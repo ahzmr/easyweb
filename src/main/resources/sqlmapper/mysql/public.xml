@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="public">
+
+    <sql id="QueryWhereClause">
+        <where>
+            <foreach item="value" index="index" collection="valueList">
+                ${sqlList[index]} #{value}
+            </foreach>
+            ${postSql}
+        </where>
+    </sql>
+
+</mapper>
