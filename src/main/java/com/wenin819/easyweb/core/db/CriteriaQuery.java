@@ -8,13 +8,14 @@ import java.util.List;
 
 /**
  * Mybatis 通用查询类
+ *
  * @author wenin819@gmail.com
  */
 public class CriteriaQuery {
 
-	/**
-	 * order by
-	 */
+    /**
+     * order by
+     */
     protected StringBuilder orderByClause;
     /**
      * distinct
@@ -36,31 +37,28 @@ public class CriteriaQuery {
     public String getOrderByClause() {
         return null == orderByClause ? null : orderByClause.toString();
     }
-    
+
     /**
      * 增加排序
-     * @param filedName
-     * @param isAsc
-     * @return
      */
     public CriteriaQuery addOrder(String filedName, boolean isAsc) {
-    	if(null == orderByClause) {
-    		orderByClause = new StringBuilder(filedName);
-    	} else {
-    		orderByClause.append(" ");
-    		orderByClause.append(filedName);
-    	}
-    	orderByClause.append(isAsc ? " ASC" : " DESC");
-    	return this;
+        if (null == orderByClause) {
+            orderByClause = new StringBuilder(filedName);
+        } else {
+            orderByClause.append(" ");
+            orderByClause.append(filedName);
+        }
+        orderByClause.append(isAsc ? " ASC" : " DESC");
+        return this;
     }
-    
-    public void setDistinct(boolean distinct) {
-		this.distinct = distinct;
-	}
 
-	public boolean isDistinct() {
-		return distinct;
-	}
+    public boolean isDistinct() {
+        return distinct;
+    }
+
+    public void setDistinct(boolean distinct) {
+        this.distinct = distinct;
+    }
 
     public Criteria createAndCriteria() {
         return criteria.createAndCriteria();
@@ -78,14 +76,14 @@ public class CriteriaQuery {
     }
 
     public List<String> getSqlList() {
-        if(null == sqlList) {
+        if (null == sqlList) {
             buildSql();
         }
         return Collections.unmodifiableList(sqlList);
     }
 
     public List<Object> getValueList() {
-        if(null == valueList) {
+        if (null == valueList) {
             buildSql();
         }
         return Collections.unmodifiableList(valueList);
@@ -93,11 +91,11 @@ public class CriteriaQuery {
 
     public String getWhereSql() {
         return StringUtils.collectionToDelimitedString(getSqlList(), "?") +
-                (getValueList().size() > 0 ? "?" : "") + getPostSql();
+               (getValueList().size() > 0 ? "?" : "") + getPostSql();
     }
 
     public String getPostSql() {
-        if(null == postSql) {
+        if (null == postSql) {
             buildSql();
         }
         return postSql.toString();

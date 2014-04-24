@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="public">
 
-    <sql id="QueryWhereClause">
+    <sql id="WhereClause4Query">
         <where>
             <foreach item="value" index="index" collection="valueList">
                 ${sqlList[index]} #{value}
@@ -11,4 +12,52 @@
         </where>
     </sql>
 
+    <sql id="UpdateWhereClause4Query">
+        <where>
+            <foreach item="value" index="index" collection="query.valueList">
+                ${query.sqlList[index]} #{value}
+            </foreach>
+            ${query.postSql}
+        </where>
+    </sql>
+
+    <sql id="SelectById">
+        select
+        <include refid="BaseColumnList" />
+        from
+        <include refid="TableClause" />
+        <include refid="WhereClause4Id" />
+    </sql>
+
+    <sql id="Select4Query">
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="BaseColumnList" />
+        from
+        <include refid="TableClause" />
+        <include refid="public.WhereClause4Query" />
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </sql>
+
+    <sql id="Count4Query">
+        select count(*) from
+        <include refid="TableClause" />
+        <include refid="public.WhereClause4Query" />
+    </sql>
+
+    <sql id="DeleteById">
+        delete
+        <include refid="TableClause" />
+        <include refid="WhereClause4Id" />
+    </sql>
+
+    <sql id="Delete4Query">
+        delete
+        <include refid="TableClause" />
+        <include refid="public.WhereClause4Query" />
+    </sql>
 </mapper>

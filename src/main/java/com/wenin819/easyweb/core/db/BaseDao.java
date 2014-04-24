@@ -7,5 +7,17 @@ import java.util.List;
  */
 public interface BaseDao<E extends BaseEntity> {
 
-    public List<E> queryByCriteria(CriteriaQuery critQuery);
+    int insert(E record);
+
+    E queryById(String id);
+
+    int updateById(E record);
+
+    int deleteById(String id);
+
+    List<E> queryByCriteria(CriteriaQuery critQuery);
+
+    int countByCriteria(CriteriaQuery critQuery);
+
+    int deleteByCriteria(CriteriaQuery critQuery);
 }

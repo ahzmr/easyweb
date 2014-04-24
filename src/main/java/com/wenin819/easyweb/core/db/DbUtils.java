@@ -17,7 +17,7 @@ public class DbUtils {
 
     public static String getTableId(IFiledEnum filedEnum) {
         String tableSchema = filedEnum.getTableSchema();
-        if(null != tableSchema && !tableSchema.isEmpty()) {
+        if (null != tableSchema && !tableSchema.isEmpty()) {
             return tableSchema + '.' + filedEnum.getTableName();
         } else {
             return filedEnum.getTableName();
@@ -32,8 +32,9 @@ public class DbUtils {
         out.printf(resultSet2String(rs));
         out.flush();
     }
+
     public static String resultSet2String(ResultSet rs) {
-        if(null == rs) {
+        if (null == rs) {
             return "";
         }
         StringBuilder s = new StringBuilder();
@@ -53,7 +54,7 @@ public class DbUtils {
             }
             s.append("]\n");
 
-            while(rs.next()) {
+            while (rs.next()) {
                 s.append("Row:[\t");
                 for (int i = 1; i <= columnCount; i++) {
                     s.append(rs.getString(i));

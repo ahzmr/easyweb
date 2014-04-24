@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -20,9 +21,12 @@
         <log4j.version>1.2.17</log4j.version>
         <jackson.version>2.3.2</jackson.version>
         <freemarker.version>2.3.20</freemarker.version>
+        <commons-lang3.version>3.3.1</commons-lang3.version>
+        <commons-io.version>2.4</commons-io.version>
 
         <!-- jdbc driver setting -->
         <mysql.driver.version>5.1.30</mysql.driver.version>
+        <orcle.driver.version>10.2.0.4.0</orcle.driver.version>
 
         <!-- other setting -->
         <jdk.version>1.7</jdk.version>
@@ -67,6 +71,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.driver.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc14</artifactId>
+            <version>${orcle.driver.version}</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -151,6 +161,18 @@
             <version>${freemarker.version}</version>
         </dependency>
 
+        <!-- GENERAL UTILS begin -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+
         <!-- test -->
         <dependency>
             <groupId>junit</groupId>
@@ -186,7 +208,8 @@
                     <webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
                     <classesDirectory>target/classes</classesDirectory>
                     <connectors>
-                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                        <connector
+                                implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
                             <port>${webserver.port}</port>
                             <maxIdleTime>3000</maxIdleTime>
                         </connector>
