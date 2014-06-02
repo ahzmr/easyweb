@@ -11,8 +11,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 /**
- * Created by wenin819@gmail.com on 2014/4/7.
- */
+* Created by wenin819@gmail.com on 2014/4/7.
+*/
 public class SysUserDaoTest extends BaseSpringTest {
 
     @Resource
@@ -46,6 +46,7 @@ public class SysUserDaoTest extends BaseSpringTest {
 
     @Test
     public void testInsert() {
+        sysUserDao.deleteById("7");
         SysUser user = sysUserDao.queryById("1");
         user.setId("7");
         user.setLoginName("wenin819");

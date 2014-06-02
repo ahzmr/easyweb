@@ -25,7 +25,7 @@
         </#if>${"#\{"}${tf.name}${"}"}</#list>
     </sql>
 
-    <sql id="TableClause"> sys_user </sql>
+    <sql id="TableClause"> ${table.schema}.${table.name} </sql>
 
     <sql id="WhereClause4Id">
         <where>

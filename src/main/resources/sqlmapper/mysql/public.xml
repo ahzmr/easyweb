@@ -50,13 +50,13 @@
     </sql>
 
     <sql id="DeleteById">
-        delete
+        delete from
         <include refid="TableClause" />
         <include refid="WhereClause4Id" />
     </sql>
 
     <sql id="Delete4Query">
-        delete
+        delete from
         <include refid="TableClause" />
         <include refid="public.WhereClause4Query" />
     </sql>

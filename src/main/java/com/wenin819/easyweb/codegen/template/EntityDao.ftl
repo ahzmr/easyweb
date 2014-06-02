@@ -1,17 +1,17 @@
 /**
 * There are <a href="https://github.com/wenin819/easyweb">EasyWeb</a> code generation
 */
-package com.wenin819.easyweb.modules.sys.dao;
+package ${basePackageName}.${moduleName}.dao;
 
 import com.wenin819.easyweb.core.db.BaseDao;
-import com.wenin819.easyweb.modules.sys.model.SysUser;
+import ${basePackageName}.${moduleName}.model.${table.className};
 
 import org.springframework.stereotype.Repository;
 
 /**
- * @author wenin819@gmail.com
+ * @author ${author}
  */
 @Repository
-public interface SysUserDao extends BaseDao<SysUser> {
+public interface ${table.className}Dao extends BaseDao<${table.className}> {
 
 }

@@ -80,6 +80,10 @@ public class CodeGen {
                                                   new String[]{"/", "."},
                                                   new String[]{separator, separator});
         logger.info("Java Path: {}", javaPath);
+        String sqlMapperPath = StringUtils.replaceEach(projectPath + "/src/main/resources/sqlmapper/mysql",
+                                                       new String[]{"/", "."},
+                                                       new String[]{separator, separator});
+        logger.info("SqlMapper Path: {}", sqlMapperPath);
 
         // 代码模板配置
         Configuration cfg = new Configuration();
@@ -92,8 +96,10 @@ public class CodeGen {
         model.put("author", author);
 
         // 生成 Entity
-        Template entityTpl = cfg.getTemplate("entity.ftl");
+        Template entityTpl = cfg.getTemplate("Entity.ftl");
+        Template daoTpl = cfg.getTemplate("EntityDao.ftl");
         Template sqlMapperTpl = cfg.getTemplate("SqlMapper.ftl");
+        Template sqlMapperExtTpl = cfg.getTemplate("SqlMapperExt.ftl");
 
         Collection<TableEntity> tables = DbUtils.getTables("easyweb", tablePattern);
         if (logger.isInfoEnabled()) {
@@ -104,14 +110,26 @@ public class CodeGen {
             String filePath = javaPath + separator + model.get("moduleName") + separator + "model"
                               + separator + table.getClassName() + ".java";
             String content = FreemarkerUtils.process2String(entityTpl, model);
-            writeFile(content, filePath);
+            writeFile(content, filePath, false);
             logger.info("Entity: {}", filePath);
 
-            filePath = javaPath + separator + model.get("moduleName") + separator + "sqlmap"
-                       + separator + table.getName() + ".xml";
+            filePath = javaPath + separator + model.get("moduleName") + separator + "dao"
+                              + separator + table.getClassName() + "Dao.java";
+            content = FreemarkerUtils.process2String(daoTpl, model);
+            writeFile(content, filePath, false);
+            logger.info("Dao: {}", filePath);
+
+            filePath = sqlMapperPath + separator + model.get("moduleName") + separator
+                       + table.getName() + ".xml";
             content = FreemarkerUtils.process2String(sqlMapperTpl, model);
-            writeFile(content, filePath);
+            writeFile(content, filePath, true);
             logger.info("SqlMapper: {}", filePath);
+
+            filePath = sqlMapperPath + separator + model.get("moduleName") + separator
+                       + table.getName() + "_ext.xml";
+            content = FreemarkerUtils.process2String(sqlMapperExtTpl, model);
+            writeFile(content, filePath, false);
+            logger.info("SqlMapperExt: {}", filePath);
         }
 
         logger.info("Generate Success.");
@@ -122,14 +140,15 @@ public class CodeGen {
      *
      * @param content  文件内容
      * @param filePath 路径
+     * @param cover 是否覆盖已有文件
      */
-    public static void writeFile(String content, String filePath) {
+    public static void writeFile(String content, String filePath, boolean cover) {
         try {
             File file = new File(filePath);
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
-            if (true || !file.exists()) {
+            if (cover || !file.exists()) {
                 FileWriter fileWriter = new FileWriter(filePath, false);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 bufferedWriter.write(content);
@@ -137,7 +156,7 @@ public class CodeGen {
                 bufferedWriter.close();
                 fileWriter.close();
             } else {
-                logger.info("生成失败，文件已存在！");
+                logger.info("文件[{}]已存在，直接跳过！", filePath);
             }
         } catch (Exception e) {
             e.printStackTrace();

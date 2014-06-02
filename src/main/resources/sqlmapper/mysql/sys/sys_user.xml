@@ -37,7 +37,7 @@
         #{updateBy},#{updateDate},#{remarks},#{delFlag}
     </sql>
 
-    <sql id="TableClause"> sys_user </sql>
+    <sql id="TableClause"> easyweb.sys_user </sql>
 
     <sql id="WhereClause4Id">
         <where>
