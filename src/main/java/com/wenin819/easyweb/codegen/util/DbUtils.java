@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
-import java.sql.JDBCType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -95,7 +94,6 @@ public class DbUtils {
                 rs.close();
             } catch (SQLException e) {
                 // ignore
-                ;
             }
         }
     }
@@ -108,7 +106,7 @@ public class DbUtils {
         while (rs.next()) {
             TableField field = new TableField();
             field.setCollumnName(rs.getString("COLUMN_NAME"));
-            field.setJdbcType(JDBCType.valueOf(rs.getInt("DATA_TYPE")));
+            field.setJdbcType(rs.getInt("DATA_TYPE"));
             field.setLength(rs.getInt("COLUMN_SIZE"));
             field.setNullable(rs.getInt("NULLABLE") > 0);
             field.setRemarks(rs.getString("REMARKS"));

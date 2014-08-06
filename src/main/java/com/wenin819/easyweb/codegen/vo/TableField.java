@@ -3,7 +3,8 @@ package com.wenin819.easyweb.codegen.vo;
 import com.wenin819.easyweb.codegen.util.JavaTypeResolverUtil;
 import com.wenin819.easyweb.core.util.StringUtils;
 
-import java.sql.JDBCType;
+import org.apache.ibatis.type.JdbcType;
+import java.util.Objects;
 
 /**
  * 表字段对应的代码生成辅助类.
@@ -14,7 +15,7 @@ public class TableField {
     private String name;
     private String methodName;
     private String collumnName;
-    private JDBCType jdbcType;
+    private Integer jdbcType;
     private int length;
     private int scale;
     private boolean nullable;
@@ -38,16 +39,24 @@ public class TableField {
         this.name = StringUtils.uncapitalize(this.methodName);
     }
 
-    public JDBCType getJdbcType() {
+    public Integer getJdbcType() {
         return jdbcType;
     }
 
-    public void setJdbcType(JDBCType jdbcType) {
+    public void setJdbcType(Integer jdbcType) {
         this.jdbcType = jdbcType;
     }
 
     public String getJdbcTypeName() {
-        return null == jdbcType ? null : jdbcType.getName();
+        if (null == jdbcType) {
+            return null;
+        } else {
+            JdbcType type = JdbcType.forCode(jdbcType);
+            if(null == type) {
+                type = JdbcType.UNDEFINED;
+            }
+            return type.name();
+        }
     }
 
     public Class getJavaType() {
@@ -84,7 +93,7 @@ public class TableField {
     }
 
     public String getRemarks() {
-        return remarks;
+        return Objects.toString(remarks, "");
     }
 
     public void setRemarks(String remarks) {

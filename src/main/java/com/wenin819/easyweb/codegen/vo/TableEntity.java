@@ -6,6 +6,7 @@ import com.wenin819.easyweb.core.util.StringUtils;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -55,7 +56,7 @@ public class TableEntity {
     }
 
     public String getRemarks() {
-        return remarks;
+        return Objects.toString(remarks, "");
     }
 
     public void setRemarks(String remarks) {
@@ -118,7 +119,8 @@ public class TableEntity {
 
     @Override
     public boolean equals(Object obj) {
-        return getTableId().equals(obj);
+        return obj instanceof TableEntity && null != getTableId() &&
+                getTableId().equals(obj);
     }
 
     @Override

@@ -12,6 +12,9 @@
     <url>http://wenin819.github.com/easyweb</url>
 
     <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.test.skip>true</maven.test.skip>
         <!-- version setting -->
         <spring.version>3.2.8.RELEASE</spring.version>
         <mybatis.version>3.2.6</mybatis.version>
@@ -45,6 +48,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <!-- shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.2.3</version>
         </dependency>
 
         <!-- MyBatis -->
@@ -116,14 +126,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>${slf4j.version}</version>
-            <scope>runtime</scope>
         </dependency>
         <!-- java.util.logging 实际调用slf4j -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
             <version>${slf4j.version}</version>
-            <scope>runtime</scope>
         </dependency>
         <!-- log4j -->
         <dependency>
@@ -161,6 +169,18 @@
             <version>${freemarker.version}</version>
         </dependency>
 
+        <!-- jsoup HTML parser library @ http://jsoup.org/ -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.7.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.4</version>
+        </dependency>
+
         <!-- GENERAL UTILS begin -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -192,6 +212,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
                 <configuration>
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>

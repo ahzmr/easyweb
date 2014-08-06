@@ -1,7 +1,7 @@
 /**
 * There are <a href="https://github.com/wenin819/easyweb">EasyWeb</a> code generation
 */
-package ${basePackageName}.${moduleName}.model;
+package ${basePackageName}.model;
 
 import com.wenin819.easyweb.core.db.BaseEntity;
 import com.wenin819.easyweb.core.db.IFiledEnum;
