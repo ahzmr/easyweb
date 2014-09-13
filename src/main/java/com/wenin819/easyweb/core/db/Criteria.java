@@ -159,12 +159,12 @@ public class Criteria {
         return this;
     }
 
-    public <E extends Object> Criteria in(IFiledEnum filedEnum, List<E> values) {
+    public <E> Criteria in(IFiledEnum filedEnum, List<E> values) {
         addCriterion(filedEnum, "in", values);
         return this;
     }
 
-    public <E extends Object> Criteria notIn(IFiledEnum filedEnum, List<E> values) {
+    public <E> Criteria notIn(IFiledEnum filedEnum, List<E> values) {
         addCriterion(filedEnum, "not in", values);
         return this;
     }
@@ -189,7 +189,7 @@ public class Criteria {
         singleValue.add(map);
     }
 
-    protected <E extends Object> void addCriterion(IFiledEnum filedEnum, String op,
+    protected <E> void addCriterion(IFiledEnum filedEnum, String op,
                                                    List<E> values) {
         Assert.notNull(filedEnum, "filedEnum 不能为空");
         Assert.notNull(op, "op 不能为空");
@@ -242,7 +242,7 @@ public class Criteria {
             if (hasAdd) {
                 preSql.append(this.delim);
             }
-            List<Object> list = (List<Object>) stringObjectMap.get(VALUES_KEY);
+            @SuppressWarnings("unchecked") List<Object> list = (List<Object>) stringObjectMap.get(VALUES_KEY);
             preSql.append((String) (stringObjectMap.get(CONDITION_KEY)));
             sqlList.add(preSql.toString());
             preSql = new StringBuilder();
@@ -255,7 +255,7 @@ public class Criteria {
             if (hasAdd) {
                 preSql.append(this.delim);
             }
-            List<Object> list = (List<Object>) stringObjectMap.get(VALUES_KEY);
+            @SuppressWarnings("unchecked") List<Object> list = (List<Object>) stringObjectMap.get(VALUES_KEY);
             preSql.append((String) (stringObjectMap.get(CONDITION_KEY)));
             preSql.append(" (");
             sqlList.add(preSql.toString());

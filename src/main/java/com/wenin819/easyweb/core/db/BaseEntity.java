@@ -14,6 +14,7 @@ public abstract class BaseEntity<TE extends IFiledEnum> {
         extPropertiesMap.put(getLableKey(field), v);
     }
 
+    @SuppressWarnings("unchecked")
     public <V> V getFieldLable(TE field) {
         return (V) extPropertiesMap.get(getLableKey(field));
     }
@@ -22,6 +23,7 @@ public abstract class BaseEntity<TE extends IFiledEnum> {
         extPropertiesMap.put(key, v);
     }
 
+    @SuppressWarnings("unchecked")
     public <V> V getExtProperty(String key) {
         return (V) extPropertiesMap.get(key);
     }
@@ -29,4 +31,8 @@ public abstract class BaseEntity<TE extends IFiledEnum> {
     private String getLableKey(TE field) {
         return field.getFiledName() + "_Lable";
     }
+
+    public abstract String getId();
+
+    public abstract void setId(String id);
 }

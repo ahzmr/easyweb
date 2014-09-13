@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenin819.easyweb.modules.contacts.dao.TxContactsDao">
+    <resultMap id="BaseResultMap" type="TxContacts">
+        <id property="id" column="ID" jdbcType="VARCHAR" />
+        <result property="name" column="name" jdbcType="VARCHAR" />
+        <result property="cellphone" column="cellphone" jdbcType="VARCHAR" />
+        <result property="phone" column="phone" jdbcType="VARCHAR" />
+        <result property="education" column="education" jdbcType="VARCHAR" />
+        <result property="university" column="university" jdbcType="VARCHAR" />
+        <result property="department" column="department" jdbcType="VARCHAR" />
+        <result property="profession" column="profession" jdbcType="VARCHAR" />
+        <result property="address" column="address" jdbcType="VARCHAR" />
+        <result property="workAddr" column="work_addr" jdbcType="VARCHAR" />
+        <result property="job" column="job" jdbcType="VARCHAR" />
+        <result property="company" column="company" jdbcType="VARCHAR" />
+        <result property="myMsg" column="my_msg" jdbcType="VARCHAR" />
+        <result property="memo" column="memo" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        ID,name,cellphone,phone,education,
+        university,department,profession,address,work_addr,
+        job,company,my_msg,memo
+    </sql>
+
+    <sql id="BaseColumnValueList">
+        #{id},#{name},#{cellphone},#{phone},#{education},
+        #{university},#{department},#{profession},#{address},#{workAddr},
+        #{job},#{company},#{myMsg},#{memo}
+    </sql>
+
+    <sql id="TableClause"> easyweb.tx_contacts </sql>
+
+    <sql id="WhereClause4Id">
+        <where>
+            ID = #{id}
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="TxContacts">
+        insert into <include refid="TableClause" /> (
+        <include refid="BaseColumnList" />
+        ) values (
+        <include refid="BaseColumnValueList" />
+        )
+    </insert>
+
+    <select id="queryById" parameterType="string" resultMap="BaseResultMap">
+        <include refid="public.SelectById" />
+    </select>
+
+    <update id="updateById" parameterType="TxContacts">
+        update <include refid="TableClause" />
+        <set>
+            name=#{name},
+            cellphone=#{cellphone},
+            phone=#{phone},
+            education=#{education},
+            university=#{university},
+            department=#{department},
+            profession=#{profession},
+            address=#{address},
+            work_addr=#{workAddr},
+            job=#{job},
+            company=#{company},
+            my_msg=#{myMsg},
+            memo=#{memo}
+        </set> <include refid="WhereClause4Id" />
+    </update>
+
+    <update id="deleteById" parameterType="string">
+        <include refid="public.DeleteById" />
+    </update>
+
+    <select id="queryByCriteria" resultMap="BaseResultMap" parameterType="CriteriaQuery">
+        <include refid="public.Select4Query" />
+    </select>
+
+    <select id="countByCriteria" resultType="_int" parameterType="CriteriaQuery">
+        <include refid="public.Count4Query" />
+    </select>
+
+    <select id="deleteByCriteria" resultType="_int" parameterType="CriteriaQuery">
+        <include refid="public.Count4Query" />
+    </select>
+</mapper>
