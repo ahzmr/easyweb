@@ -85,7 +85,7 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      * @param request
      * @return
      */
-    @RequestMapping({"/list.html", ""})
+    @RequestMapping({"list.html", ""})
     public String toList(Page<E> page, E entity, Model model, HttpServletRequest request) {
         entity = updateEntity(entity, ActionType.SELECT, request);
         CriteriaQuery example = genCriteriaes(entity, request);
@@ -101,7 +101,7 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      * @param request
      * @return
      */
-    @RequestMapping("/form.html")
+    @RequestMapping("form.html")
     public String toForm(E entry, Model model, HttpServletRequest request) {
         model.addAttribute("entry", entry);
         return pagePathForm;
@@ -114,13 +114,13 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/save.html", method = RequestMethod.POST)
+    @RequestMapping(value = "save.html", method = RequestMethod.POST)
     public String save(E entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         entity = updateEntity(entity, ActionType.SAVE, request);
         final int success = getService().createOrUpdate(entity);
         if(success > 0) {
             redirectAttributes.addAttribute("message", "保存成功");
-            return "redirect:./list.html";
+            return "redirect:list.html";
         } else {
             model.addAttribute("message", "保存失败，请重试");
             model.addAttribute("entry", entity);

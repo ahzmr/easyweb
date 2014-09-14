@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by wenin819@gmail.com on 2014-09-02.
  */
 @Controller
-@RequestMapping("/contacts")
+@RequestMapping("/contacts/")
 public class TxContactsController extends BaseEntityController<TxContacts> {
     @Override
     protected CriteriaQuery genCriteriaes(TxContacts entity, HttpServletRequest request) {
