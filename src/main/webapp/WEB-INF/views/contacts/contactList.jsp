@@ -9,13 +9,15 @@
 <body>
 <ul class="nav nav-tabs">
     <li class="active"><a href="${baseUrl}/contacts/list.html">通讯录列表</a></li>
-    <li><a href="${baseUrl}/contacts/form.html?id=${entry.id}">通讯录${fn:length(entry.id) gt 8 ?'修改':'添加'}</a></li>
+    <li><a href="${baseUrl}/contacts/form.html">通讯录添加</a></li>
 </ul><br/>
 
-<div class="container-fluid">
-    <table class="table table-condensed table-hover" >
+<div class="container-fluid table-responsive">
+    <tags:message content="${empty message?param.message:message}"/>
+    <table class="table table-condensed table-hover table-striped table-bordered" >
         <thead>
         <tr>
+            <th>序号</th>
             <th>姓名</th>
             <th>常住地点</th>
             <th>工作地点</th>
@@ -25,13 +27,16 @@
         </tr>
         </thead>
         <tbody>
-            <c:forEach items="${list}" var="entry">
+            <c:forEach items="${list}" var="entry" varStatus="idx">
+            <tr>
+                <td>${idx.index + 1}</td>
                 <td>${entry.name}</td>
                 <td>${entry.address}</td>
                 <td>${entry.workAddr}</td>
                 <td>${entry.job}</td>
                 <td>${entry.company}</td>
                 <td>${entry.myMsg}</td>
+            </tr>
             </c:forEach>
         </tbody>
     </table>

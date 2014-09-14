@@ -9,7 +9,9 @@ import com.wenin819.easyweb.core.util.StringUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -83,7 +85,7 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      * @param request
      * @return
      */
-    @RequestMapping("/list.html")
+    @RequestMapping({"/list.html", ""})
     public String toList(Page<E> page, E entity, Model model, HttpServletRequest request) {
         entity = updateEntity(entity, ActionType.SELECT, request);
         CriteriaQuery example = genCriteriaes(entity, request);
@@ -112,13 +114,13 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      * @param request
      * @return
      */
-    @RequestMapping("/save.html")
-    public String save(E entity, Model model, HttpServletRequest request) {
+    @RequestMapping(value = "/save.html", method = RequestMethod.POST)
+    public String save(E entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         entity = updateEntity(entity, ActionType.SAVE, request);
         final int success = getService().createOrUpdate(entity);
         if(success > 0) {
-            model.addAttribute("message", "保存成功");
-            return pagePathList;
+            redirectAttributes.addAttribute("message", "保存成功");
+            return "redirect:./list.html";
         } else {
             model.addAttribute("message", "保存失败，请重试");
             model.addAttribute("entry", entity);

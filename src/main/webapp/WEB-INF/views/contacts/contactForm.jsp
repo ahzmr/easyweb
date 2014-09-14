@@ -12,7 +12,7 @@
                return this.optional(element) || val && val.length > 8 &&
                                                 parseInt(val.substring(8)) > 0 &&
                                                 val.substring(0, 8) == "07070110";
-           }, "请输入正常的学号");
+           }, "请输入正确的学号");
            $("#inputForm").validate(
                    {
                rules: {

@@ -12,6 +12,7 @@
 <![endif]-->
 
 <script src="${libUrl}/jquery/js/jquery-1.11.1.min.js"></script>
+<script src="${libUrl}/jquery-migrate/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="${libUrl}/bootstrap/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="${libUrl}/jquery-validation/css/jquery.validate.min.css" />
