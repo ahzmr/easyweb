@@ -20,9 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 public class TxContactsController extends BaseEntityController<TxContacts> {
     @Override
     protected CriteriaQuery genCriteriaes(TxContacts entity, HttpServletRequest request) {
-        final CriteriaQuery criteriaQuery = super.genCriteriaes(entity, request);
-        criteriaQuery.createAndCriteria().isNotNull(TxContacts.TE.cellphone);
-        return criteriaQuery;
+        return super.genCriteriaes(entity, request);
     }
 
     @Resource
