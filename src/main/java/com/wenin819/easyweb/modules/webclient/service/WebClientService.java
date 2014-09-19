@@ -29,7 +29,8 @@ public class WebClientService {
     private Map<String, HttpContext> httpContextMap = new HashMap<>();
     private final String imageUrl = "http://web.ahnw.gov.cn/xzxchqn/Getcode.asp";
     private final String formUrl = "http://web.ahnw.gov.cn/xzxchqn/SaveVote.asp";
-    private final String userId = "1759";
+    public final String userId = "1759";
+    public String isCity = "1";
 
     private static final List<String> proxies = new LinkedList<>();
 
@@ -127,6 +128,7 @@ public class WebClientService {
     public HttpContext genNewHttpContext() {
         HttpContext httpContext = new HttpContext(imageUrl);
         httpContext.addParam("Id", userId);
+        httpContext.addParam("isCity", isCity);
         return httpContext;
     }
 

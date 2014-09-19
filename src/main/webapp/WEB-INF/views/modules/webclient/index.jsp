@@ -30,7 +30,7 @@
 <div class="container-fluid">
     <div class="page-header">
         <h1>投票</h1>
-        <p class="lead">为1759投票.</p>
+        <p class="lead">为${userId}投票.</p>
     </div>
 
     <h3></h3>

@@ -30,6 +30,7 @@ public class WebClientController extends BaseController {
     @RequestMapping({"", "index.html"})
     public String index(Model model) {
         model.addAttribute("idList", webClientService.genNewHttpContextIdList());
+        model.addAttribute("userId", webClientService.userId);
         return "modules/webclient/index";
     }
 
