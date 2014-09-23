@@ -2,7 +2,8 @@ package com.wenin819.easyweb.modules.sys.dao;
 
 import com.wenin819.easyweb.BaseSpringTest;
 import com.wenin819.easyweb.core.db.CriteriaQuery;
-import com.wenin819.easyweb.modules.sys.model.SysUser;
+import com.wenin819.easyweb.system.dao.SysUserDao;
+import com.wenin819.easyweb.system.model.SysUser;
 
 import org.junit.Test;
 

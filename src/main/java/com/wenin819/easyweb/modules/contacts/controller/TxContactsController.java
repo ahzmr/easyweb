@@ -44,7 +44,7 @@ public class TxContactsController extends BaseEntityController<TxContacts> {
 
     @Override
     protected String getBasePagePath() {
-        return "contacts/contact";
+        return "modules/contacts/contact";
     }
 
     @Override

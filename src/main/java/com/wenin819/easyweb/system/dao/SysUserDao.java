@@ -1,10 +1,10 @@
 /**
 * There are <a href="https://github.com/wenin819/easyweb">EasyWeb</a> code generation
 */
-package com.wenin819.easyweb.modules.sys.dao;
+package com.wenin819.easyweb.system.dao;
 
 import com.wenin819.easyweb.core.db.BaseDao;
-import com.wenin819.easyweb.modules.sys.model.SysUser;
+import com.wenin819.easyweb.system.model.SysUser;
 
 import org.springframework.stereotype.Repository;
 

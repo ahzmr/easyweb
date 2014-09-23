@@ -145,7 +145,9 @@
     </div>
     <div class="form-group">
         <div class="col-sm-12 text-center">
-            <button class="btn btn-primary" type="submit">保 存</button>&nbsp;
+            <shiro:hasPermission name="contacts:edit:${entry.id}">
+                <button class="btn btn-primary" type="submit">保 存</button>&nbsp;
+            </shiro:hasPermission>
             <button class="btn" type="button" onclick="goHistory(-1)">返 回</button>
         </div>
     </div>

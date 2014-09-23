@@ -60,7 +60,7 @@
             <c:forEach items="${list}" var="entry" varStatus="idx">
             <tr>
                 <td>${idx.index + 1}</td>
-                <td>${entry.name}</td>
+                <td><a href="${baseUrl}/contacts/form.html?id=${entry.id}">${entry.name}</a></td>
                 <td>${entry.address}</td>
                 <td>${entry.workAddr}</td>
                 <td>${entry.job}</td>

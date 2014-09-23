@@ -43,7 +43,7 @@ public class WebClientService {
             final String[] strings = s.split("\n");
             for (String string : strings) {
                 if(StringUtils.hasText(string)) {
-                    System.out.println("add proxy:" + string);
+//                    System.out.println("add proxy:" + string);
                     proxies.add(string.trim());
                 }
             }

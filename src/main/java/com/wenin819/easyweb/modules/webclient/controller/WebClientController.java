@@ -45,7 +45,7 @@ public class WebClientController extends BaseController {
         out.flush();
     }
 
-    @RequestMapping("/commit.json")
+    @RequestMapping("commit.json")
     @ResponseBody
     public Map<String, Object> commit(String id, String code) {
         Map<String, Object> rs = new HashMap<>();
