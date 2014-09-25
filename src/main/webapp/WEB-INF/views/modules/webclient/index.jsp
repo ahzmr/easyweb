@@ -11,6 +11,9 @@
             img.attr("src", "getImage.html?id=" + id + "&r=" + Math.random());
         }
         $(function(){
+            $.ajaxSetup({
+                            timeout: 180000
+                        });
             var cmtFun = function () {
                 var myid = $(this).attr("myid");
                 $("#" + myid + " p").text("提交中……");

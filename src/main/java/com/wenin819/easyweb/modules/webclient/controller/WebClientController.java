@@ -51,12 +51,27 @@ public class WebClientController extends BaseController {
         Map<String, Object> rs = new HashMap<>();
         String msg = null;
         int status = 0;
+        int count = 0;
         try {
-            msg = webClientService.commit(id, code);
+            for (int i = 0; i < 100; i++) {
+                msg = webClientService.commit(id, code);
+                if("投票成功".equals(msg)) {
+                    count++;
+                    continue;
+                } else {
+                    break;
+                }
+            }
             status = 1;
         } catch (Exception e) {
             msg = e.getMessage();
             e.printStackTrace();
+        }
+        if(0 < count) {
+            msg = "成功投" + count + "票，最后次结果为：" + msg;
+        }
+        if (logger.isInfoEnabled()) {
+            logger.info("投票结果：" + msg);
         }
         rs.put("status", status);
         rs.put("msg", msg);

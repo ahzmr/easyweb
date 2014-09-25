@@ -72,7 +72,7 @@ public class WebClientService {
                 continue;
             }
             if("投票成功".equals(msg)) {
-                httpContextMap.remove(id);
+//                httpContextMap.remove(id);
             }
             return msg;
         }

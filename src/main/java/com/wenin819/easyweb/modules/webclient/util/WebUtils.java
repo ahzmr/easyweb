@@ -20,7 +20,6 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,9 +98,9 @@ public class WebUtils {
         try {
             rs = new String(bytes, DEFAULT_HTTP_ENCODING);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
-        System.out.println("response context: " + rs);
+//        System.out.println("response context: " + rs);
         return rs;
     }
 
@@ -129,15 +128,15 @@ public class WebUtils {
         try {
             final CloseableHttpResponse response = httpClient.execute(httpGet);
             httpContext.addAllCookie(getCookies(response));
-            System.out.println("statusLine: " + response.getStatusLine());
+//            System.out.println("statusLine: " + response.getStatusLine());
             final HttpEntity entity = response.getEntity();
             final byte[] rs = EntityUtils.toByteArray(entity);
-            System.out.println("response headers: " + Arrays.toString(response.getAllHeaders()));
+//            System.out.println("response headers: " + Arrays.toString(response.getAllHeaders()));
 //            System.out.println("response rs: " + Arrays.toString(rs));
             EntityUtils.consume(entity);
             return rs;
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } finally {
             HttpClientUtils.closeQuietly(httpClient);
         }
@@ -171,15 +170,15 @@ public class WebUtils {
             }
             final CloseableHttpResponse response = httpClient.execute(httpPost);
             httpContext.addAllCookie(getCookies(response));
-            System.out.println(response.getStatusLine());
+//            System.out.println(response.getStatusLine());
             final HttpEntity entity = response.getEntity();
             final String rs = EntityUtils.toString(entity, DEFAULT_HTTP_ENCODING);
-            System.out.println("response headers: " + Arrays.toString(response.getAllHeaders()));
-            System.out.println(rs);
+//            System.out.println("response headers: " + Arrays.toString(response.getAllHeaders()));
+//            System.out.println(rs);
             EntityUtils.consume(entity);
             return rs;
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } finally {
             HttpClientUtils.closeQuietly(httpClient);
         }

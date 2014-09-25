@@ -5,6 +5,23 @@
 <head>
     <%@include file="/WEB-INF/includes/common.jsp"%>
     <title>通讯录增加或修改</title>
+    <style>
+        body {
+            padding-top: 20px;
+            background: transparent;
+        }
+        .margin-base-vertical {
+            margin: 40px 0;
+        }
+        .panel {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        #loginForm {
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
     <script>
         $(function() {
             $("#cellphone").focus();
@@ -28,40 +45,46 @@
                             }
                         }
                     });
+            $("#defaultPass").click(function() {
+                $("#password").val($("#username").val());
+            });
         });
     </script>
 </head>
 <body>
-<div class="container-fluid" style="max-width: 480px; margin: 0 auto;">
-    <form id="loginForm"  class="form login-form" action="./login.html" method="post">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 panel panel-default">
+        <h1 class="margin-base-vertical text-center">系统登陆</h1>
         <tags:message content="${empty message?param.message:message}" />
-        <legend><h3>系统登陆</h3></legend>
-        <div class="control-group">
-            <label class="col-sm-4 control-label">登录名:</label>
-            <div class="col-sm-6">
-                <input type="text" name="username" value="${username}" placeholder="学号">
+    <form id="loginForm" class="form panel-body margin-base-vertical"
+          action="./login.html" method="post">
+        <div class="form-group">
+            <div class="col-md-12">
+                <label class="control-label" for="username">登录名</label>
+                <input type="text" id="username" name="username" class="form-control"
+                   value="${username}" placeholder="学号">
             </div>
         </div>
 
-        <div class="control-group">
-            <label class="col-sm-4 control-label">密码:</label>
-            <div class="col-sm-6">
-                <input type="password" name="password" placeholder="密码"/>
+        <div class="form-group">
+            <div class="col-md-12">
+                <label class="control-label" for="password">密码</label>
+                <input type="password" id="password" name="password" class="form-control"
+                   placeholder="密码"/>
             </div>
-        </div><%--
-        <div class="control-group">
-            <div class="col-sm-offset-4 col-sm-6">
-                <div class="checkbox">
-                    <input type="checkbox" name="rememberMe"><span>记住我</span>
-                </div>
-            </div>
-        </div>--%>
-        <div class="control-group">
-            <div class="col-sm-12 text-center">
+        </div>
+        <br />
+        <div class="form-group text-center">
+            <div class="col-md-12">
                 <input class="btn btn-primary" type="submit" value="登 录"/>
+                <input id="defaultPass" class="btn" type="button" value="默认密码"/>
+                <input class="btn" type="reset" value="重 置"/>
             </div>
         </div>
     </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>

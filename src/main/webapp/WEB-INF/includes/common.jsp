@@ -3,7 +3,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="author" content="wenin819" />
-
+<link rel="icon" type="image/png" href="https://s.gravatar.com/avatar/d5a97fee279a30ff64abaeb2abba9574?s=32" />
 <link rel="stylesheet" href="${libUrl}/bootstrap/css/bootstrap.min.css" />
 
 <!--[if lt IE 9]>
@@ -25,3 +25,6 @@
 
 <script src="${commonUrl}/js/utils.js"></script>
 <script src="${commonUrl}/js/validateUtils.js"></script>
+
+<link rel="stylesheet" href="${commonUrl}/css/main.css" />
+<link rel="stylesheet" href="${commonUrl}/css/normalize.css" />
