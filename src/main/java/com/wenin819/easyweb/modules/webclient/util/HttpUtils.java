@@ -29,7 +29,7 @@ import java.util.Objects;
  * Web 访问工具类
  * Created by wenin819@gmail.com on 2014-08-25
  */
-public class WebUtils {
+public class HttpUtils {
 
     public static final String DEFAULT_HTTP_ENCODING = "GBK";
     private static RequestConfig requestConfig = RequestConfig.custom()

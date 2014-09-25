@@ -24,6 +24,9 @@
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="systemUserRealm"/>
+        <property name="sessionManager">
+            <bean class="com.wenin819.easyweb.core.security.shiro.HttpSessionManager" />
+        </property>
     </bean>
 
     <bean id="systemUserRealm" class="com.wenin819.easyweb.core.security.shiro.SystemUserRealm">

@@ -1,6 +1,6 @@
 package com.wenin819.easyweb.modules.webclient.service;
 
-import com.wenin819.easyweb.modules.webclient.util.WebUtils;
+import com.wenin819.easyweb.modules.webclient.util.HttpUtils;
 import com.wenin819.easyweb.modules.webclient.vo.HttpContext;
 
 import org.apache.commons.io.IOUtils;
@@ -65,7 +65,7 @@ public class WebClientService {
         }
         httpContext.addParam("code", code);
         for (int i = 0; i < 30; i++) {
-            final String rs = WebUtils.httpPost(httpContext);
+            final String rs = HttpUtils.httpPost(httpContext);
             final String msg = getResultMsg(rs);
             if(null == msg || "每天同一IP投票只能投3次".equals(msg) || "该IP投票已超过30次".equals(msg)) {
                 updateProxy(httpContext);
@@ -141,7 +141,7 @@ public class WebClientService {
         if(imageUrl != httpContext.getUrl()) {
             httpContext.setUrl(imageUrl);
         }
-        return WebUtils.httpGetBytes(httpContext);
+        return HttpUtils.httpGetBytes(httpContext);
     }
 
 }

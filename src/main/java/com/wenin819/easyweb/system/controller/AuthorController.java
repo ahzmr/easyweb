@@ -1,5 +1,6 @@
 package com.wenin819.easyweb.system.controller;
 
+import com.wenin819.easyweb.core.util.WebUtils;
 import com.wenin819.easyweb.core.web.BaseController;
 
 import org.apache.shiro.SecurityUtils;
@@ -34,12 +35,12 @@ public class AuthorController extends BaseController {
         try {
             SecurityUtils.getSubject().login(token);
             if (logger.isInfoEnabled()) {
-                logger.info("用户[" + username + "]成功登陆，登陆IP为:" + SecurityUtils.getSubject().getSession().getHost());
+                logger.info("用户[" + username + "]成功登陆，登陆IP为:" + WebUtils.getRealRemoteAddr());
             }
             return "redirect:" + secucessUrl;
         } catch (AuthenticationException e) {
             if (logger.isWarnEnabled()) {
-                logger.warn("用户[" + username + "]成功失败，登陆IP为:" + SecurityUtils.getSubject().getSession().getHost());
+                logger.warn("用户[" + username + "]成功失败，登陆IP为:" + WebUtils.getRealRemoteAddr());
             }
             model.addAttribute("message", "用户名或密码错误");
             return "system/login";
