@@ -48,9 +48,10 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      * 生成分布查询条件
      * @param entity
      * @param request
+     * @param model
      * @return
      */
-    protected CriteriaQuery genCriteriaes(E entity, HttpServletRequest request) {
+    protected CriteriaQuery genCriteriaes(E entity, HttpServletRequest request, Model model) {
         return new CriteriaQuery();
     }
 
@@ -59,9 +60,10 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      * @param entity    实体
      * @param type  操作类型
      * @param request
+     * @param model
      * @return
      */
-    protected E updateEntity(E entity, ActionType type, HttpServletRequest request) {
+    protected E updateEntity(E entity, ActionType type, HttpServletRequest request, Model model) {
         return entity;
     }
 
@@ -87,8 +89,8 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      */
     @RequestMapping({"list.html", ""})
     public String toList(Page<E> page, E entity, Model model, HttpServletRequest request) {
-        entity = updateEntity(entity, ActionType.SELECT, request);
-        CriteriaQuery example = genCriteriaes(entity, request);
+        entity = updateEntity(entity, ActionType.SELECT, request, model);
+        CriteriaQuery example = genCriteriaes(entity, request, model);
         final List<E> list = getService().queryByCriteria(example);
         model.addAttribute("list", list);
         return pagePathList;
@@ -116,7 +118,7 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      */
     @RequestMapping(value = "save.html", method = RequestMethod.POST)
     public String save(E entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
-        entity = updateEntity(entity, ActionType.SAVE, request);
+        entity = updateEntity(entity, ActionType.SAVE, request, model);
         final int success = getService().createOrUpdate(entity);
         if(success > 0) {
             redirectAttributes.addAttribute("message", "保存成功");

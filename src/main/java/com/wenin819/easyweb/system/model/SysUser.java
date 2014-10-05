@@ -5,14 +5,17 @@ package com.wenin819.easyweb.system.model;
 
 import com.wenin819.easyweb.core.db.BaseEntity;
 import com.wenin819.easyweb.core.db.IFiledEnum;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 用户表
  * @author wenin819@gmail.com
  */
-public class SysUser extends BaseEntity<SysUser.TE> {
+public class SysUser extends BaseEntity<SysUser.TE> implements Serializable {
 
+    private static final long serialVersionUID = 3421251191328239924L;
     /**
      * 编号
      */

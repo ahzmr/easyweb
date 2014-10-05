@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@include file="/WEB-INF/includes/taglib.jsp"%>
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <%@include file="/WEB-INF/includes/common.jsp"%>
     <title>测试投票</title>

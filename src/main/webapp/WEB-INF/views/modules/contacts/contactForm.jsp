@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@include file="/WEB-INF/includes/taglib.jsp"%>
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <%@include file="/WEB-INF/includes/common.jsp"%>
     <title>通讯录增加或修改</title>
@@ -49,29 +49,10 @@
     </script>
 </head>
 <body>
-<header class="navbar" id="top" role="banner">
-    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-        <shiro:authenticated>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="${baseUrl}/contacts/form.html?id=<shiro:principal property='id'/>">
-                    <shiro:principal property="name"/></a></li>
-                <li><a href="${baseUrl}/logout.html" >退出</a></li>
-            </ul>
-        </shiro:authenticated>
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="${baseUrl}/contacts/list.html">通讯录列表</a></li>
-            <shiro:authenticated>
-                <li><a href="${baseUrl}/contacts/form.html?id=<shiro:principal property='id'/>">修改我的通讯录</a></li>
-            </shiro:authenticated>
-        </ul>
-    </nav>
-</header>
-<br/>
-
 <div class="container-fluid" style="max-width: 540px; margin: 0 auto;">
 <form:form id="inputForm" modelAttribute="entry" action="${baseUrl}/contacts/save.html"
            method="post" class="form-horizontal">
-    <tags:message content="${message}"/>
+    <tags:message />
     <div class="form-group">
         <label class="col-sm-3 control-label">学号:</label>
         <div class="col-sm-9">

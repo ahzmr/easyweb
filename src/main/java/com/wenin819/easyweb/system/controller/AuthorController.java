@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/")
 public class AuthorController extends BaseController {
 
-    public static String secucessUrl = "/contacts/";
+    public static String secucessUrl = "/";
 
     @RequestMapping(value = "login.html", method = RequestMethod.GET)
     public String login() {
@@ -40,7 +40,7 @@ public class AuthorController extends BaseController {
             return "redirect:" + secucessUrl;
         } catch (AuthenticationException e) {
             if (logger.isWarnEnabled()) {
-                logger.warn("用户[" + username + "]成功失败，登陆IP为:" + WebUtils.getRealRemoteAddr());
+                logger.warn("用户[" + username + "]登陆失败，登陆IP为:" + WebUtils.getRealRemoteAddr());
             }
             model.addAttribute("message", "用户名或密码错误");
             return "system/login";

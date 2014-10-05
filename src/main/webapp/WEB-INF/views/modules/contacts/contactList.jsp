@@ -1,63 +1,37 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@include file="/WEB-INF/includes/taglib.jsp"%>
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <%@include file="/WEB-INF/includes/common.jsp"%>
     <title>通讯录列表</title>
     <script>
         $(function(){
-            $("[name='viewType']:input").click(function(){
+            $("#viewType > label").click(function(){
+                $(this).find('input:radio').attr("checked", "checked");
                 $("#searchForm").submit();
             });
-            $("[name='viewType'][value='${empty param.viewType?2:param.viewType}']:input")
-                    .attr("checked", "checked");
+            $("[name='viewType'][value='${viewType}']:radio").parent().button('toggle');
         });
     </script>
 </head>
 <body>
-<header class="navbar" id="top" role="banner">
-    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-        <shiro:authenticated>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="${baseUrl}/contacts/form.html?id=<shiro:principal property='id'/>">
-                    <shiro:principal property="name"/></a></li>
-                <li><a href="${baseUrl}/logout.html" >退出</a></li>
-            </ul>
-        </shiro:authenticated>
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="${baseUrl}/contacts/list.html">通讯录列表</a></li>
-<shiro:authenticated>
-            <li><a href="${baseUrl}/contacts/form.html?id=<shiro:principal property='id'/>">修改我的通讯录</a></li>
-</shiro:authenticated>
-        </ul>
-    </nav>
-</header>
-<br/>
-
-<div class="container-fluid">
+<div class="container-fluid table-responsive">
+    <tags:message />
     <form id="searchForm" class="form-horizontal"
           action="${baseUrl}/contacts/list.html" method="post">
-        <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-11">
-                <div class="radio">
-                    <label class="radio-inline">
-                        <input type="radio" name="viewType" value="2" />查看全部
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="viewType" value="1" />查看已填写
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="viewType" value="0" />查看未填写
-                    </label>
-                </div>
-            </div>
+        <div id="viewType" class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default">
+                <input type="radio" name="viewType" value="2" />查看全部
+            </label>
+            <label class="btn btn-default">
+                <input type="radio" name="viewType" value="1" />查看已填写
+            </label>
+            <label class="btn btn-default">
+                <input type="radio" name="viewType" value="0" />查看未填写
+            </label>
         </div>
     </form>
-</div>
-
-<div class="container-fluid table-responsive">
-    <tags:message content="${empty message?param.message:message}"/>
     <table class="table table-condensed table-hover table-striped table-bordered" >
         <thead>
         <tr>
