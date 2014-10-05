@@ -30,7 +30,7 @@
     <div class="collapse navbar-collapse" id="navbar-collapse">
         <ul id="toolbar" class="nav navbar-nav">
             <li><a href="${baseUrl}/contacts/" >通讯录</a></li>
-            <li><a href="${baseUrl}/webclient/" >投票</a></li>
+            <%--<li><a href="${baseUrl}/webclient/" >投票</a></li>--%>
         </ul>
         <shiro:authenticated>
             <ul class="nav navbar-nav navbar-right">

@@ -26,7 +26,4 @@
 <script src="${libUrl}/jquery-jbox/js/jquery.jBox-2.3.min.js"></script>
 <script src="${libUrl}/jquery-jbox/js/i18n/jquery.jBox-zh-CN.js"></script>
 
-<script src="${libUrl}/jquery-hash/js/jquery.hash.js"></script>
-
-<script src="${commonUrl}/js/utils.js"></script>
 <script src="${commonUrl}/js/validateUtils.js"></script>

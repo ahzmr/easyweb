@@ -1,19 +1,27 @@
+;initPage();
+
+$(function(){
+    initDoc();
+});
+
 function winResize() {  // 自动计算高度并设置
     $("#mainFrame").css(
         { 'height': $(document).height() - $("#navtoolbar").outerHeight(true) - 18
         });
 }
-$(window).resize(function(){
-    winResize();
-});
 
-$(function(){
+function initPage() {   // 初始化页面
+    $(window).resize(function(){
+        winResize();
+    });
+}
+
+function initDoc() {
     winResize();
 
     $("#toolbar li > a").click(function() {
         $("#toolbar li").removeClass("active");
         $(this).parent().addClass("active");
-//               $("#mainFrame").attr("src", $(this).attr("href"));
         toPage($(this).attr("href"));
         return false;
     });
@@ -23,4 +31,11 @@ $(function(){
         p = $("#myself").attr("href");
     }
     toPage(p);
-});
+
+    // 监听iframe变化
+    $("#mainFrame").on("load", function() {
+        var p = this.contentWindow.location.href.replace(/.+(\/easyweb\/)/i, "$1");
+        toPage(p, true);
+        top.$.hash().set("p", p).location('?');
+    });
+}

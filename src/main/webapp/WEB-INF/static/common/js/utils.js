@@ -4,7 +4,7 @@ function goHistory(cur) {
     history.go(cur);
 }
 
-function toPage(path) {
+function toPage(path, notGo) {
     if(null) {
         return;
     }
@@ -13,12 +13,13 @@ function toPage(path) {
         p = $(path).attr("href");
     }
     global.prevPage = $.hash().get("p");
-    top.$.hash().set("p", p).location('?');
-    var $mainFrame = $("#mainFrame");
-    if($mainFrame && $mainFrame.length) {
-        $mainFrame.attr("src", p);
-    } else {
-        location.href = location.href.replace(/\/easyweb\/[^#]+/i, "/easyweb/");
+    if(!notGo) {
+        var $mainFrame = $("#mainFrame");
+        if($mainFrame && $mainFrame.length) {
+            $mainFrame.attr("src", p);
+        } else {
+            location.href = location.href.replace(/\/easyweb\/[^#]+/i, "/easyweb/");
+        }
     }
     return false;   // 成功处理，不继续处理
 }
