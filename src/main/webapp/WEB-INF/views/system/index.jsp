@@ -43,7 +43,7 @@
     </div>
 </nav>
 <div class="container-fluid">
-    <iframe id="mainFrame" name="mainFrame" src="" >
+    <iframe id="mainFrame" name="mainFrame" src="" frameborder="0" >
     </iframe>
 </div>
 </body>

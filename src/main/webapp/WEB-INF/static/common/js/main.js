@@ -11,6 +11,10 @@ function winResize() {  // 自动计算高度并设置
 }
 
 function initPage() {   // 初始化页面
+    if(top != window) {
+        top.location.href = location.href;
+    }
+
     $(window).resize(function(){
         winResize();
     });

@@ -18,7 +18,7 @@ function toPage(path, notGo) {
         if($mainFrame && $mainFrame.length) {
             $mainFrame.attr("src", p);
         } else {
-            location.href = location.href.replace(/\/easyweb\/[^#]+/i, "/easyweb/");
+            location.href = location.href.replace(/(\/easyweb\/)[^#]+/i, "$1");
         }
     }
     return false;   // 成功处理，不继续处理
