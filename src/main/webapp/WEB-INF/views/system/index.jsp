@@ -4,6 +4,7 @@
 <html lang="zh-CN">
 <head>
     <%@include file="/WEB-INF/includes/common.jsp"%>
+    <script src="${commonUrl}/js/main.js"></script>
     <title>综合管理系统</title>
     <style>
         body { overflow: hidden;}
@@ -13,29 +14,6 @@
             width: 100%;
         }
     </style>
-    <script>
-        function winResize() {  // 自动计算高度
-            $("#mainFrame").css(
-                    { 'height': $(document).height() - $("#navtoolbar").outerHeight(true) - 18
-                                });
-        }
-        $(window).resize(function(){
-            winResize();
-        });
-
-        $(function(){
-           winResize();
-
-           $("#toolbar li > a").click(function() {
-               $("#toolbar li").removeClass("active");
-               $(this).parent().addClass("active");
-           });
-
-           if($("#myself")) {
-               $("#mainFrame").attr("src", $("#myself").attr("href"));
-           };
-        });
-    </script>
 </head>
 <body>
 <nav id="navtoolbar" class="navbar navbar-default" role="navigation">
@@ -51,13 +29,13 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse">
         <ul id="toolbar" class="nav navbar-nav">
-            <li><a href="${baseUrl}/contacts/" target="mainFrame">通讯录</a></li>
-            <li><a href="${baseUrl}/webclient/" target="mainFrame">投票</a></li>
+            <li><a href="${baseUrl}/contacts/" >通讯录</a></li>
+            <li><a href="${baseUrl}/webclient/" >投票</a></li>
         </ul>
         <shiro:authenticated>
             <ul class="nav navbar-nav navbar-right">
-                <li><a id="myself"
-                        href="${baseUrl}/contacts/form.html?id=<shiro:principal property='id'/>" target="mainFrame">
+                <li><a id="myself" onclick="return toPage(this)"
+                        href="${baseUrl}/contacts/form.html?id=<shiro:principal property='id'/>">
                     <shiro:principal property="name"/></a></li>
                 <li><a href="${baseUrl}/logout.html" >退出</a></li>
             </ul>
