@@ -23,6 +23,9 @@
         }
     </style>
     <script>
+        if(top != window) {
+            top.location.href = location.href;
+        }
         $(function() {
             $("#username").focus();
             $("#loginForm").validate(

@@ -25,7 +25,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">wenin819</a>
+        <a class="navbar-brand" href="#" onclick="return false;">wenin819</a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse">
         <ul id="toolbar" class="nav navbar-nav">
@@ -34,7 +34,7 @@
         </ul>
         <shiro:authenticated>
             <ul class="nav navbar-nav navbar-right">
-                <li><a id="myself" onclick="return toPage(this)"
+                <li><a id="myself"
                         href="${baseUrl}/contacts/form.html?id=<shiro:principal property='id'/>">
                     <shiro:principal property="name"/></a></li>
                 <li><a href="${baseUrl}/logout.html" >退出</a></li>

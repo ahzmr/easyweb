@@ -23,8 +23,8 @@ function initPage() {   // 初始化页面
 function initDoc() {
     winResize();
 
-    $("#toolbar li > a").click(function() {
-        $("#toolbar li").removeClass("active");
+    $("#navbar-collapse li > a[id]").click(function() {
+        $("#navbar-collapse li").removeClass("active");
         $(this).parent().addClass("active");
         toPage($(this).attr("href"));
         return false;
@@ -43,7 +43,7 @@ function initDoc() {
     // 监听iframe变化
     $("#mainFrame").on("load", function() {
         var p = this.contentWindow.location.href.replace(/.+(\/easyweb\/)/i, "$1");
-        var m0 = $("#toolbar li.active > a").attr("id");
+        var m0 = $("#navbar-collapse li.active > a").attr("id");
         toPage(p, true);
         top.$.hash().set("m0", m0 ? m0 : "").set("p", p).location('?');
     });
