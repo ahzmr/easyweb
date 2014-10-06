@@ -31,6 +31,10 @@ function initDoc() {
     });
 
     var p = $.hash().get("p");
+    var m0 = $.hash().get("m0");
+    if(m0) {
+        $("#" + m0).parent().addClass("active");
+    }
     if(!p) {
         p = $("#myself").attr("href");
     }
@@ -39,7 +43,8 @@ function initDoc() {
     // 监听iframe变化
     $("#mainFrame").on("load", function() {
         var p = this.contentWindow.location.href.replace(/.+(\/easyweb\/)/i, "$1");
+        var m0 = $("#toolbar li.active > a").attr("id");
         toPage(p, true);
-        top.$.hash().set("p", p).location('?');
+        top.$.hash().set("m0", m0 ? m0 : "").set("p", p).location('?');
     });
 }

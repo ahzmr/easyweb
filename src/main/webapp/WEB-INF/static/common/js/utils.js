@@ -12,7 +12,10 @@ function toPage(path, notGo) {
     if(typeof path != "string") {
         p = $(path).attr("href");
     }
-    global.prevPage = $.hash().get("p");
+    var prevPage = $.hash().get("p");
+    if(prevPage != global.prevPage) {
+        global.prevPage = prevPage;
+    }
     if(!notGo) {
         var $mainFrame = $("#mainFrame");
         if($mainFrame && $mainFrame.length) {
