@@ -29,4 +29,5 @@
 <script src="${libUrl}/jquery-hash/js/jquery.hash.js"></script>
 
 <script src="${commonUrl}/js/utils.js"></script>
+<script src="${commonUrl}/js/subpage.js"></script>
 <script src="${commonUrl}/js/validateUtils.js"></script>

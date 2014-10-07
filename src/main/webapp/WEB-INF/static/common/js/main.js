@@ -24,17 +24,10 @@ function initDoc() {
     winResize();
 
     $("#navbar-collapse li > a[id]").click(function() {
-        $("#navbar-collapse li").removeClass("active");
-        $(this).parent().addClass("active");
-        toPage($(this).attr("href"));
-        return false;
+        return updateActive(this);
     });
 
     var p = $.hash().get("p");
-    var m0 = $.hash().get("m0");
-    if(m0) {
-        $("#" + m0).parent().addClass("active");
-    }
     if(!p) {
         p = $("#myself").attr("href");
     }
@@ -42,9 +35,15 @@ function initDoc() {
 
     // 监听iframe变化
     $("#mainFrame").on("load", function() {
-        var p = this.contentWindow.location.href.replace(/.+(\/easyweb\/)/i, "");
+        var p = subUrlFormat(this.contentWindow.location.href);
         var m0 = $("#navbar-collapse li.active > a").attr("id");
-        m0 = m0 || "";
         top.$.hash().set({"m0": m0, "p": p}).location('?');
     });
+}
+
+function updateActive(thiz) { // 更新工具栏选择状态
+    $("#navbar-collapse li").removeClass("active");
+    $(thiz).parent().addClass("active");
+    toPage($(thiz).attr("href"));
+    return false;
 }

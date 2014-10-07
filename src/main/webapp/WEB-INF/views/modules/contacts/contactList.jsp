@@ -19,7 +19,7 @@
 <div class="container-fluid table-responsive">
     <tags:message />
     <form id="searchForm" class="form-horizontal"
-          action="${baseUrl}/contacts/list.html" method="post">
+          action="${baseUrl}/contacts/" method="get">
         <div id="viewType" class="btn-group" data-toggle="buttons">
             <label class="btn btn-default">
                 <input type="radio" name="viewType" value="2" />查看全部
