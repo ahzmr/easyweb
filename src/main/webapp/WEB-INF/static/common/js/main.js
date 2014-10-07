@@ -42,9 +42,9 @@ function initDoc() {
 
     // 监听iframe变化
     $("#mainFrame").on("load", function() {
-        var p = this.contentWindow.location.href.replace(/.+(\/easyweb\/)/i, "$1");
+        var p = this.contentWindow.location.href.replace(/.+(\/easyweb\/)/i, "");
         var m0 = $("#navbar-collapse li.active > a").attr("id");
-        toPage(p, true);
-        top.$.hash().set("m0", m0 ? m0 : "").set("p", p).location('?');
+        m0 = m0 || "";
+        top.$.hash().set({"m0": m0, "p": p}).location('?');
     });
 }

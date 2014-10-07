@@ -45,9 +45,9 @@
         </tr>
         </thead>
         <tbody>
-            <c:forEach items="${list}" var="entry" varStatus="idx">
+            <c:forEach items="${page}" var="entry" varStatus="idx">
             <tr>
-                <td>${idx.index + 1}</td>
+                <td>${fn:substringAfter(entry.id, '07070110')}</td>
                 <td><a href="${baseUrl}/contacts/form.html?id=${entry.id}">${entry.name}</a></td>
                 <td>${entry.address}</td>
                 <td>${entry.workAddr}</td>
@@ -58,6 +58,7 @@
             </c:forEach>
         </tbody>
     </table>
+    <tags:pagination page="${page}" />
 </div>
 </body>
 </html>

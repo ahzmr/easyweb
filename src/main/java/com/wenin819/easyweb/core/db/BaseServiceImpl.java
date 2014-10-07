@@ -1,5 +1,6 @@
 package com.wenin819.easyweb.core.db;
 
+import com.github.pagehelper.PageHelper;
 import com.wenin819.easyweb.core.util.StringUtils;
 
 import org.slf4j.Logger;
@@ -86,6 +87,15 @@ public abstract class BaseServiceImpl<E extends BaseEntity> implements BaseServi
     @Override
     public List<E> queryByCriteria(CriteriaQuery critQuery) {
         return getDao().queryByCriteria(critQuery);
+    }
+
+    @Override
+    public Page<E> queryPageByCriteria(CriteriaQuery critQuery, Page<E> page) {
+        if(null == page) {
+            page = new Page<E>();
+        }
+        PageHelper.startPage(page);
+        return (Page<E>) getDao().queryByCriteria(critQuery);
     }
 
     @Override

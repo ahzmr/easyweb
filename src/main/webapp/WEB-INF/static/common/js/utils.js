@@ -1,10 +1,8 @@
-var global = global || {};
-
-function goHistory(cur) {
-    history.go(cur);
+function goHistory(cur) {   // 历史跳转
+    history.go(cur - 1);
 }
 
-function toPage(path, notGo) {
+function toPage(path) { // 跳转页面
     if(null) {
         return;
     }
@@ -12,19 +10,29 @@ function toPage(path, notGo) {
     if(typeof path != "string") {
         p = $(path).attr("href");
     }
-    var prevPage = $.hash().get("p");
-    if(prevPage != global.prevPage) {
-        global.prevPage = prevPage;
-    }
-    if(!notGo) {
-        var $mainFrame = $("#mainFrame");
-        if($mainFrame && $mainFrame.length) {
-            $mainFrame.attr("src", p);
-        } else {
-            location.href = location.href.replace(/(\/easyweb\/)[^#]+/i, "$1");
-        }
+    var $mainFrame = $("#mainFrame");
+    if($mainFrame && $mainFrame.length) {
+        $mainFrame.attr("src", p);
+    } else {
+        top.$.hash().set("p", p).location('?');
+        location.href = location.href.replace(/(\/easyweb\/)[^#]+/i, "");
     }
     return false;   // 成功处理，不继续处理
+}
+
+function page(pageNum) {   // 分布跳转
+    var searchForm = $("#searchForm");
+    if(!searchForm) {
+        searchForm = $("form:first");
+    }
+    var $pageNum = searchForm.find('[name="pageNum"]:input');
+    if(!$pageNum.length) {
+        $pageNum=$('<input type="hidden" name="pageNum" />');
+        searchForm.append($pageNum);
+    }
+    $pageNum.val(pageNum);
+    searchForm.submit();
+    return false;
 }
 
 $(function() {

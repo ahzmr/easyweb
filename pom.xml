@@ -12,9 +12,11 @@
     <url>http://wenin819.github.com/easyweb</url>
 
     <properties>
+        <!-- maven setting -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.test.skip>true</maven.test.skip>
+
         <!-- version setting -->
         <spring.version>3.2.8.RELEASE</spring.version>
         <mybatis.version>3.2.6</mybatis.version>
@@ -26,6 +28,15 @@
         <freemarker.version>2.3.20</freemarker.version>
         <commons-lang3.version>3.3.1</commons-lang3.version>
         <commons-io.version>2.4</commons-io.version>
+        <shiro-spring.version>1.2.3</shiro-spring.version>
+        <jsoup.version>1.7.3</jsoup.version>
+        <httpclient.version>4.3.4</httpclient.version>
+
+        <servlet-api.version>2.5</servlet-api.version>
+        <jstl.version>1.2</jstl.version>
+        <jsp-api.version>2.1</jsp-api.version>
+
+        <junit.version>4.10</junit.version>
 
         <!-- jdbc driver setting -->
         <mysql.driver.version>5.1.30</mysql.driver.version>
@@ -54,7 +65,7 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>1.2.3</version>
+            <version>${shiro-spring.version}</version>
         </dependency>
 
         <!-- MyBatis -->
@@ -93,19 +104,19 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <version>${servlet-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
+            <version>${jsp-api.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -173,12 +184,12 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.7.3</version>
+            <version>${jsoup.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.3.4</version>
+            <version>${httpclient.version}</version>
         </dependency>
 
         <!-- GENERAL UTILS begin -->
@@ -197,7 +208,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -91,8 +91,8 @@ public abstract class BaseEntityController <E extends BaseEntity> {
     public String toList(Page<E> page, E entity, Model model, HttpServletRequest request) {
         entity = updateEntity(entity, ActionType.SELECT, request, model);
         CriteriaQuery example = genCriteriaes(entity, request, model);
-        final List<E> list = getService().queryByCriteria(example);
-        model.addAttribute("list", list);
+        page = getService().queryPageByCriteria(example, page);
+        model.addAttribute("page", page);
         return pagePathList;
     }
 
