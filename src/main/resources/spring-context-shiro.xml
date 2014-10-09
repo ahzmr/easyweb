@@ -28,9 +28,16 @@
             <bean class="com.wenin819.easyweb.core.security.shiro.HttpSessionManager" />
         </property>
     </bean>
+    
+    <bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="SHA-512" />
+        <property name="storedCredentialsHexEncoded" value="false" />
+        <property name="hashIterations" value="1024" />
+    </bean>
 
     <bean id="systemUserRealm" class="com.wenin819.easyweb.core.security.shiro.SystemUserRealm">
         <property name="name" value="systemUserRealm"/>
+        <property name="credentialsMatcher" ref="hashedCredentialsMatcher" />
     </bean>
 
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>

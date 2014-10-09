@@ -1,9 +1,9 @@
 package com.wenin819.easyweb.system.controller;
 
+import com.wenin819.easyweb.core.util.SecurityUtils;
 import com.wenin819.easyweb.core.util.WebUtils;
 import com.wenin819.easyweb.core.web.BaseController;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.stereotype.Controller;

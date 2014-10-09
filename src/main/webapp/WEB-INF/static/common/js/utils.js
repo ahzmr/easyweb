@@ -41,3 +41,8 @@ function page(pageNum) {   // 分页跳转
     searchForm.submit();
     return false;
 }
+
+function loading(mess){ // 显示加载框
+    top.$.jBox.tip.mess = null;
+    top.$.jBox.tip(mess,'loading',{opacity:0});
+}

@@ -13,6 +13,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 
 import javax.annotation.Resource;
 
@@ -42,6 +43,7 @@ public class SystemUserRealm extends AuthorizingRealm {
         if(null == sysUser) {
             throw new AuthenticationException();
         }
-        return new SimpleAuthenticationInfo(sysUser, sysUser.getPassword(), getName());
+        return new SimpleAuthenticationInfo(sysUser, sysUser.getPassword(),
+                ByteSource.Util.bytes(sysUser.getLoginName()), getName());
     }
 }

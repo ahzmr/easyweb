@@ -13,6 +13,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class WebUtils extends org.springframework.web.util.WebUtils {
 
+    public static final String ENTRY = "entry"; // 实体
+    public static final String LIST = "list";   // 列表
+    public static final String PAGE = "page";   // 分页
+    public static final String MSG = "message"; // 消息
+
     /**
      * 客户端地址请求头，分先后顺序
      */

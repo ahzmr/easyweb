@@ -4,6 +4,8 @@
 <html lang="zh-CN">
 <head>
     <%@include file="/WEB-INF/includes/commonBase.jsp"%>
+    <script src="${libUrl}/jsSHA/js/sha.js"></script>
+    <script src="${commonUrl}/js/securityutils.js"></script>
     <title>通讯录增加或修改</title>
     <style>
         body {
@@ -27,7 +29,7 @@
             top.location.href = location.href;
         }
         $(function() {
-            $("#username").focus();
+            $("#u").focus();
             $("#loginForm").validate(
                     {
                         rules: {
@@ -35,6 +37,7 @@
                             password: { required: true }
                         },
                         submitHandler: function(form){
+                            $("#fp").val(genPwd($("#p").val(), $("#u").val()));
                             loading('正在提交，请稍等...');
                             form.submit();
                         },
@@ -49,7 +52,7 @@
                         }
                     });
             $("#defaultPass").click(function() {
-                $("#password").val($("#username").val());
+                $("#p").val($("#u").val());
                 $("#loginFormSubmit").click();
             });
         });
@@ -67,18 +70,19 @@
     <form id="loginForm" class="form panel-body margin-base-vertical"
           action="./login.html" method="post">
         <tags:message />
+        <input type="hidden" id="fp" name="password">
         <div class="form-group">
             <div class="col-md-12">
-                <label class="control-label" for="username">登录名</label>
-                <input type="text" id="username" name="username" class="form-control"
+                <label class="control-label" for="u">登录名</label>
+                <input type="text" id="u" name="username" class="form-control"
                    value="${username}" placeholder="学号">
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-12">
-                <label class="control-label" for="password">密码</label>
-                <input type="password" id="password" name="password" class="form-control"
+                <label class="control-label" for="p">密码</label>
+                <input type="password" id="p" name="p" class="form-control"
                    placeholder="密码"/>
             </div>
         </div>

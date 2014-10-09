@@ -5,6 +5,7 @@ import com.wenin819.easyweb.core.db.BaseService;
 import com.wenin819.easyweb.core.db.CriteriaQuery;
 import com.wenin819.easyweb.core.db.Page;
 import com.wenin819.easyweb.core.util.StringUtils;
+import com.wenin819.easyweb.core.util.WebUtils;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -92,7 +93,7 @@ public abstract class BaseEntityController <E extends BaseEntity> {
         entity = updateEntity(entity, ActionType.SELECT, request, model);
         CriteriaQuery example = genCriteriaes(entity, request, model);
         page = getService().queryPageByCriteria(example, page);
-        model.addAttribute("page", page);
+        model.addAttribute(WebUtils.PAGE, page);
         return pagePathList;
     }
 
@@ -105,7 +106,7 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      */
     @RequestMapping("form.html")
     public String toForm(E entry, Model model, HttpServletRequest request) {
-        model.addAttribute("entry", entry);
+        model.addAttribute(WebUtils.ENTRY, entry);
         return pagePathForm;
     }
 
@@ -121,11 +122,11 @@ public abstract class BaseEntityController <E extends BaseEntity> {
         entity = updateEntity(entity, ActionType.SAVE, request, model);
         final int success = getService().createOrUpdate(entity);
         if(success > 0) {
-            redirectAttributes.addAttribute("message", "保存成功");
+            redirectAttributes.addAttribute(WebUtils.MSG, "保存成功");
             return "redirect:list.html";
         } else {
-            model.addAttribute("message", "保存失败，请重试");
-            model.addAttribute("entry", entity);
+            model.addAttribute(WebUtils.MSG, "保存失败，请重试");
+            model.addAttribute(WebUtils.ENTRY, entity);
             return pagePathForm;
         }
     }
