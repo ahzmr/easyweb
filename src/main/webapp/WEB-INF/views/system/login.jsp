@@ -38,6 +38,7 @@
                         },
                         submitHandler: function(form){
                             $("#fp").val(genPwd($("#p").val(), $("#u").val()));
+                            $("#p").val("");
                             loading('正在提交，请稍等...');
                             form.submit();
                         },

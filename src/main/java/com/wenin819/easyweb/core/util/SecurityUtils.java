@@ -1,7 +1,7 @@
 package com.wenin819.easyweb.core.util;
 
 import com.wenin819.easyweb.core.exception.DataException;
-import com.wenin819.easyweb.core.security.shiro.CodeUtils;
+import com.wenin819.easyweb.core.security.CodeUtils;
 import com.wenin819.easyweb.system.model.SysUser;
 
 import org.apache.shiro.crypto.hash.Sha512Hash;

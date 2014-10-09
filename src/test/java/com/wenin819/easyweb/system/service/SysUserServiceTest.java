@@ -2,16 +2,13 @@ package com.wenin819.easyweb.system.service;
 
 import com.wenin819.easyweb.BaseSpringTest;
 import com.wenin819.easyweb.core.db.CriteriaQuery;
-import com.wenin819.easyweb.core.security.shiro.CodeUtils;
 import com.wenin819.easyweb.core.util.SecurityUtils;
 import com.wenin819.easyweb.system.model.SysUser;
 
-import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.MessageDigest;
 import java.util.List;
 
 import javax.annotation.Resource;

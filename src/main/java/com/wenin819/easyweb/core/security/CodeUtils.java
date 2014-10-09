@@ -1,4 +1,4 @@
-package com.wenin819.easyweb.core.security.shiro;
+package com.wenin819.easyweb.core.security;
 
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.codec.CodecSupport;
