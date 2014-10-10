@@ -30,4 +30,10 @@
 
 <script src="${commonUrl}/js/utils.js"></script>
 <script src="${commonUrl}/js/subpage.js"></script>
-<script src="${commonUrl}/js/validateUtils.js"></script>
+<script src="${commonUrl}/js/formutils.js"></script>
+
+<script>
+    $(function(){
+        top.$.jBox.closeTip();
+    });
+</script>

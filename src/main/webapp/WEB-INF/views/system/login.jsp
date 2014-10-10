@@ -18,7 +18,7 @@
         .panel {
             background-color: rgba(255, 255, 255, 0.9);
         }
-        #loginForm {
+        #inputForm {
             max-width: 380px;
             margin-left: auto;
             margin-right: auto;
@@ -29,9 +29,7 @@
             top.location.href = location.href;
         }
         $(function() {
-            $("#u").focus();
-            $("#loginForm").validate(
-                    {
+            initForm({
                         rules: {
                             username: { required: true },
                             password: { required: true }
@@ -41,17 +39,8 @@
                             $("#p").val("");
                             loading('正在提交，请稍等...');
                             form.submit();
-                        },
-                        errorContainer: "#messageBox",
-                        errorPlacement: function(error, element) {
-                            $("#messageBox").text("输入有误，请先更正。");
-                            if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-                                error.appendTo(element.parent().parent());
-                            } else {
-                                error.insertAfter(element);
-                            }
                         }
-                    });
+                      });
             $("#defaultPass").click(function() {
                 $("#p").val($("#u").val());
                 $("#loginFormSubmit").click();
@@ -68,7 +57,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title text-center">系统登陆</h3>
             </div>
-    <form id="loginForm" class="form panel-body margin-base-vertical"
+    <form id="inputForm" class="form panel-body margin-base-vertical"
           action="./login.html" method="post">
         <tags:message />
         <input type="hidden" id="fp" name="password">

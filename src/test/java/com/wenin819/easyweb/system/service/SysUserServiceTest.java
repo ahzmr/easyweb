@@ -29,7 +29,7 @@ public class SysUserServiceTest extends BaseSpringTest {
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     @Test
     public void testModifyPwd() throws Exception {
-        final SysUser sysUser = sysUserService.queryByLoginName("0707011003");
+        final SysUser sysUser = sysUserService.queryByLoginName("wenin819");
         modifyPwd(sysUser);
     }
 

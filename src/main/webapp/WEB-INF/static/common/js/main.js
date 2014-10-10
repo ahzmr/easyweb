@@ -23,15 +23,19 @@ function initPage() {   // 初始化页面
 function initDoc() {
     winResize();
 
-    $("#navbar-collapse li > a[id]").click(function() {
+    $("#navbar-collapse ul.navbar-nav > li > a[id]").click(function() {
         return updateActive(this);
+    });
+    $("#navbar-collapse ul.dropdown-menu > li > a[id]").click(function() {
+        return updateActive(this) || true;
     });
 
     var p = $.hash().get("p");
     if(!p) {
-        p = $("#myself").attr("href");
+        goIndex();
+    } else {
+        toPage(p);
     }
-    toPage(p);
 
     // 监听iframe变化
     $("#mainFrame").on("load", function() {
@@ -41,9 +45,13 @@ function initDoc() {
     });
 }
 
+function goIndex() {
+    return updateActive($("#navbar-collapse li > a").first());
+}
+
 function updateActive(thiz) { // 更新工具栏选择状态
     $("#navbar-collapse li").removeClass("active");
     $(thiz).parent().addClass("active");
-    toPage($(thiz).attr("href"));
+    toPage(thiz);
     return false;
 }

@@ -27,4 +27,10 @@
 <script src="${libUrl}/jquery-jbox/js/i18n/jquery.jBox-zh-CN.js"></script>
 
 <script src="${commonUrl}/js/utils.js"></script>
-<script src="${commonUrl}/js/validateUtils.js"></script>
+<script src="${commonUrl}/js/formutils.js"></script>
+
+<script>
+    $(function(){
+        top.$.jBox.closeTip();
+    });
+</script>

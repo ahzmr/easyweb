@@ -13,8 +13,7 @@
                                                 parseInt(val.substring(8)) > 0 &&
                                                 val.substring(0, 8) == "07070110";
            }, "请输入正确的学号");
-           $("#inputForm").validate(
-                   {
+           initForm({
                rules: {
                    id: { required: true, isStuNo: true },   // 学号
                    name: { required: true },  // 名称
@@ -30,21 +29,8 @@
                    company: { required: true },  // 公司
                    myMsg: { required: true },  // 互助信息
                    memo: {}  // 备注
-               },
-                submitHandler: function(form){
-                    loading('正在提交，请稍等...');
-                    form.submit();
-                },
-                errorContainer: "#messageBox",
-                errorPlacement: function(error, element) {
-                    $("#messageBox").text("输入有误，请先更正。");
-                    if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-                        error.appendTo(element.parent().parent());
-                    } else {
-                        error.insertAfter(element);
-                    }
-                }
-                     });
+               }
+                    });
         });
     </script>
 </head>

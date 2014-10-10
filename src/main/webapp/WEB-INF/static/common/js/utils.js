@@ -15,7 +15,7 @@ function toPage(path, m0) { // 跳转页面
     }
     var p = path;
     if(typeof path != "string") {
-        p = $(path).attr("href");
+        p = $(path).data("url") || $(path).attr("href");
     }
     p = subUrlFormat(p);
     var $mainFrame = top.$("#mainFrame");

@@ -34,10 +34,20 @@
         </ul>
         <shiro:authenticated>
             <ul class="nav navbar-nav navbar-right">
-                <li><a id="myself"
-                        href="${baseUrl}/contacts/form.html?id=<shiro:principal property='id'/>">
-                    <shiro:principal property="name"/></a></li>
-                <li><a href="${baseUrl}/logout.html" >退出</a></li>
+                <li class="dropdown">
+                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
+                        <shiro:principal property="name"/> &nbsp;<b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a id="selfInfo" href="javascript:"
+                               data-url="${baseUrl}/contacts/form.html?id=<shiro:principal property='id'/>">
+                            修改个人信息</a></li>
+                        <li><a id="selfPwd" href="javascript:"
+                               data-url="${baseUrl}/sys/user/modifyPwd.html">
+                            修改个人密码</a></li>
+                    </ul>
+                </li>
+                <li><a href="${baseUrl}/logout.html">退出</a></li>
             </ul>
         </shiro:authenticated>
     </div>

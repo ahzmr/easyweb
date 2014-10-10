@@ -3,7 +3,6 @@
 <%@ include file="/WEB-INF/includes/taglib.jsp" %>
 <%@ attribute name="content" type="java.lang.String" description="消息内容" %>
 <%@ attribute name="type" type="java.lang.String" description="消息类型：info、success、warning、error、loading" %>
-<script type="text/javascript">top.$.jBox.closeTip();</script>
 <c:if test="${empty content}">
     <c:set var="content" value="${empty message?param.message:message}" />
 </c:if>
