@@ -32,7 +32,7 @@ public class SystemUserRealm extends AuthorizingRealm {
         }
         final SysUser user = (SysUser) getAvailablePrincipal(principals);
         final SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.addStringPermission("contacts:edit:" + user.getLoginName());
+        info.addStringPermission("contacts:edit:" + user.getId());
         return info;
     }
 
