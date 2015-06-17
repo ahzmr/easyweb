@@ -1,4 +1,4 @@
-package com.wenin819.easyweb.core.db;
+package com.wenin819.easyweb.core.persistence;
 
 /**
  * Created by wenin819@gmail.com on 2014/4/7.

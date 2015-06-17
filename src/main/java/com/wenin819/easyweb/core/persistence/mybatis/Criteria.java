@@ -1,5 +1,6 @@
-package com.wenin819.easyweb.core.db;
+package com.wenin819.easyweb.core.persistence.mybatis;
 
+import com.wenin819.easyweb.core.persistence.IFiledEnum;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 

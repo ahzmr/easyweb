@@ -1,7 +1,7 @@
 package com.wenin819.easyweb.system.service;
 
 import com.wenin819.easyweb.BaseSpringTest;
-import com.wenin819.easyweb.core.db.CriteriaQuery;
+import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.util.SecurityUtils;
 import com.wenin819.easyweb.system.model.SysUser;
 

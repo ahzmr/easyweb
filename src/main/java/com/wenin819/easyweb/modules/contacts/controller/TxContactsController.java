@@ -1,8 +1,8 @@
 package com.wenin819.easyweb.modules.contacts.controller;
 
-import com.wenin819.easyweb.core.db.BaseService;
-import com.wenin819.easyweb.core.db.Criteria;
-import com.wenin819.easyweb.core.db.CriteriaQuery;
+import com.wenin819.easyweb.core.service.mybatis.BaseService;
+import com.wenin819.easyweb.core.persistence.mybatis.Criteria;
+import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.web.ActionType;
 import com.wenin819.easyweb.core.web.BaseEntityController;
 import com.wenin819.easyweb.modules.contacts.model.TxContacts;

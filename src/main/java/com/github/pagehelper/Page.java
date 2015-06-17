@@ -27,6 +27,7 @@ package com.github.pagehelper;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ import java.util.List;
  * @version 3.2.2
  * @url http://git.oschina.net/free/Mybatis_PageHelper
  */
-public class Page<E> extends ArrayList<E> {
+public class Page<E> extends LinkedList<E> {
     /**
      * 不进行count查询
      */
@@ -63,7 +64,6 @@ public class Page<E> extends ArrayList<E> {
     }
 
     public Page(int pageNum, int pageSize, int total) {
-        super(pageSize > -1 ? pageSize : 0);
         this.pageNum = pageNum;
         this.pageSize = pageSize;
         this.total = total;
@@ -81,7 +81,6 @@ public class Page<E> extends ArrayList<E> {
 
 
     public Page(RowBounds rowBounds, int total) {
-        super(rowBounds.getLimit() > -1 ? rowBounds.getLimit() : 0);
         this.pageSize = rowBounds.getLimit();
         this.startRow = rowBounds.getOffset();
         //RowBounds方式默认不求count总数，如果想求count,可以修改这里为SQL_COUNT

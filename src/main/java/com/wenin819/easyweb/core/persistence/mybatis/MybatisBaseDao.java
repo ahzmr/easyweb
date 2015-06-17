@@ -1,7 +1,7 @@
-package com.wenin819.easyweb.core.db;
+package com.wenin819.easyweb.core.persistence.mybatis;
 
-import com.github.pagehelper.*;
-
+import com.wenin819.easyweb.core.persistence.BaseEntity;
+import com.wenin819.easyweb.core.persistence.Page;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by wenin819@gmail.com on 2014/4/7.
  */
-public interface BaseDao<E extends BaseEntity> {
+public interface MybatisBaseDao<E extends BaseEntity> {
 
     /**
      * 新增记录
@@ -52,7 +52,7 @@ public interface BaseDao<E extends BaseEntity> {
      * @param rowBounds 分页
      * @return
      */
-    com.github.pagehelper.Page<E> queryByCriteria(CriteriaQuery critQuery, RowBounds rowBounds);
+    Page<E> queryByCriteria(CriteriaQuery critQuery, RowBounds rowBounds);
 
     /**
      * 对条件查询求总数

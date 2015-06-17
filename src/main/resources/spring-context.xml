@@ -11,6 +11,5 @@
     <import resource="spring-context-dao.xml"/>
     <import resource="spring-context-service.xml"/>
     <import resource="spring-context-shiro.xml"/>
-    <import resource="spring-context-cxf.xml"/>
 
 </beans>

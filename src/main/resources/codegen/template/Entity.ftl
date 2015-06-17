@@ -3,8 +3,8 @@
 */
 package ${basePackageName}.model;
 
-import com.wenin819.easyweb.core.db.BaseEntity;
-import com.wenin819.easyweb.core.db.IFiledEnum;
+import com.wenin819.easyweb.core.persistence.BaseEntity;
+import com.wenin819.easyweb.core.persistence.IFiledEnum;
 <#list table.importTypeList as importType >
 import ${importType};
 </#list>

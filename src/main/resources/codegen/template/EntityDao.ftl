@@ -3,7 +3,7 @@
 */
 package ${basePackageName}.dao;
 
-import com.wenin819.easyweb.core.db.BaseDao;
+import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
 import ${basePackageName}.model.${table.className};
 
 import org.springframework.stereotype.Repository;

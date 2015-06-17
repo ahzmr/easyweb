@@ -2,12 +2,14 @@ package com.wenin819.easyweb.codegen.util;
 
 import com.wenin819.easyweb.codegen.vo.TableEntity;
 import com.wenin819.easyweb.codegen.vo.TableField;
+import com.wenin819.easyweb.core.persistence.IFiledEnum;
 import com.wenin819.easyweb.core.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.sql.*;
 import java.util.*;
 
@@ -122,6 +124,59 @@ public class DbUtils {
             list.add(table);
         }
         return list;
+    }
+
+    public static String getTableId(IFiledEnum filedEnum) {
+        String tableSchema = filedEnum.getTableSchema();
+        if (null != tableSchema && !tableSchema.isEmpty()) {
+            return tableSchema + '.' + filedEnum.getTableName();
+        } else {
+            return filedEnum.getTableName();
+        }
+    }
+
+    public static void printResultSet(ResultSet rs) {
+        printResultSet(rs, System.out);
+    }
+
+    public static void printResultSet(ResultSet rs, PrintStream out) {
+        out.printf(resultSet2String(rs));
+        out.flush();
+    }
+
+    public static String resultSet2String(ResultSet rs) {
+        if (null == rs) {
+            return "";
+        }
+        StringBuilder s = new StringBuilder();
+        try {
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            s.append("Name:[\t");
+            for (int i = 1; i <= columnCount; i++) {
+                s.append(metaData.getColumnName(i));
+                s.append("\t");
+            }
+            s.append("]\n");
+            s.append("ColumnType:[\t");
+            for (int i = 1; i <= columnCount; i++) {
+                s.append(metaData.getColumnType(i));
+                s.append("\t");
+            }
+            s.append("]\n");
+
+            while (rs.next()) {
+                s.append("Row:[\t");
+                for (int i = 1; i <= columnCount; i++) {
+                    s.append(rs.getString(i));
+                    s.append("\t");
+                }
+                s.append("]\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return s.toString();
     }
 
     public static void main(String[] args) {

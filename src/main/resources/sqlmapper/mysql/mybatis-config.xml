@@ -39,7 +39,7 @@
     </settings>
 
     <typeAliases>
-        <typeAlias type="com.wenin819.easyweb.core.db.CriteriaQuery" alias="CriteriaQuery"/>
+        <typeAlias type="com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery" alias="CriteriaQuery"/>
     </typeAliases>
     
     <plugins>

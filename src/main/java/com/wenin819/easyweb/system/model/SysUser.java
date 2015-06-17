@@ -3,8 +3,8 @@
 */
 package com.wenin819.easyweb.system.model;
 
-import com.wenin819.easyweb.core.db.BaseEntity;
-import com.wenin819.easyweb.core.db.IFiledEnum;
+import com.wenin819.easyweb.core.persistence.BaseEntity;
+import com.wenin819.easyweb.core.persistence.IFiledEnum;
 
 import java.io.Serializable;
 import java.util.Date;

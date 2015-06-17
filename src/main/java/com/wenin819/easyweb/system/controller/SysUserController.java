@@ -1,15 +1,13 @@
 package com.wenin819.easyweb.system.controller;
 
-import com.wenin819.easyweb.core.db.BaseService;
 import com.wenin819.easyweb.core.util.SecurityUtils;
 import com.wenin819.easyweb.core.util.StringUtils;
 import com.wenin819.easyweb.core.util.WebUtils;
 import com.wenin819.easyweb.core.web.BaseEntityController;
 import com.wenin819.easyweb.system.model.SysUser;
-import com.wenin819.easyweb.system.service.SysUserService;
 
+import com.wenin819.easyweb.system.service.SysUserService;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

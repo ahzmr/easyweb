@@ -1,8 +1,11 @@
-package com.wenin819.easyweb.core.db;
+package com.wenin819.easyweb.core.service.mybatis;
 
 import com.github.pagehelper.PageHelper;
+import com.wenin819.easyweb.core.persistence.BaseEntity;
+import com.wenin819.easyweb.core.persistence.Page;
+import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
+import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
 import com.wenin819.easyweb.core.util.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,21 +17,24 @@ import java.util.UUID;
 /**
  * Created by wenin819@gmail.com on 2014-09-02.
  */
-public abstract class BaseServiceImpl<E extends BaseEntity> implements BaseService<E> {
+public abstract class BaseService<E extends BaseEntity> {
 
     protected Class<E> clazz;
-    protected abstract BaseDao<E> getDao();
+    protected abstract MybatisBaseDao<E> getDao();
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @SuppressWarnings("unchecked")
-    public BaseServiceImpl() {
+    public BaseService() {
         Type type = getClass().getGenericSuperclass();
         if (type instanceof ParameterizedType) {
             clazz = (Class<E>) ((ParameterizedType) type).getActualTypeArguments()[0];
         }
     }
 
-    @Override
+    /**
+     * 创建空的实体记录
+     * @return
+     */
     public E createEntity() {
         if(null == clazz) {
             return null;
@@ -44,7 +50,11 @@ public abstract class BaseServiceImpl<E extends BaseEntity> implements BaseServi
         }
     }
 
-    @Override
+    /**
+     * 新增记录
+     * @param record 待新增的记录
+     * @return
+     */
     public int insert(E record) {
         if(null == record) {
             return -1;
@@ -55,12 +65,20 @@ public abstract class BaseServiceImpl<E extends BaseEntity> implements BaseServi
         return getDao().insert(record);
     }
 
-    @Override
+    /**
+     * 通过主键查询记录
+     * @param id 待查询记录的主键
+     * @return
+     */
     public E queryById(String id) {
         return getDao().queryById(id);
     }
 
-    @Override
+    /**
+     * 通过主键更新
+     * @param record 待更新的记录
+     * @return
+     */
     public int update(E record) {
         if(null == record || StringUtils.isBlank(record.getId())) {
             return -1;
@@ -68,7 +86,11 @@ public abstract class BaseServiceImpl<E extends BaseEntity> implements BaseServi
         return getDao().updateById(record);
     }
 
-    @Override
+    /**
+     * 新增或更新记录
+     * @param record 待新增或更新的记录
+     * @return
+     */
     public int createOrUpdate(E record) {
         if(!StringUtils.isBlank(record.getId())) {
             final int update = update(record);
@@ -79,17 +101,30 @@ public abstract class BaseServiceImpl<E extends BaseEntity> implements BaseServi
         return insert(record);
     }
 
-    @Override
+    /**
+     * 通过主键删除记录
+     * @param id 待删除记录的主键
+     * @return
+     */
     public int delete(String id) {
         return getDao().deleteById(id);
     }
 
-    @Override
+    /**
+     * 通过条件查询
+     * @param critQuery 条件查询
+     * @return
+     */
     public List<E> queryByCriteria(CriteriaQuery critQuery) {
         return getDao().queryByCriteria(critQuery);
     }
 
-    @Override
+    /**
+     * 通过条件分页查询
+     * @param critQuery 条件查询
+     * @param page 分页
+     * @return
+     */
     public Page<E> queryPageByCriteria(CriteriaQuery critQuery, Page<E> page) {
         if(null == page) {
             page = new Page<E>();
@@ -98,12 +133,20 @@ public abstract class BaseServiceImpl<E extends BaseEntity> implements BaseServi
         return (Page<E>) getDao().queryByCriteria(critQuery);
     }
 
-    @Override
+    /**
+     * 对条件查询求总数
+     * @param critQuery 条件查询
+     * @return
+     */
     public int countByCriteria(CriteriaQuery critQuery) {
         return getDao().countByCriteria(critQuery);
     }
 
-    @Override
+    /**
+     * 通过条件查询删除
+     * @param critQuery 条件查询
+     * @return
+     */
     public int deleteByCriteria(CriteriaQuery critQuery) {
         return getDao().deleteByCriteria(critQuery);
     }

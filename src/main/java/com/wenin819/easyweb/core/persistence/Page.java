@@ -1,8 +1,6 @@
-package com.wenin819.easyweb.core.db;
+package com.wenin819.easyweb.core.persistence;
 
 import org.apache.ibatis.session.RowBounds;
-
-import java.util.List;
 
 /**
  * 分页查询

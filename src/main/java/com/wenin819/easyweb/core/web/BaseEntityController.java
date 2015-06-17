@@ -1,9 +1,9 @@
 package com.wenin819.easyweb.core.web;
 
-import com.wenin819.easyweb.core.db.BaseEntity;
-import com.wenin819.easyweb.core.db.BaseService;
-import com.wenin819.easyweb.core.db.CriteriaQuery;
-import com.wenin819.easyweb.core.db.Page;
+import com.wenin819.easyweb.core.persistence.BaseEntity;
+import com.wenin819.easyweb.core.service.mybatis.BaseService;
+import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
+import com.wenin819.easyweb.core.persistence.Page;
 import com.wenin819.easyweb.core.util.StringUtils;
 import com.wenin819.easyweb.core.util.WebUtils;
 
@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 

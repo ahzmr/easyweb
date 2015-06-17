@@ -5,19 +5,19 @@
 
     <sql id="WhereClause4Query">
         <where>
-            <foreach item="value" index="index" collection="valueList">
-                ${sqlList[index]} #{value}
+            <foreach item="value" index="index" collection="whereValues">
+                ${whereSqls[index]} #{value}
             </foreach>
-            ${postSql}
+            ${whereEndSql}
         </where>
     </sql>
 
     <sql id="UpdateWhereClause4Query">
         <where>
-            <foreach item="value" index="index" collection="query.valueList">
-                ${query.sqlList[index]} #{value}
+            <foreach item="value" index="index" collection="query.whereValues">
+                ${query.whereSqls[index]} #{value}
             </foreach>
-            ${query.postSql}
+            ${query.whereEndSql}
         </where>
     </sql>
 

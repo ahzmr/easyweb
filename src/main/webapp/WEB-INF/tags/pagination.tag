@@ -1,8 +1,8 @@
-<%@ tag import="com.wenin819.easyweb.core.db.Page" %>
+<%@ tag import="com.wenin819.easyweb.core.persistence.Page" %>
 <%@ tag language="java" pageEncoding="UTF-8" %>
 <%@ tag trimDirectiveWhitespaces="true" %>
 <%@ include file="/WEB-INF/includes/taglib.jsp" %>
-<%@ attribute name="page" type="com.wenin819.easyweb.core.db.Page"
+<%@ attribute name="page" type="com.wenin819.easyweb.core.persistence.Page"
               required="true" description="分页信息" %>
 <ul class="pagination" style="margin-top: 0">
     <%

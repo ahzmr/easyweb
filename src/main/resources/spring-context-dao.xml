@@ -45,7 +45,7 @@
         <property name="configLocation" value="classpath:/sqlmapper/mysql/mybatis-config.xml"/>
         <property name="mapperLocations" value="classpath:/sqlmapper/mysql/*/**.xml"/>
         <property name="typeAliasesPackage" value="com.wenin819.easyweb"/>
-        <property name="typeAliasesSuperType" value="com.wenin819.easyweb.core.db.BaseEntity"/>
+        <property name="typeAliasesSuperType" value="com.wenin819.easyweb.core.persistence.BaseEntity"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

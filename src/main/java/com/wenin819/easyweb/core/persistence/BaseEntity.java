@@ -1,4 +1,4 @@
-package com.wenin819.easyweb.core.db;
+package com.wenin819.easyweb.core.persistence;
 
 import java.util.HashMap;
 import java.util.Map;
