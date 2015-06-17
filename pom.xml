@@ -18,7 +18,7 @@
         <maven.test.skip>true</maven.test.skip>
 
         <!-- version setting -->
-        <spring.version>3.1.4.RELEASE</spring.version>
+        <spring.version>3.2.13.RELEASE</spring.version>
         <cglib.version>3.1</cglib.version>
         <mybatis.version>3.2.6</mybatis.version>
         <mybatis-spring.version>1.2.2</mybatis-spring.version>
