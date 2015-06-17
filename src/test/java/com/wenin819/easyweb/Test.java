@@ -18,11 +18,13 @@ import java.net.URLConnection;
 public class Test {
 
     public static void main(String[] args) throws IOException {
-        URL url = new URL("http://user.goodjobs.cn/dispatcher.php/module/Resume/action/Show/id/xinan%2E");
-        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(InetAddress.getByName("127.0.0.1"), 3128));
-        URLConnection urlConnection = url.openConnection(proxy);
-        urlConnection.setRequestProperty("Cookie", "PHPSESSID=dtsul5dbddj14ua2bgjta1m4f3");
-        System.out.println(IOUtils.toString(urlConnection.getInputStream(), "GBK"));
+        short s = -1;
+        System.out.println((short)0xffff);
+        System.out.println((short)0x7fff);
+        System.out.println((short)0x8000);
+        System.out.println((-s) << 16);
+        System.out.println(s << 16);
+        System.out.println((s << 16) + 32693);
     }
 
 }

@@ -15,6 +15,8 @@
         <property name="filterChainDefinitions">
             <value>
                 /static/**=anon
+                /services/**=anon
+                /ecard/**=anon
                 /login.html=anon
                 /logout.html=anon
                 /**=authc

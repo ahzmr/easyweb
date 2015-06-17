@@ -3,11 +3,7 @@ package com.wenin819.easyweb.codegen.vo;
 
 import com.wenin819.easyweb.core.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 表对应的代码生成辅助类.
@@ -68,7 +64,7 @@ public class TableEntity {
             return;
         }
         if (null == primaryKeyList) {
-            primaryKeyList = new ArrayList<>();
+            primaryKeyList = new ArrayList<String>();
         }
         if (!primaryKeyList.contains(collumnName)) {
             primaryKeyList.add(collumnName);
@@ -88,7 +84,7 @@ public class TableEntity {
     }
 
     public List<TableField> getFieldListWithoutKey() {
-        List<TableField> list = new ArrayList<>(fieldList.size());
+        List<TableField> list = new ArrayList<TableField>(fieldList.size());
         TableField primaryField = getPrimaryField();
         for (TableField tableField : fieldList) {
             if (tableField != primaryField) {
@@ -100,7 +96,7 @@ public class TableEntity {
 
     public Set<String> getImportTypeList() {
         if (null != this.fieldList) {
-            Set<String> importTypeSet = new HashSet<>();
+            Set<String> importTypeSet = new HashSet<String>();
             for (TableField tableField : fieldList) {
                 Class javaType = tableField.getJavaType();
                 if (null != javaType && !javaType.getName().startsWith("java.lang")) {

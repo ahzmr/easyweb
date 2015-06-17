@@ -2,6 +2,7 @@ package com.wenin819.easyweb.modules.webclient.vo;
 
 import org.apache.http.HttpHost;
 
+import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ public class HttpContext {
     private Map<String, String> params;
     private Map<String, String> cookies;
     private HttpHost proxy;
+    private Charset charset;
 
     public HttpContext(String url) {
         this.url = url;
@@ -111,6 +113,15 @@ public class HttpContext {
 
     public HttpContext setProxy(HttpHost proxy) {
         this.proxy = proxy;
+        return this;
+    }
+
+    public Charset getCharset() {
+        return charset;
+    }
+
+    public HttpContext setCharset(Charset charset) {
+        this.charset = charset;
         return this;
     }
 }

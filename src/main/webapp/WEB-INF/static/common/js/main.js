@@ -24,7 +24,7 @@ function initDoc() {
     winResize();
 
     $("#navbar-collapse ul.navbar-nav > li > a[id]").click(function() {
-        return updateActive(this);
+        return updateActive(this) || true;
     });
     $("#navbar-collapse ul.dropdown-menu > li > a[id]").click(function() {
         return updateActive(this) || true;

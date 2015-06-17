@@ -7,7 +7,6 @@ import com.wenin819.easyweb.core.web.ActionType;
 import com.wenin819.easyweb.core.web.BaseEntityController;
 import com.wenin819.easyweb.modules.contacts.model.TxContacts;
 import com.wenin819.easyweb.modules.contacts.service.TxContactsService;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,11 +33,11 @@ public class TxContactsController extends BaseEntityController<TxContacts> {
         if(null == viewType) {
             viewType = "1";
         }
-        switch (viewType) {
-            case "1":
+        switch (Integer.parseInt(viewType)) {
+            case 1:
                 criteria.isNotNull(TxContacts.TE.cellphone);
                 break;
-            case "0":
+            case 0:
                 criteria.isNull(TxContacts.TE.cellphone);
                 break;
             default:

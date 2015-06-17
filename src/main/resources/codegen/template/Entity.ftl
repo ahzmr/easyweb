@@ -63,5 +63,9 @@ public class ${table.className} extends BaseEntity<${table.className}.TE> {
         public String getTableSchema() {
             return "${table.schema}";
         }
+        @Override
+        public String toString() {
+            return this.filedName;
+        }
     }
 }

@@ -264,5 +264,10 @@ public class SysUser extends BaseEntity<SysUser.TE> implements Serializable {
         public String getTableSchema() {
             return "easyweb";
         }
+
+        @Override
+        public String toString() {
+            return this.filedName;
+        }
     }
 }

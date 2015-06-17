@@ -4,6 +4,7 @@ import com.wenin819.easyweb.core.web.BaseController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by wenin819@gmail.com on 2014-09-23.
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class IndexController extends BaseController {
 
-    @RequestMapping({"", "index.html"})
+    @RequestMapping(value = {"", "index.html"}, method = {RequestMethod.GET, RequestMethod.HEAD})
     public String index() {
         return "system/index";
     }

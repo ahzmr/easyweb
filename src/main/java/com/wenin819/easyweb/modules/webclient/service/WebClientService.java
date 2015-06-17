@@ -2,7 +2,6 @@ package com.wenin819.easyweb.modules.webclient.service;
 
 import com.wenin819.easyweb.modules.webclient.util.HttpUtils;
 import com.wenin819.easyweb.modules.webclient.vo.HttpContext;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -12,12 +11,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  *
@@ -26,13 +20,13 @@ import java.util.UUID;
 @Service
 public class WebClientService {
 
-    private Map<String, HttpContext> httpContextMap = new HashMap<>();
+    private Map<String, HttpContext> httpContextMap = new HashMap<String, HttpContext>();
     private final String imageUrl = "http://web.ahnw.gov.cn/xzxchqn/Getcode.asp";
     private final String formUrl = "http://web.ahnw.gov.cn/xzxchqn/SaveVote.asp";
     public final String userId = "1759";
     public String isCity = "1";
 
-    private static final List<String> proxies = new LinkedList<>();
+    private static final List<String> proxies = new LinkedList<String>();
 
     static {
         final Resource resource = new DefaultResourceLoader().getResource("modules/webclient/proxy_list.txt");
@@ -112,7 +106,7 @@ public class WebClientService {
     }
 
     public List<String> genNewHttpContextIdList() {
-        List<String> rsList = new ArrayList<>();
+        List<String> rsList = new ArrayList<String>();
         for (int i = 0; i < 20; i++) {
             rsList.add(genNewHttpContextId());
         }

@@ -16,8 +16,9 @@
                     password: { equalTo: "#p" }
                 },
                 submitHandler: function(form) {
-                    $("#fp").val(genPwd($("#fp").val(), $("#loginName").val()));
-                    $("#p").val("");
+                    var pwd = genPwd($("#fp").val(), $("#loginName").val());
+                    $("#fp").val(pwd);
+                    $("#p").val(pwd);
                     loading('正在提交，请稍等...');
                     form.submit();
                 }

@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public abstract class BaseEntity<TE extends IFiledEnum> {
 
-    private final Map<String, Object> extPropertiesMap = new HashMap<>();
+    private final Map<String, Object> extPropertiesMap = new HashMap<String, Object>();
 
     public void setFieldLable(TE field, Object v) {
         extPropertiesMap.put(getLableKey(field), v);
@@ -16,7 +16,7 @@ public abstract class BaseEntity<TE extends IFiledEnum> {
 
     @SuppressWarnings("unchecked")
     public <V> V getFieldLable(TE field) {
-        return (V) extPropertiesMap.get(getLableKey(field));
+        return (V) getExtProperty(getLableKey(field));
     }
 
     public void setExtProperty(String key, Object v) {

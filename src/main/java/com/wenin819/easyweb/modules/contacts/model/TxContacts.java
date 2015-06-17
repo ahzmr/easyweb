@@ -202,5 +202,10 @@ public class TxContacts extends BaseEntity<TxContacts.TE> {
         public String getTableSchema() {
             return "easyweb";
         }
+
+        @Override
+        public String toString() {
+            return this.filedName;
+        }
     }
 }

@@ -1,7 +1,6 @@
 package com.wenin819.easyweb.modules.webclient.util;
 
 import com.wenin819.easyweb.modules.webclient.vo.HttpContext;
-
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -16,14 +15,13 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.nio.charset.Charset;
+import java.util.*;
 
 /**
  * Web 访问工具类
@@ -31,9 +29,11 @@ import java.util.Objects;
  */
 public class HttpUtils {
 
-    public static final String DEFAULT_HTTP_ENCODING = "GBK";
+    public static final Charset DEFAULT_HTTP_ENCODING = Charset.forName("UTF-8");
     private static RequestConfig requestConfig = RequestConfig.custom()
             .setSocketTimeout(2000).setConnectTimeout(2000).build();
+
+    private static Logger logger = LoggerFactory.getLogger(HttpUtils.class);
 
     /**
      * 得到查询串，用特定字符分隔
@@ -62,7 +62,7 @@ public class HttpUtils {
     }
 
     private static Map<String, String> getCookies(CloseableHttpResponse response) {
-        Map<String, String> cookies = new LinkedHashMap<>();
+        Map<String, String> cookies = new LinkedHashMap<String, String>();
         if(null == response) {
             return cookies;
         }
@@ -96,11 +96,13 @@ public class HttpUtils {
         final byte[] bytes = httpGetBytes(httpContext);
         String rs = null;
         try {
-            rs = new String(bytes, DEFAULT_HTTP_ENCODING);
-        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
+            rs = new String(bytes, null != httpContext.getCharset() ? httpContext.getCharset() : DEFAULT_HTTP_ENCODING);
+        } catch (Exception e) {
+            logger.error("转换httpGet请求返回报文失败", e);
         }
-//        System.out.println("response context: " + rs);
+        if(logger.isTraceEnabled()) {
+            logger.trace("response context: [{}]", rs);
+        }
         return rs;
     }
 
@@ -128,15 +130,12 @@ public class HttpUtils {
         try {
             final CloseableHttpResponse response = httpClient.execute(httpGet);
             httpContext.addAllCookie(getCookies(response));
-//            System.out.println("statusLine: " + response.getStatusLine());
             final HttpEntity entity = response.getEntity();
             final byte[] rs = EntityUtils.toByteArray(entity);
-//            System.out.println("response headers: " + Arrays.toString(response.getAllHeaders()));
-//            System.out.println("response rs: " + Arrays.toString(rs));
             EntityUtils.consume(entity);
             return rs;
         } catch (IOException e) {
-//            e.printStackTrace();
+            logger.error("httpGet请求异常", e);
         } finally {
             HttpClientUtils.closeQuietly(httpClient);
         }
@@ -161,42 +160,26 @@ public class HttpUtils {
         httpPost.addHeader("Cookie", genQueryString(cookies, "; "));
         try {
             Map<String, String> params = httpContext.getParams();
+            Charset httpEncoding = null != httpContext.getCharset() ? httpContext.getCharset() : DEFAULT_HTTP_ENCODING;
             if(null != params && !params.isEmpty()) {
                 List<NameValuePair> nvps = new ArrayList<NameValuePair>();
                 for (Map.Entry<String, String> entry : params.entrySet()) {
                     nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
                 }
-                httpPost.setEntity(new UrlEncodedFormEntity(nvps, DEFAULT_HTTP_ENCODING));
+                httpPost.setEntity(new UrlEncodedFormEntity(nvps, httpEncoding));
             }
             final CloseableHttpResponse response = httpClient.execute(httpPost);
             httpContext.addAllCookie(getCookies(response));
-//            System.out.println(response.getStatusLine());
             final HttpEntity entity = response.getEntity();
-            final String rs = EntityUtils.toString(entity, DEFAULT_HTTP_ENCODING);
-//            System.out.println("response headers: " + Arrays.toString(response.getAllHeaders()));
-//            System.out.println(rs);
+            final String rs = EntityUtils.toString(entity, httpEncoding);
             EntityUtils.consume(entity);
             return rs;
         } catch (IOException e) {
-//            e.printStackTrace();
+            logger.error("httpPost请求异常", e);
         } finally {
             HttpClientUtils.closeQuietly(httpClient);
         }
         return null;
-    }
-
-    public static void main(String[] args) throws IOException {
-//        final HttpContext httpContext = new HttpContext("http://web.ahnw.gov.cn/xzxchqn/Getcode.asp");
-//        final HttpContext httpContext = new HttpContext("http://web.ahnw.gov.cn/xzxchqn/UserInfo.asp");
-//        httpGet(httpContext.addParam("id", "1720"));
-//        httpGetBytes(httpContext.addParam("id", "1720"));
-
-        final HttpContext httpContext = new HttpContext("http://web.ahnw.gov.cn/xzxchqn/SaveVote.asp");
-        httpContext.addParam("Id", "1720");
-        httpContext.addParam("code", "西合哈");
-        httpContext.addCookie("ASPSESSIONIDCSDDASBD", "EOCIPKMBLLGJIKMLHMMBCPDA");
-        httpPost(httpContext);
-        System.out.printf("return cookies" + httpContext.getCookies());
     }
 
 }

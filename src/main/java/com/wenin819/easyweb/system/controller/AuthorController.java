@@ -21,7 +21,7 @@ public class AuthorController extends BaseController {
 
     public static String secucessUrl = "/";
 
-    @RequestMapping(value = "login.html", method = RequestMethod.GET)
+    @RequestMapping(value = "login.html", method = {RequestMethod.GET, RequestMethod.HEAD})
     public String login() {
         if (SecurityUtils.getSubject().isAuthenticated()) {
             return "redirect:" + secucessUrl;

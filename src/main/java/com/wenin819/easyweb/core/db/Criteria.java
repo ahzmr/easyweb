@@ -3,10 +3,7 @@ package com.wenin819.easyweb.core.db;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Ibatis 通用查询条件
@@ -15,46 +12,57 @@ import java.util.Map;
  */
 public class Criteria {
 
-    protected static final String CONDITION_KEY = "condition";
-    protected static final String VALUES_KEY = "values";
     protected final String delim;
     protected final boolean isAnd;
+    protected CriteriaQuery query;
     /**
      * 不带值的查询条件
      */
-    protected List<String> noValue;
+    protected final List<String> noValues;
 
     /**
      * 单个值的查询条件
      */
-    protected List<Map<String, Object>> singleValue;
+    protected final List<Map.Entry<String, Object>> singleValues;
 
     /**
      * 值为集合的查询条件
      */
-    protected List<Map<String, Object>> listValue;
+    protected final List<Map.Entry<String, List<?>>> listValues;
 
     /**
      * between查询条件
      */
-    protected List<Map<String, Object>> betweenValue;
+    protected final List<Map.Entry<String, List<Object>>> betweenValues;
+
+    /**
+     * Sql查询条件
+     */
+    protected final List<Map.Entry<String, Object[]>> sqlValues;
 
     /**
      * 嵌套子查询条件
      */
-    protected List<Criteria> criterias;
+    protected final List<Criteria> criterias;
 
-    private Criteria(boolean isAnd) {
+    private Criteria(boolean isAnd, CriteriaQuery query) {
         super();
         this.isAnd = isAnd;
+        this.query = query;
         delim = isAnd ? " and " : " or ";
-        noValue = new ArrayList<>();
-        singleValue = new ArrayList<>();
-        listValue = new ArrayList<>();
-        betweenValue = new ArrayList<>();
-        criterias = new ArrayList<>();
+        noValues = new ArrayList<String>();
+        singleValues = new ArrayList<Map.Entry<String, Object>>();
+        listValues = new ArrayList<Map.Entry<String, List<?>>>();
+        betweenValues = new ArrayList<Map.Entry<String, List<Object>>>();
+        criterias = new ArrayList<Criteria>();
+        sqlValues = new ArrayList<Map.Entry<String, Object[]>>();
     }
 
+    /**
+     * 判断条件查询列表是否有效，即存在有用的条件查询
+     * @param criteriaList 条件查询列表
+     * @return
+     */
     protected static boolean isValid(List<Criteria> criteriaList) {
         if (null == criteriaList || criteriaList.isEmpty()) {
             return false;
@@ -67,153 +75,313 @@ public class Criteria {
         return false;
     }
 
-    public static Criteria newAndCriteria() {
-        return new Criteria(true);
+    /**
+     * 基于当前条件创建And子查询条件
+     * @return
+     */
+    public static Criteria newAndCriteria(CriteriaQuery query) {
+        return new Criteria(true, query);
     }
 
-    public static Criteria newOrCriteria() {
-        return new Criteria(false);
+    /**
+     * 基于当前条件创建Or子查询条件
+     * @return
+     */
+    public static Criteria newOrCriteria(CriteriaQuery query) {
+        return new Criteria(false, query);
     }
 
+    /**
+     * 当前查询条件是否有效，即存在有用的条件查询
+     * @return
+     */
     public boolean isValid() {
-        return noValue.size() > 0
-               || singleValue.size() > 0
-               || listValue.size() > 0
-               || betweenValue.size() > 0
+        return noValues.size() > 0
+               || singleValues.size() > 0
+               || listValues.size() > 0
+               || betweenValues.size() > 0
+               || sqlValues.size() > 0
                || isValid(criterias);
     }
 
+    /**
+     * 基于当前条件创建Or子查询条件
+     * @return
+     */
     public Criteria createOrCriteria() {
         if (!this.isAnd) {
             return this;
         }
-        Criteria criteria = Criteria.newOrCriteria();
+        Criteria criteria = Criteria.newOrCriteria(query);
         criterias.add(criteria);
+        hasChange();
         return criteria;
     }
 
+    /**
+     * 基于当前条件创建And子查询条件
+     * @return
+     */
     public Criteria createAndCriteria() {
         if (isAnd) {
             return this;
         }
-        Criteria criteria = Criteria.newAndCriteria();
+        Criteria criteria = Criteria.newAndCriteria(query);
         criterias.add(criteria);
+        hasChange();
         return criteria;
     }
 
-    public Criteria isNull(IFiledEnum filedEnum) {
-        noValue.add(filedEnum + " is null");
+    /**
+     * 为空查询
+     * @param filedName 可以加函数的字段名称
+     * @return
+     */
+    public Criteria isNull(IFiledEnum filedName) {
+        noValues.add(filedName + " is null");
+        hasChange();
         return this;
     }
 
-    public Criteria isNotNull(IFiledEnum filedEnum) {
-        noValue.add(filedEnum + " is not null");
+    /**
+     * 不为空查询
+     * @param filedName 可以加函数的字段名称
+     * @return
+     */
+    public Criteria isNotNull(IFiledEnum filedName) {
+        noValues.add(filedName + " is not null");
+        hasChange();
         return this;
     }
 
-    public Criteria equalTo(IFiledEnum filedEnum, Object value) {
+    /**
+     * 相等查询
+     * @param filedName 可以加函数的字段名称
+     * @param value 值，可为null
+     * @return
+     */
+    public Criteria equalTo(IFiledEnum filedName, Object value) {
         if (null == value) {
-            isNull(filedEnum);
+            isNull(filedName);
         } else {
-            addCriterion(filedEnum, "=", value);
+            addCriterion(filedName, "=", value);
         }
         return this;
     }
 
-    public Criteria notEqualTo(IFiledEnum filedEnum, Object value) {
+    /**
+     * 不相等查询
+     * @param filedName 可以加函数的字段名称
+     * @param value 值，可为null
+     * @return
+     */
+    public Criteria notEqualTo(IFiledEnum filedName, Object value) {
         if (null == value) {
-            isNotNull(filedEnum);
+            isNotNull(filedName);
         } else {
-            addCriterion(filedEnum, "<>", value);
+            addCriterion(filedName, "!=", value);
         }
         return this;
     }
 
-    public Criteria greaterThan(IFiledEnum filedEnum, Object value) {
-        addCriterion(filedEnum, ">", value);
+    /**
+     * 大于查询
+     * @param filedName 可以加函数的字段名称
+     * @param value 值
+     * @return
+     */
+    public Criteria greaterThan(IFiledEnum filedName, Object value) {
+        addCriterion(filedName, ">", value);
         return this;
     }
 
-    public Criteria greaterThanOrEqualTo(IFiledEnum filedEnum, Object value) {
-        addCriterion(filedEnum, ">=", value);
+    /**
+     * 大于等于查询
+     * @param filedName 可以加函数的字段名称
+     * @param value 值
+     * @return
+     */
+    public Criteria greaterThanOrEqualTo(IFiledEnum filedName, Object value) {
+        addCriterion(filedName, ">=", value);
         return this;
     }
 
-    public Criteria lessThan(IFiledEnum filedEnum, Object value) {
-        addCriterion(filedEnum, "<", value);
+    /**
+     * 小于查询
+     * @param filedName 可以加函数的字段名称
+     * @param value 值
+     * @return
+     */
+    public Criteria lessThan(IFiledEnum filedName, Object value) {
+        addCriterion(filedName, "<", value);
         return this;
     }
 
-    public Criteria lessThanOrEqualTo(IFiledEnum filedEnum, Object value) {
-        addCriterion(filedEnum, "<=", value);
+    /**
+     * 小于等于查询
+     * @param filedName 可以加函数的字段名称
+     * @param value 值
+     * @return
+     */
+    public Criteria lessThanOrEqualTo(IFiledEnum filedName, Object value) {
+        addCriterion(filedName, "<=", value);
         return this;
     }
 
-    public Criteria like(IFiledEnum filedEnum, Object value) {
-        addCriterion(filedEnum, "like", value);
+    /**
+     * like查询
+     * @param filedName 可以加函数的字段名称
+     * @param value 值
+     * @return
+     */
+    public Criteria like(IFiledEnum filedName, Object value) {
+        addCriterion(filedName, "like", value);
         return this;
     }
 
-    public Criteria notLike(IFiledEnum filedEnum, Object value) {
-        addCriterion(filedEnum, "not like", value);
+    /**
+     * not like查询
+     * @param filedName 可以加函数的字段名称
+     * @param value 值
+     * @return
+     */
+    public Criteria notLike(IFiledEnum filedName, Object value) {
+        addCriterion(filedName, "not like", value);
         return this;
     }
 
-    public <E> Criteria in(IFiledEnum filedEnum, List<E> values) {
-        addCriterion(filedEnum, "in", values);
+    /**
+     * in查询
+     * @param filedName 可以加函数的字段名称
+     * @param values 值列表
+     * @param <E>
+     * @return
+     */
+    public <E> Criteria in(IFiledEnum filedName, List<E> values) {
+        addCriterion(filedName, "in", values);
         return this;
     }
 
-    public <E> Criteria notIn(IFiledEnum filedEnum, List<E> values) {
-        addCriterion(filedEnum, "not in", values);
+    /**
+     * not in查询
+     * @param filedName 可以加函数的字段名称
+     * @param values 值列表
+     * @param <E>
+     * @return
+     */
+    public <E> Criteria notIn(IFiledEnum filedName, List<E> values) {
+        addCriterion(filedName, "not in", values);
         return this;
     }
 
-    public Criteria between(IFiledEnum filedEnum, Object value1, Object value2) {
-        addCriterion(filedEnum, "between", value1, value2);
+    /**
+     * between查询
+     * @param filedName 可以加函数的字段名称
+     * @param value1 起始值
+     * @param value2 结束值
+     * @return
+     */
+    public Criteria between(IFiledEnum filedName, Object value1, Object value2) {
+        addCriterion(filedName, "between", value1, value2);
         return this;
     }
 
-    public Criteria andApprIdNotBetween(IFiledEnum filedEnum, Object value1, Object value2) {
-        addCriterion(filedEnum, "not between", value1, value2);
+    /**
+     * not between查询
+     * @param filedName 可以加函数的字段名称
+     * @param value1 起始值
+     * @param value2 结束值
+     * @return
+     */
+    public Criteria notBetween(IFiledEnum filedName, Object value1, Object value2) {
+        addCriterion(filedName, "not between", value1, value2);
         return this;
     }
 
-    protected void addCriterion(IFiledEnum filedEnum, String op, Object value) {
-        Assert.notNull(filedEnum, "filedEnum 不能为空");
+    /**
+     * 直接sql查询
+     * @param sql 子sql语句
+     * @param values 值列表
+     * @return
+     */
+    public Criteria sql(String sql, Object... values) {
+        Assert.hasText(sql, "sql 语句不能为空");
+        int count = 0;
+        int idx = -1;
+        while(-1 != (idx = sql.indexOf('?', idx + 1))) {
+            count ++;
+        }
+        Assert.isTrue(count == values.length, "sql 中的变量个数与值的个数不匹配");
+        sqlValues.add(new AbstractMap.SimpleEntry<String, Object[]>(sql, values));
+        hasChange();
+        return this;
+    }
+
+    /**
+     * 增加单值查询条件
+     * @param filedName 可以加函数的字段名称
+     * @param op 操作名
+     * @param value 值
+     */
+    protected void addCriterion(IFiledEnum filedName, String op, Object value) {
+        Assert.notNull(filedName, "filedName 不能为空");
         Assert.notNull(op, "op 不能为空");
         Assert.notNull(value, "value 不能为空");
-        Map<String, Object> map = new HashMap<>();
-        map.put(CONDITION_KEY, filedEnum.getFiledName() + ' ' + op);
-        map.put(VALUES_KEY, value);
-        singleValue.add(map);
+        singleValues.add(new AbstractMap.SimpleEntry<String, Object>(filedName.getFiledName() + ' ' + op, value));
+        hasChange();
     }
 
-    protected <E> void addCriterion(IFiledEnum filedEnum, String op,
+    /**
+     * 增加列表值查询条件
+     * @param filedName 可以加函数的字段名称
+     * @param op 操作名
+     * @param values 列表值
+     * @param <E>
+     */
+    protected <E> void addCriterion(IFiledEnum filedName, String op,
                                                    List<E> values) {
-        Assert.notNull(filedEnum, "filedEnum 不能为空");
+        Assert.notNull(filedName, "filedName 不能为空");
         Assert.notNull(op, "op 不能为空");
         Assert.notEmpty(values, "values 不能为空");
-        Map<String, Object> map = new HashMap<>();
-        map.put(CONDITION_KEY, filedEnum.getFiledName() + ' ' + op);
-        map.put(VALUES_KEY, values);
-        listValue.add(map);
+        listValues.add(new AbstractMap.SimpleEntry<String, List<?>>(filedName.getFiledName() + ' ' + op, values));
+        hasChange();
     }
 
-    protected void addCriterion(IFiledEnum filedEnum, String op, Object value1, Object value2) {
-        Assert.notNull(filedEnum, "filedEnum 不能为空");
+    /**
+     * 增加两个值查询条件
+     * @param filedName 可以加函数的字段名称
+     * @param op 操作名
+     * @param value1 值1
+     * @param value2 值2
+     */
+    protected void addCriterion(IFiledEnum filedName, String op, Object value1, Object value2) {
+        Assert.notNull(filedName, "filedName 不能为空");
         Assert.notNull(op, "op 不能为空");
         Assert.notNull(value1, "value1 不能为空");
         Assert.notNull(value2, "value2 不能为空");
-        List<Object> list = new ArrayList<>();
+        List<Object> list = new ArrayList<Object>();
         list.add(value1);
         list.add(value2);
-        Map<String, Object> map = new HashMap<>();
-        map.put(CONDITION_KEY, filedEnum.getFiledName() + ' ' + op);
-        map.put(VALUES_KEY, list);
-        betweenValue.add(map);
+        betweenValues.add(new AbstractMap.SimpleEntry<String, List<Object>>(filedName.getFiledName() + ' ' + op, list));
+        hasChange();
     }
 
+    /**
+     * 当前类改变后触发的方法
+     */
+    protected void hasChange() {
+        if(null != query) {
+            query.notifyChange();
+        }
+    }
+
+    /**
+     * 递归拼装查询Sql
+     * @param preSql 起始Sql，可为空
+     * @param sqlList Sql片断列表
+     * @param valueList 值列表
+     * @param postSql 结尾Sql，不能为空
+     */
     public void genSql(StringBuilder preSql, List<String> sqlList, List<Object> valueList,
                        StringBuilder postSql) {
         Assert.notNull(sqlList, "sqlList不能为空");
@@ -222,8 +390,8 @@ public class Criteria {
         if (null == preSql) {
             preSql = new StringBuilder();
         }
-        StringBuilder tmpSql = new StringBuilder();
         boolean hasAdd = false;
+        // 拼装子查询
         for (Criteria criteria : this.criterias) {
             if (!criteria.isValid()) {
                 continue;
@@ -231,19 +399,44 @@ public class Criteria {
             if (hasAdd) {
                 preSql.append(this.delim);
             }
+            StringBuilder tmpSql = new StringBuilder();
             preSql.append("(");
             criteria.genSql(preSql, sqlList, valueList, tmpSql);
             preSql = tmpSql;
-            tmpSql = new StringBuilder();
             preSql.append(")");
             hasAdd = true;
         }
-        for (Map<String, Object> stringObjectMap : this.betweenValue) {
+        // 拼装Sql查询
+        for (Map.Entry<String, Object[]> entry : sqlValues) {
             if (hasAdd) {
                 preSql.append(this.delim);
             }
-            @SuppressWarnings("unchecked") List<Object> list = (List<Object>) stringObjectMap.get(VALUES_KEY);
-            preSql.append((String) (stringObjectMap.get(CONDITION_KEY)));
+            preSql.append("(");
+            String sql = entry.getKey();
+            String[] sqls = sql.split("\\?");
+            sqls[0] = preSql.append(sqls[0]).toString();
+            Object[] values = entry.getValue();
+            if(null != values && values.length > 0) {
+                int i = 0;
+                for (; i < values.length; i++) {
+                    sqlList.add(sqls[i]);
+                    valueList.add(values[i]);
+                }
+                if(i < sqls.length) {
+                    preSql = new StringBuilder(sqls[i]);
+                } else {
+                    preSql = new StringBuilder();
+                }
+            }
+            preSql.append(")");
+            hasAdd = true;
+        }
+        for (Map.Entry<String, List<Object>> entry : this.betweenValues) {
+            if (hasAdd) {
+                preSql.append(this.delim);
+            }
+            List<Object> list = entry.getValue();
+            preSql.append(entry.getKey());
             sqlList.add(preSql.toString());
             preSql = new StringBuilder();
             valueList.add(list.get(0));
@@ -251,12 +444,12 @@ public class Criteria {
             valueList.add(list.get(1));
             hasAdd = true;
         }
-        for (Map<String, Object> stringObjectMap : this.listValue) {
+        for (Map.Entry<String, List<?>> entry : this.listValues) {
             if (hasAdd) {
                 preSql.append(this.delim);
             }
-            @SuppressWarnings("unchecked") List<Object> list = (List<Object>) stringObjectMap.get(VALUES_KEY);
-            preSql.append((String) (stringObjectMap.get(CONDITION_KEY)));
+            List<?> list = entry.getValue();
+            preSql.append(entry.getKey());
             preSql.append(" (");
             sqlList.add(preSql.toString());
             preSql = new StringBuilder();
@@ -268,21 +461,21 @@ public class Criteria {
             preSql.append(")");
             hasAdd = true;
         }
-        if (!this.noValue.isEmpty()) {
+        if (!this.noValues.isEmpty()) {
             if (hasAdd) {
                 preSql.append(this.delim);
             }
-            preSql.append(StringUtils.collectionToDelimitedString(this.noValue, this.delim));
+            preSql.append(StringUtils.collectionToDelimitedString(this.noValues, this.delim));
             hasAdd = true;
         }
-        for (Map<String, Object> stringObjectMap : this.singleValue) {
+        for (Map.Entry<String, Object> entry : this.singleValues) {
             if (hasAdd) {
                 preSql.append(this.delim);
             }
-            preSql.append((String) (stringObjectMap.get(CONDITION_KEY)));
+            preSql.append(entry.getKey());
             sqlList.add(preSql.toString());
             preSql = new StringBuilder();
-            valueList.add(stringObjectMap.get(VALUES_KEY));
+            valueList.add(entry.getValue());
             hasAdd = true;
         }
         if (preSql.length() > 0) {

@@ -3,23 +3,13 @@ package com.wenin819.easyweb.codegen.util;
 import com.wenin819.easyweb.codegen.vo.TableEntity;
 import com.wenin819.easyweb.codegen.vo.TableField;
 import com.wenin819.easyweb.core.util.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.sql.*;
+import java.util.*;
 
 /**
  * 代码生成方面的数据库工具类.
@@ -55,7 +45,7 @@ public class DbUtils {
     }
 
     public static Collection<TableEntity> getTables(String schema, String tablePattern) {
-        Set<TableEntity> tableCollection = new HashSet<>();
+        Set<TableEntity> tableCollection = new HashSet<TableEntity>();
         if (StringUtils.isBlank(tablePattern)) {
             return tableCollection;
         }
@@ -99,7 +89,7 @@ public class DbUtils {
     }
 
     private static List<TableField> parseTableField4ResultSet(ResultSet rs) throws SQLException {
-        List<TableField> list = new ArrayList<>();
+        List<TableField> list = new ArrayList<TableField>();
         if (null == rs) {
             return null;
         }
@@ -117,7 +107,7 @@ public class DbUtils {
     }
 
     private static List<TableEntity> parseTableEntity4ResultSet(ResultSet rs) throws SQLException {
-        List<TableEntity> list = new ArrayList<>();
+        List<TableEntity> list = new ArrayList<TableEntity>();
         if (null == rs) {
             return null;
         }

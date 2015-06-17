@@ -1,7 +1,6 @@
 package com.wenin819.easyweb.codegen.util;
 
 import com.wenin819.easyweb.codegen.vo.TableField;
-
 import org.apache.ibatis.type.JdbcType;
 
 import java.math.BigDecimal;
@@ -15,7 +14,7 @@ import java.util.Map;
  */
 public class JavaTypeResolverUtil {
 
-    private static final Map<JdbcType, Class> typeMap = new HashMap<>();
+    private static final Map<JdbcType, Class> typeMap = new HashMap<JdbcType, Class>();
 
     static {
         typeMap.put(JdbcType.ARRAY, Object.class);
