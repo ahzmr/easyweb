@@ -3,8 +3,6 @@
 <mapper namespace="com.wenin819.easyweb.system.dao.SysUserDao">
     <resultMap id="BaseResultMap" type="SysUser">
         <id property="id" column="id" jdbcType="VARCHAR" />
-        <result property="companyId" column="company_id" jdbcType="VARCHAR" />
-        <result property="officeId" column="office_id" jdbcType="VARCHAR" />
         <result property="loginName" column="login_name" jdbcType="VARCHAR" />
         <result property="password" column="password" jdbcType="VARCHAR" />
         <result property="no" column="no" jdbcType="VARCHAR" />
@@ -12,7 +10,6 @@
         <result property="email" column="email" jdbcType="VARCHAR" />
         <result property="phone" column="phone" jdbcType="VARCHAR" />
         <result property="mobile" column="mobile" jdbcType="VARCHAR" />
-        <result property="userType" column="user_type" jdbcType="CHAR" />
         <result property="loginIp" column="login_ip" jdbcType="VARCHAR" />
         <result property="loginDate" column="login_date" jdbcType="TIMESTAMP" />
         <result property="createBy" column="create_by" jdbcType="VARCHAR" />
@@ -24,20 +21,20 @@
     </resultMap>
 
     <sql id="BaseColumnList">
-        id,company_id,office_id,login_name,password,
-        no,name,email,phone,mobile,
-        user_type,login_ip,login_date,create_by,create_date,
-        update_by,update_date,remarks,del_flag
+        id,login_name,password,no,name,
+        email,phone,mobile,login_ip,login_date,
+        create_by,create_date,update_by,update_date,remarks,
+        del_flag
     </sql>
 
     <sql id="BaseColumnValueList">
-        #{id},#{companyId},#{officeId},#{loginName},#{password},
-        #{no},#{name},#{email},#{phone},#{mobile},
-        #{userType},#{loginIp},#{loginDate},#{createBy},#{createDate},
-        #{updateBy},#{updateDate},#{remarks},#{delFlag}
+        #{id},#{loginName},#{password},#{no},#{name},
+        #{email},#{phone},#{mobile},#{loginIp},#{loginDate},
+        #{createBy},#{createDate},#{updateBy},#{updateDate},#{remarks},
+        #{delFlag}
     </sql>
 
-    <sql id="TableClause"> easyweb.sys_user </sql>
+    <sql id="TableClause"> ${schema.configPlat}.sys_user </sql>
 
     <sql id="WhereClause4Id">
         <where>
@@ -53,33 +50,52 @@
         )
     </insert>
 
-    <select id="queryById" parameterType="string" resultMap="BaseResultMap">
+    <select id="queryById" resultMap="BaseResultMap">
         <include refid="public.SelectById" />
     </select>
 
     <update id="updateById" parameterType="SysUser">
         update <include refid="TableClause" />
         <set>
-            company_id=#{companyId},
-            office_id=#{officeId},
-            login_name=#{loginName},
-            password=#{password},
-            no=#{no},
-            name=#{name},
-            email=#{email},
-            phone=#{phone},
-            mobile=#{mobile},
-            user_type=#{userType},
-            login_ip=#{loginIp},
-            login_date=#{loginDate},
-            create_by=#{createBy},
-            create_date=#{createDate},
-            update_by=#{updateBy},
-            update_date=#{updateDate},
-            remarks=#{remarks},
-            del_flag=#{delFlag}
+        login_name=#{loginName},
+        password=#{password},
+        no=#{no},
+        name=#{name},
+        email=#{email},
+        phone=#{phone},
+        mobile=#{mobile},
+        login_ip=#{loginIp},
+        login_date=#{loginDate},
+        create_by=#{createBy},
+        create_date=#{createDate},
+        update_by=#{updateBy},
+        update_date=#{updateDate},
+        remarks=#{remarks},
+        del_flag=#{delFlag}
         </set> <include refid="WhereClause4Id" />
     </update>
+
+    <update id="updateByIdSelective" parameterType="SysUser">
+        update <include refid="TableClause" />
+        <set>
+            <if test="loginName!=null">login_name=#{loginName},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="no!=null">no=#{no},</if>
+            <if test="name!=null">name=#{name},</if>
+            <if test="email!=null">email=#{email},</if>
+            <if test="phone!=null">phone=#{phone},</if>
+            <if test="mobile!=null">mobile=#{mobile},</if>
+            <if test="loginIp!=null">login_ip=#{loginIp},</if>
+            <if test="loginDate!=null">login_date=#{loginDate},</if>
+            <if test="createBy!=null">create_by=#{createBy},</if>
+            <if test="createDate!=null">create_date=#{createDate},</if>
+            <if test="updateBy!=null">update_by=#{updateBy},</if>
+            <if test="updateDate!=null">update_date=#{updateDate},</if>
+            <if test="remarks!=null">remarks=#{remarks},</if>
+            <if test="delFlag!=null">del_flag=#{delFlag}</if>
+        </set> <include refid="WhereClause4Id" />
+    </update>
+
 
     <update id="deleteById" parameterType="string">
         <include refid="public.DeleteById" />
@@ -89,11 +105,11 @@
         <include refid="public.Select4Query" />
     </select>
 
-    <select id="countByCriteria" resultType="_int" parameterType="CriteriaQuery">
+    <select id="countByCriteria" resultType="int" parameterType="CriteriaQuery">
         <include refid="public.Count4Query" />
     </select>
 
-    <select id="deleteByCriteria" resultType="_int" parameterType="CriteriaQuery">
-        <include refid="public.Count4Query" />
+    <select id="deleteByCriteria" resultType="int" parameterType="CriteriaQuery">
+        <include refid="public.Delete4Query" />
     </select>
 </mapper>

@@ -4,7 +4,10 @@ import com.wenin819.easyweb.core.persistence.IFiledEnum;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Ibatis 通用查询条件

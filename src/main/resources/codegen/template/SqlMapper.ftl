@@ -25,7 +25,7 @@
         </#if>${"#\{"}${tf.name}${"}"}</#list>
     </sql>
 
-    <sql id="TableClause"> ${table.schema}.${table.name} </sql>
+    <sql id="TableClause"> ${"$\{"}${table.schemaPropName}${"}"}.${table.name} </sql>
 
     <sql id="WhereClause4Id">
         <where>
@@ -43,7 +43,7 @@
         )
     </insert>
 
-    <select id="queryById" parameterType="string" resultMap="BaseResultMap">
+    <select id="queryById" resultMap="BaseResultMap">
         <include refid="public.SelectById" />
     </select>
 
@@ -55,6 +55,15 @@
         </set> <include refid="WhereClause4Id" />
     </update>
 
+     <update id="updateByIdSelective" parameterType="${table.className}">
+        <#assign i = 0 />
+            update <include refid="TableClause" />
+            <set><#list table.fieldListWithoutKey as tf>
+                <if test="${tf.name}!=null">${tf.collumnName}=${"#\{"}${tf.name}${"}"}<#if tf_has_next>,</#if></if></#list>
+            </set> <include refid="WhereClause4Id" />
+     </update>
+
+
     <update id="deleteById" parameterType="string">
         <include refid="public.DeleteById" />
     </update>
@@ -63,11 +72,11 @@
         <include refid="public.Select4Query" />
     </select>
 
-    <select id="countByCriteria" resultType="_int" parameterType="CriteriaQuery">
+    <select id="countByCriteria" resultType="int" parameterType="CriteriaQuery">
         <include refid="public.Count4Query" />
     </select>
 
-    <select id="deleteByCriteria" resultType="_int" parameterType="CriteriaQuery">
-        <include refid="public.Count4Query" />
+    <select id="deleteByCriteria" resultType="int" parameterType="CriteriaQuery">
+        <include refid="public.Delete4Query" />
     </select>
 </mapper>

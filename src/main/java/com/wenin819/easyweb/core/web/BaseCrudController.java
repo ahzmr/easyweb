@@ -1,12 +1,11 @@
 package com.wenin819.easyweb.core.web;
 
 import com.wenin819.easyweb.core.persistence.BaseEntity;
-import com.wenin819.easyweb.core.service.mybatis.BaseService;
-import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.persistence.Page;
-import com.wenin819.easyweb.core.util.StringUtils;
-import com.wenin819.easyweb.core.util.WebUtils;
-
+import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
+import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
+import com.wenin819.easyweb.core.utils.StringUtils;
+import com.wenin819.easyweb.core.utils.WebUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 /**
  * Created by wenin819@gmail.com on 2014-09-02.
  */
-public abstract class BaseEntityController <E extends BaseEntity> {
+public abstract class BaseCrudController<E extends BaseEntity> {
 
 
     /**
@@ -41,7 +41,7 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      * 得到对应service实现
      * @return
      */
-    protected abstract BaseService<E> getService();
+    protected abstract MybatisBaseService<E> getService();
 
     /**
      * 生成分布查询条件
@@ -66,18 +66,6 @@ public abstract class BaseEntityController <E extends BaseEntity> {
         return entity;
     }
 
-    @ModelAttribute
-    public E getEntryById(@RequestParam(required = false) String id) {
-        E entry = null;
-        if(!StringUtils.isBlank(id)) {
-            entry = getService().queryById(id);
-        }
-        if(null == entry) {
-            entry = getService().createEntity();
-        }
-        return entry;
-    }
-
     /**
      * 跳转分页查询页面
      * @param page  分页信息
@@ -90,7 +78,7 @@ public abstract class BaseEntityController <E extends BaseEntity> {
     public String toList(Page<E> page, E entity, Model model, HttpServletRequest request) {
         entity = updateEntity(entity, ActionType.SELECT, request, model);
         CriteriaQuery example = genCriteriaes(entity, request, model);
-        page = getService().queryPageByCriteria(example, page);
+        page = getService().queryPage(example, page);
         model.addAttribute(WebUtils.PAGE, page);
         return pagePathList;
     }
@@ -104,7 +92,12 @@ public abstract class BaseEntityController <E extends BaseEntity> {
      */
     @RequestMapping("form.html")
     public String toForm(E entry, Model model, HttpServletRequest request) {
-        model.addAttribute(WebUtils.ENTRY, entry);
+        E entity = getService().queryById(entry.getId());
+        if(null == entity) {
+            model.addAttribute(WebUtils.ENTRY, entry);
+        } else {
+            model.addAttribute(WebUtils.ENTRY, entity);
+        }
         return pagePathForm;
     }
 
@@ -118,7 +111,7 @@ public abstract class BaseEntityController <E extends BaseEntity> {
     @RequestMapping(value = "save.html", method = RequestMethod.POST)
     public String save(E entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         entity = updateEntity(entity, ActionType.SAVE, request, model);
-        final int success = getService().createOrUpdate(entity);
+        final int success = getService().save(entity);
         if(success > 0) {
             redirectAttributes.addAttribute(WebUtils.MSG, "保存成功");
             return "redirect:list.html";

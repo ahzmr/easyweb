@@ -20,9 +20,10 @@ public class FreemarkerUtils {
         Writer strWritter = new StringWriter();
         try {
             tpl.process(params, strWritter);
+            return strWritter.toString();
         } catch (Exception e) {
             logger.error("模板生成失败", e);
         }
-        return strWritter.toString();
+        return null;
     }
 }

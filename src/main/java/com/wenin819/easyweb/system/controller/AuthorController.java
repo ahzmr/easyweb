@@ -1,7 +1,7 @@
 package com.wenin819.easyweb.system.controller;
 
-import com.wenin819.easyweb.core.util.SecurityUtils;
-import com.wenin819.easyweb.core.util.WebUtils;
+import com.wenin819.easyweb.core.utils.SecurityUtils;
+import com.wenin819.easyweb.core.utils.WebUtils;
 import com.wenin819.easyweb.core.web.BaseController;
 
 import org.apache.shiro.authc.AuthenticationException;

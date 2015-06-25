@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author wenin819@gmail.com
  */
-public class CriteriaQuery {
+public class CriteriaQuery implements DBQuery {
 
     /**
      * 排序条件

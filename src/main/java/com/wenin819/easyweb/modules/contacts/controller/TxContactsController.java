@@ -1,10 +1,10 @@
 package com.wenin819.easyweb.modules.contacts.controller;
 
-import com.wenin819.easyweb.core.service.mybatis.BaseService;
 import com.wenin819.easyweb.core.persistence.mybatis.Criteria;
 import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
+import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
 import com.wenin819.easyweb.core.web.ActionType;
-import com.wenin819.easyweb.core.web.BaseEntityController;
+import com.wenin819.easyweb.core.web.BaseCrudController;
 import com.wenin819.easyweb.modules.contacts.model.TxContacts;
 import com.wenin819.easyweb.modules.contacts.service.TxContactsService;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/contacts/")
-public class TxContactsController extends BaseEntityController<TxContacts> {
+public class TxContactsController extends BaseCrudController<TxContacts> {
     @Override
     protected TxContacts updateEntity(TxContacts entity, ActionType type, HttpServletRequest request, Model model) {
         return super.updateEntity(entity, type, request, model);
@@ -56,7 +56,7 @@ public class TxContactsController extends BaseEntityController<TxContacts> {
     }
 
     @Override
-    protected BaseService<TxContacts> getService() {
+    protected MybatisBaseService<TxContacts> getService() {
         return txContactsService;
     }
 }

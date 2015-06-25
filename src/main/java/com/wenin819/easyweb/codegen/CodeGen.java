@@ -4,19 +4,14 @@ import com.wenin819.easyweb.codegen.util.CodegenConfigUtils;
 import com.wenin819.easyweb.codegen.util.DbUtils;
 import com.wenin819.easyweb.codegen.util.FreemarkerUtils;
 import com.wenin819.easyweb.codegen.vo.TableEntity;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Collection;
-import java.util.Map;
+import java.util.Properties;
 
 /**
  * 代码生成主类.
@@ -33,46 +28,71 @@ public class CodeGen {
         // 代码模板配置
         Configuration cfg = new Configuration();
         cfg.setDirectoryForTemplateLoading(CodegenConfigUtils.getTplPath());
+        cfg.setDefaultEncoding("UTF-8");
 
         // 定义模板变量
-        Map<Object, Object> model = CodegenConfigUtils.getConfigs();
+        Properties model = CodegenConfigUtils.getConfigs();
+
 
         // 生成 Entity
         Template entityTpl = cfg.getTemplate("Entity.ftl");
         Template daoTpl = cfg.getTemplate("EntityDao.ftl");
+        Template serviceTpl = cfg.getTemplate("EntityService.ftl");
         Template sqlMapperTpl = cfg.getTemplate("SqlMapper.ftl");
+        Template sqlMapperDB2Tpl = cfg.getTemplate("SqlMapperForMysql.ftl");
         Template sqlMapperExtTpl = cfg.getTemplate("SqlMapperExt.ftl");
 
         Collection<TableEntity> tables = DbUtils.getTables(CodegenConfigUtils.getTableSchema(),
                 CodegenConfigUtils.getTablePattern());
-        if (logger.isInfoEnabled()) {
-            logger.info("tables:[{}]", tables.toString());
+        if (logger.isTraceEnabled()) {
+            logger.trace("tables:[{}]", tables.toString());
+        }
+
+        String genFileType = model.getProperty("genFileType", null);
+        if(null != genFileType) {
+            genFileType = genFileType.toUpperCase();
         }
         for (TableEntity table : tables) {
             model.put("table", table);
-            String filePath = CodegenConfigUtils.getJavaBasePath() + separator + "model"
+            String filePath = null;
+            String content = null;
+
+            if(null == genFileType || genFileType.contains("M")) {
+                filePath = CodegenConfigUtils.getJavaBasePath() + separator + "model"
                               + separator + table.getClassName() + ".java";
-            String content = FreemarkerUtils.process2String(entityTpl, model);
+                content = FreemarkerUtils.process2String(entityTpl, model);
             writeFile(content, filePath, false);
             logger.info("Entity: {}", filePath);
 
-            filePath = CodegenConfigUtils.getJavaBasePath() + separator + "dao"
-                              + separator + table.getClassName() + "Dao.java";
-            content = FreemarkerUtils.process2String(daoTpl, model);
-            writeFile(content, filePath, false);
-            logger.info("Dao: {}", filePath);
-
-            filePath = CodegenConfigUtils.getMapperBasePath() + separator
+            filePath = CodegenConfigUtils.getMapperMysqlPath() + separator
                        + table.getName() + ".xml";
             content = FreemarkerUtils.process2String(sqlMapperTpl, model);
             writeFile(content, filePath, true);
             logger.info("SqlMapper: {}", filePath);
 
-            filePath = CodegenConfigUtils.getMapperBasePath() + separator
+            filePath = CodegenConfigUtils.getMapperMysqlPath() + separator
                        + table.getName() + "_ext.xml";
             content = FreemarkerUtils.process2String(sqlMapperExtTpl, model);
             writeFile(content, filePath, false);
             logger.info("SqlMapperExt: {}", filePath);
+            }
+
+            if(null == genFileType || genFileType.contains("D")) {
+                filePath = CodegenConfigUtils.getJavaBasePath() + separator + "dao"
+                        + separator + table.getClassName() + "Dao.java";
+                content = FreemarkerUtils.process2String(daoTpl, model);
+                writeFile(content, filePath, false);
+                logger.info("Dao: {}", filePath);
+            }
+
+            if(null == genFileType || genFileType.contains("S")) {
+                filePath = CodegenConfigUtils.getJavaBasePath() + separator + "service"
+                        + separator + table.getClassName() + "Service.java";
+                content = FreemarkerUtils.process2String(serviceTpl, model);
+                writeFile(content, filePath, false);
+                logger.info("Service: {}", filePath);
+            }
+
         }
 
         logger.info("Generate Success.");
@@ -86,23 +106,35 @@ public class CodeGen {
      * @param cover 是否覆盖已有文件
      */
     public static void writeFile(String content, String filePath, boolean cover) {
+        if(null == content || null == filePath) {
+            return;
+        }
+        BufferedWriter bufferedWriter = null;
         try {
             File file = new File(filePath);
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
             if (cover || !file.exists()) {
-                FileWriter fileWriter = new FileWriter(filePath, false);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(file, false), "UTF-8"));
                 bufferedWriter.write(content);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                fileWriter.close();
             } else {
                 logger.info("文件[{}]已存在，直接跳过！", filePath);
             }
         } catch (Exception e) {
             logger.error("写到文件时出错", e);
+        } finally {
+            if(null != bufferedWriter) {
+                try {
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                } catch (IOException e) {
+                    logger.error("关闭文件时出错", e);
+                }
+            }
         }
     }
+
+
 }

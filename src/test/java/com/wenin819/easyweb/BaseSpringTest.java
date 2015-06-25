@@ -1,6 +1,6 @@
 package com.wenin819.easyweb;
 
-import com.wenin819.easyweb.core.util.JsonUtils;
+import com.wenin819.easyweb.core.utils.JsonUtils;
 
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

@@ -23,7 +23,7 @@ public interface MybatisBaseDao<E extends BaseEntity> {
      * @param id 待查询记录的主键
      * @return
      */
-    E queryById(String id);
+    E queryById(Object id);
 
     /**
      * 通过主键更新
@@ -37,14 +37,14 @@ public interface MybatisBaseDao<E extends BaseEntity> {
      * @param id 待删除记录的主键
      * @return
      */
-    int deleteById(String id);
+    int deleteById(Object id);
 
     /**
      * 通过条件查询
      * @param critQuery 条件查询
      * @return
      */
-    List<E> queryByCriteria(CriteriaQuery critQuery);
+    List<E> queryByCriteria(DBQuery critQuery);
 
     /**
      * 通过条件查询
@@ -52,19 +52,19 @@ public interface MybatisBaseDao<E extends BaseEntity> {
      * @param rowBounds 分页
      * @return
      */
-    Page<E> queryByCriteria(CriteriaQuery critQuery, RowBounds rowBounds);
+    Page<E> queryByCriteria(DBQuery critQuery, RowBounds rowBounds);
 
     /**
      * 对条件查询求总数
      * @param critQuery 条件查询
      * @return
      */
-    int countByCriteria(CriteriaQuery critQuery);
+    int countByCriteria(DBQuery critQuery);
 
     /**
      * 通过条件查询删除
      * @param critQuery 条件查询
      * @return
      */
-    int deleteByCriteria(CriteriaQuery critQuery);
+    int deleteByCriteria(DBQuery critQuery);
 }

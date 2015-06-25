@@ -1,4 +1,4 @@
-package com.wenin819.easyweb.core.util;
+package com.wenin819.easyweb.core.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

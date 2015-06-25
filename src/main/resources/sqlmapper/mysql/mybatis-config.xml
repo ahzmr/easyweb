@@ -2,6 +2,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+    <properties resource="easyweb.properties" />
+
     <!-- 全局参数 -->
     <settings>
         <!-- 使全局的映射器启用或禁用缓存。 -->
@@ -39,7 +42,7 @@
     </settings>
 
     <typeAliases>
-        <typeAlias type="com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery" alias="CriteriaQuery"/>
+        <typeAlias type="com.wenin819.easyweb.core.persistence.mybatis.DBQuery" alias="CriteriaQuery"/>
     </typeAliases>
     
     <plugins>

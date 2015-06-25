@@ -3,7 +3,8 @@ package com.wenin819.easyweb.codegen.util;
 import com.wenin819.easyweb.codegen.vo.TableEntity;
 import com.wenin819.easyweb.codegen.vo.TableField;
 import com.wenin819.easyweb.core.persistence.IFiledEnum;
-import com.wenin819.easyweb.core.util.StringUtils;
+import com.wenin819.easyweb.core.utils.ConfigUtils;
+import com.wenin819.easyweb.core.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -20,26 +21,16 @@ import java.util.*;
 public class DbUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(DbUtils.class);
-    private static final Properties prop = genConfigProperties();
-
-    private static Properties genConfigProperties() {
-        try {
-            return PropertiesLoaderUtils.loadAllProperties("easyweb.properties");
-        } catch (IOException e) {
-            logger.error("加载数据库配置文件失败失败", e);
-            throw new RuntimeException(e);
-        }
-    }
 
     public static Connection getConnect() {
         try {
-            Class.forName(prop.getProperty("jdbc.driver"));
+            Class.forName(ConfigUtils.get().getValue("jdbc.driver"));
             Properties tmpProp = System.getProperties();
-            tmpProp.setProperty("user", prop.getProperty("jdbc.username"));
-            tmpProp.setProperty("password", prop.getProperty("jdbc.password"));
+            tmpProp.setProperty("user", ConfigUtils.get().getValue("jdbc.username"));
+            tmpProp.setProperty("password", ConfigUtils.get().getValue("jdbc.password"));
             tmpProp.setProperty("remarksReporting", "true");
             tmpProp.setProperty("useInformationSchema", "true");
-            return DriverManager.getConnection(prop.getProperty("jdbc.url"), tmpProp);
+            return DriverManager.getConnection(ConfigUtils.get().getValue("jdbc.url"), tmpProp);
         } catch (Exception e) {
             logger.error("获取和数据库的连接失败", e);
             throw new RuntimeException("获取和数据库的连接失败", e);
@@ -177,10 +168,5 @@ public class DbUtils {
             e.printStackTrace();
         }
         return s.toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.printf(getTables("easyweb", "P_MNG_USER").toString());
-        System.out.printf(getTables("MMC", "P_MNG_USER").toString());
     }
 }

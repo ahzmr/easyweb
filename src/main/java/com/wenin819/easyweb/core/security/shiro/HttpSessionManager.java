@@ -1,7 +1,7 @@
 package com.wenin819.easyweb.core.security.shiro;
 
 import com.wenin819.easyweb.config.SessionConfigEnum;
-import com.wenin819.easyweb.core.util.WebUtils;
+import com.wenin819.easyweb.core.utils.WebUtils;
 
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.session.Session;

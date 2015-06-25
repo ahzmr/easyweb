@@ -41,7 +41,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a id="selfInfo" href="javascript:"
-                               data-url="${baseUrl}/contacts/form.html?id=<shiro:principal property='id'/>">
+                               data-url="${baseUrl}/contacts/form.html?id=<shiro:principal property='no'/>">
                             修改个人信息</a></li>
                         <li><a id="selfPwd" href="javascript:"
                                data-url="${baseUrl}/sys/user/modifyPwd.html">

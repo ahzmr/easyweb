@@ -1,9 +1,9 @@
 package com.wenin819.easyweb.system.controller;
 
-import com.wenin819.easyweb.core.util.SecurityUtils;
-import com.wenin819.easyweb.core.util.StringUtils;
-import com.wenin819.easyweb.core.util.WebUtils;
-import com.wenin819.easyweb.core.web.BaseEntityController;
+import com.wenin819.easyweb.core.utils.SecurityUtils;
+import com.wenin819.easyweb.core.utils.StringUtils;
+import com.wenin819.easyweb.core.utils.WebUtils;
+import com.wenin819.easyweb.core.web.BaseCrudController;
 import com.wenin819.easyweb.system.model.SysUser;
 
 import com.wenin819.easyweb.system.service.SysUserService;
@@ -19,7 +19,7 @@ import javax.annotation.Resource;
  */
 @Controller
 @RequestMapping("/sys/user/")
-public class SysUserController extends BaseEntityController<SysUser> {
+public class SysUserController extends BaseCrudController<SysUser> {
 
     @Resource
     private SysUserService sysUserService;

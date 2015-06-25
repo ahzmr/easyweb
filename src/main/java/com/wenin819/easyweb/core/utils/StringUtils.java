@@ -1,4 +1,4 @@
-package com.wenin819.easyweb.core.util;
+package com.wenin819.easyweb.core.utils;
 
 /**
  * String工具类 Created by wenin819@gmail.com on 2014/4/9.

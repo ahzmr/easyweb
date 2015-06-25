@@ -31,12 +31,26 @@
 
     <sql id="Select4Query">
         select
-        <if test="distinct" >
-            distinct
-        </if>
-        <include refid="BaseColumnList" />
+        <choose>
+            <when test="selectClause != null">
+                ${selectClause}
+            </when>
+            <otherwise>
+                <if test="distinct" >
+                    distinct
+                </if>
+                <include refid="BaseColumnList" />
+            </otherwise>
+        </choose>
         from
-        <include refid="TableClause" />
+        <choose>
+            <when test="fromClause != null">
+                ${fromClause}
+            </when>
+            <otherwise>
+                <include refid="TableClause" />
+            </otherwise>
+        </choose>
         <include refid="public.WhereClause4Query" />
         <if test="orderByClause != null" >
             order by ${orderByClause}
@@ -45,7 +59,14 @@
 
     <sql id="Count4Query">
         select count(*) from
-        <include refid="TableClause" />
+        <choose>
+            <when test="fromClause != null">
+                ${fromClause}
+            </when>
+            <otherwise>
+                <include refid="TableClause" />
+            </otherwise>
+        </choose>
         <include refid="public.WhereClause4Query" />
     </sql>
 
@@ -55,9 +76,35 @@
         <include refid="WhereClause4Id" />
     </sql>
 
+    <sql id="LogicDeleteById">
+        update set DEL_FLAG = '1' from
+        <include refid="TableClause" />
+        <include refid="WhereClause4Id" />
+    </sql>
+
     <sql id="Delete4Query">
         delete from
-        <include refid="TableClause" />
+        <choose>
+            <when test="fromClause != null">
+                ${fromClause}
+            </when>
+            <otherwise>
+                <include refid="TableClause" />
+            </otherwise>
+        </choose>
+        <include refid="public.WhereClause4Query" />
+    </sql>
+
+    <sql id="LogicDelete4Query">
+        update set DEL_FLAG = '1' from
+        <choose>
+            <when test="fromClause != null">
+                ${fromClause}
+            </when>
+            <otherwise>
+                <include refid="TableClause" />
+            </otherwise>
+        </choose>
         <include refid="public.WhereClause4Query" />
     </sql>
 </mapper>

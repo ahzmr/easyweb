@@ -1,10 +1,10 @@
 package com.wenin819.easyweb.codegen.vo;
 
 import com.wenin819.easyweb.codegen.util.JavaTypeResolverUtil;
-import com.wenin819.easyweb.core.util.StringUtils;
+import com.wenin819.easyweb.core.utils.StringUtils;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.ibatis.type.JdbcType;
-import java.util.Objects;
 
 /**
  * 表字段对应的代码生成辅助类.
@@ -93,10 +93,13 @@ public class TableField {
     }
 
     public String getRemarks() {
-        return Objects.toString(remarks, "");
+        return ObjectUtils.toString(remarks, "");
     }
 
     public void setRemarks(String remarks) {
+        if(null != remarks) {
+            remarks = remarks.replaceAll("\\n|\\r", "  ");
+        }
         this.remarks = remarks;
     }
 

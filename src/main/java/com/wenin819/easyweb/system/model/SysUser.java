@@ -5,6 +5,7 @@ package com.wenin819.easyweb.system.model;
 
 import com.wenin819.easyweb.core.persistence.BaseEntity;
 import com.wenin819.easyweb.core.persistence.IFiledEnum;
+import com.wenin819.easyweb.core.utils.ConfigUtils;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,14 +21,6 @@ public class SysUser extends BaseEntity<SysUser.TE> implements Serializable {
      * 编号
      */
     private String id;
-    /**
-     * 归属公司
-     */
-    private String companyId;
-    /**
-     * 归属部门
-     */
-    private String officeId;
     /**
      * 登录名
      */
@@ -56,10 +49,6 @@ public class SysUser extends BaseEntity<SysUser.TE> implements Serializable {
      * 手机
      */
     private String mobile;
-    /**
-     * 用户类型
-     */
-    private String userType;
     /**
      * 最后登陆IP
      */
@@ -99,20 +88,6 @@ public class SysUser extends BaseEntity<SysUser.TE> implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-    public String getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
-    }
-    public String getOfficeId() {
-        return officeId;
-    }
-
-    public void setOfficeId(String officeId) {
-        this.officeId = officeId;
     }
     public String getLoginName() {
         return loginName;
@@ -162,13 +137,6 @@ public class SysUser extends BaseEntity<SysUser.TE> implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
     }
     public String getLoginIp() {
         return loginIp;
@@ -229,8 +197,6 @@ public class SysUser extends BaseEntity<SysUser.TE> implements Serializable {
 
     public static enum TE implements IFiledEnum {
         id("id"),  // 编号
-        companyId("company_id"),  // 归属公司
-        officeId("office_id"),  // 归属部门
         loginName("login_name"),  // 登录名
         password("password"),  // 密码
         no("no"),  // 工号
@@ -238,7 +204,6 @@ public class SysUser extends BaseEntity<SysUser.TE> implements Serializable {
         email("email"),  // 邮箱
         phone("phone"),  // 电话
         mobile("mobile"),  // 手机
-        userType("user_type"),  // 用户类型
         loginIp("login_ip"),  // 最后登陆IP
         loginDate("login_date"),  // 最后登陆时间
         createBy("create_by"),  // 创建者
@@ -262,9 +227,8 @@ public class SysUser extends BaseEntity<SysUser.TE> implements Serializable {
         }
         @Override
         public String getTableSchema() {
-            return "easyweb";
+            return ConfigUtils.get().getValue("schema.configPlat");
         }
-
         @Override
         public String toString() {
             return this.filedName;

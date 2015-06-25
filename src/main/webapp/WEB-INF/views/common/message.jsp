@@ -4,7 +4,7 @@
 <html lang="zh-CN">
 <head>
     <%@include file="/WEB-INF/includes/commonBase.jsp"%>
-    <title>通讯录增加或修改</title>
+    <title>信息提示</title>
 </head>
 <body>
 <div class="container">

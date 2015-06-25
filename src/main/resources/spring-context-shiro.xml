@@ -8,9 +8,9 @@
         <property name="loginUrl" value="/login.html"/>
         <property name="unauthorizedUrl" value="/login.html?massage=请登陆后再操作"/>
         <!-- <property name="filters">
-            <util:map>
+            <utils:map>
                 <entry key="aName" value-ref="someFilterPojo"/>
-            </util:map>
+            </utils:map>
         </property> -->
         <property name="filterChainDefinitions">
             <value>

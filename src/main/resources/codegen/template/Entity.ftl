@@ -5,6 +5,7 @@ package ${basePackageName}.model;
 
 import com.wenin819.easyweb.core.persistence.BaseEntity;
 import com.wenin819.easyweb.core.persistence.IFiledEnum;
+import com.wenin819.easyweb.core.utils.ConfigUtils;
 <#list table.importTypeList as importType >
 import ${importType};
 </#list>
@@ -61,7 +62,7 @@ public class ${table.className} extends BaseEntity<${table.className}.TE> {
         }
         @Override
         public String getTableSchema() {
-            return "${table.schema}";
+            return ConfigUtils.get().getValue("${table.schemaPropName}");
         }
         @Override
         public String toString() {

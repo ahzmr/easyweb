@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
  * @author ${author}
  */
 @Repository
-public interface ${table.className}Dao extends BaseDao<${table.className}> {
+public interface ${table.className}Dao extends MybatisBaseDao<${table.className}> {
 
 }

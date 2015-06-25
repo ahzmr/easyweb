@@ -9,6 +9,7 @@
                                   location="classpath*:/easyweb.properties"/>
 
     <import resource="spring-context-dao.xml"/>
+    <import resource="spring-context-liquibase.xml"/>
     <import resource="spring-context-service.xml"/>
     <import resource="spring-context-shiro.xml"/>
 

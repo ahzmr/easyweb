@@ -1,11 +1,13 @@
 package com.wenin819.easyweb.system.service;
 
 import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
-import com.wenin819.easyweb.core.service.mybatis.BaseService;
 import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.exception.DataException;
-import com.wenin819.easyweb.core.util.SecurityUtils;
-import com.wenin819.easyweb.core.util.StringUtils;
+import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
+import com.wenin819.easyweb.core.utils.ConfigName;
+import com.wenin819.easyweb.core.utils.ConfigUtils;
+import com.wenin819.easyweb.core.utils.SecurityUtils;
+import com.wenin819.easyweb.core.utils.StringUtils;
 import com.wenin819.easyweb.system.dao.SysUserDao;
 import com.wenin819.easyweb.system.model.SysUser;
 import org.springframework.stereotype.Service;
@@ -17,12 +19,23 @@ import java.util.List;
  * Created by wenin819@gmail.com on 2014-09-23.
  */
 @Service
-public class SysUserService extends BaseService<SysUser> {
+public class SysUserService extends MybatisBaseService<SysUser> {
 
     @Resource
     private SysUserDao sysUserDao;
+
     @Override
-    protected MybatisBaseDao<SysUser> getDao() {
+    public String getTableName() {
+        return ConfigUtils.get().getValue(ConfigName.SCHAME_CONFIGPLAT) + ".sys_user";
+    }
+
+    @Override
+    public String getIdKey() {
+        return "id";
+    }
+
+    @Override
+    public MybatisBaseDao<SysUser> getDao() {
         return sysUserDao;
     }
 
@@ -62,7 +75,7 @@ public class SysUserService extends BaseService<SysUser> {
                 currentUser.setLoginName(loginName);
             }
             currentUser.setPassword(SecurityUtils.genFinalPasswd(password, currentUser.getLoginName()));
-            update(currentUser);
+            save(currentUser);
         }
     }
 }

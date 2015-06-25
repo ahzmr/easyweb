@@ -7,13 +7,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.util.Assert;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -71,7 +71,7 @@ public class CodegenConfigUtils {
         String moduleName = props.getProperty("moduleName");
         if(StringUtils.hasText(moduleName)) {
             props.setProperty("basePackageName", props.getProperty("basePackageName") + "." + moduleName);
-            props.setProperty("sqlmapperPath", props.getProperty("sqlmapperPath") + "." + moduleName);
+            props.setProperty("sqlmapperMysqlPath", props.getProperty("sqlmapperPath") + ".mysql." + moduleName);
         }
     }
 
@@ -89,12 +89,23 @@ public class CodegenConfigUtils {
         try {
             if(!StringUtils.hasText(path)) {
                 file = new DefaultResourceLoader().getResource("").getFile();
+                // 从Class目录查找源码目录
+                while (null != file) {
+                    String name = file.getName();
+                    file = file.getParentFile();
+                    if("target".equals(name) || "src".equals(name)) {
+                        break;
+                    }
+                }
             } else {
                 file = ResourceUtils.getFile(path);
             }
+
+            file = new File(file, "src/main/java");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        Assert.notNull(file, "不能自动定位到源码目录，请手工设置工程源码目录位置：projectPath");
         props.put(projectPathFile, file);
         return file;
     }
@@ -113,12 +124,9 @@ public class CodegenConfigUtils {
      * @return
      */
     public static File getTplPath() {
-        try {
-            return new File(new DefaultResourceLoader().getResource("").getFile(),
-                    "codegen/template");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        File file = new File(getProjectPath() + "/../resources",
+                replacePath("codegen.template"));
+        return file;
     }
 
     /**
@@ -127,16 +135,25 @@ public class CodegenConfigUtils {
      */
     public static File getJavaBasePath() {
         String tplPath = props.getProperty("basePackageName");
-        return new File(getProjectPath() + "/src/main/java", replacePath(tplPath));
+        return new File(getProjectPath(), replacePath(tplPath));
     }
 
     /**
      * 获得Sql Mapper基本路径
      * @return
      */
-    public static File getMapperBasePath() {
-        String tplPath = props.getProperty("sqlmapperPath");
-        return new File(getProjectPath() + "/src/main/resources", replacePath(tplPath));
+    public static File getMapperMysqlPath() {
+        String tplPath = props.getProperty("sqlmapperMysqlPath");
+        return new File(getProjectPath() + "/../resources", replacePath(tplPath));
+    }
+
+    /**
+     * 获得页面基本路径
+     * @return
+     */
+    public static File getViewBasePath() {
+        String tplPath = props.getProperty("moduleName");
+        return new File(getProjectPath() + "/../webapp/WEB-INF/views/modules/", replacePath(tplPath));
     }
 
     /**
@@ -159,7 +176,7 @@ public class CodegenConfigUtils {
      * 得到代码生成配置信息
      * @return
      */
-    public static Map<Object, Object> getConfigs() {
+    public static Properties getConfigs() {
         return props;
     }
 

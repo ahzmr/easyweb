@@ -1,7 +1,9 @@
 package com.wenin819.easyweb.codegen.vo;
 
 
-import com.wenin819.easyweb.core.util.StringUtils;
+import com.wenin819.easyweb.core.utils.ConfigUtils;
+import com.wenin819.easyweb.core.utils.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.*;
 
@@ -38,6 +40,19 @@ public class TableEntity {
         this.schema = schema;
     }
 
+    public String getSchemaPropName() {
+        if(null == schema) {
+            return "";
+        }
+        Set<String> keys = ConfigUtils.get().keySetStartWith("schema.");
+        for (String key : keys) {
+            if(schema.equalsIgnoreCase(ConfigUtils.get().getValue(key))) {
+                return key;
+            }
+        }
+        return "";
+    }
+
     public String getName() {
         return name;
     }
@@ -52,10 +67,13 @@ public class TableEntity {
     }
 
     public String getRemarks() {
-        return Objects.toString(remarks, "");
+        return ObjectUtils.toString(remarks, "");
     }
 
     public void setRemarks(String remarks) {
+        if(null != remarks) {
+            remarks = remarks.replaceAll("\\n|\\r", "  ");
+        }
         this.remarks = remarks;
     }
 

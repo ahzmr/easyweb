@@ -1,4 +1,4 @@
-package com.wenin819.easyweb.core.util;
+package com.wenin819.easyweb.core.utils;
 
 import com.wenin819.easyweb.config.SessionConfigEnum;
 
