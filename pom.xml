@@ -43,6 +43,8 @@
 
         <liquibase.version>3.3.5</liquibase.version>
 
+        <sitemesh.version>2.4.2</sitemesh.version>
+
         <!-- jdbc driver setting -->
         <mysql.driver.version>5.1.30</mysql.driver.version>
         <orcle.driver.version>10.2.0.5.0</orcle.driver.version>
@@ -106,12 +108,12 @@
             <version>${mysql.driver.version}</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc14</artifactId>
-            <version>${orcle.driver.version}</version>
-            <scope>runtime</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.oracle</groupId>-->
+            <!--<artifactId>ojdbc14</artifactId>-->
+            <!--<version>${orcle.driver.version}</version>-->
+            <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -214,6 +216,13 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
+        </dependency>
+
+        <!-- sitemesh -->
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>sitemesh</artifactId>
+            <version>${sitemesh.version}</version>
         </dependency>
 
         <!-- liquibase -->

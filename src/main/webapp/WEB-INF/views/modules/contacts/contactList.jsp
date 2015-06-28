@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <%@include file="/WEB-INF/includes/common.jsp"%>
+    <meta name="decorator" content="default"/>
     <title>通讯录列表</title>
     <script>
         $(function(){

@@ -1,0 +1,8 @@
+CREATE TABLE
+    ARES_KEY_SEQUENCE
+    (
+        CODE VARCHAR(64) NOT NULL COMMENT '表名',
+        VALUE VARCHAR(64) COMMENT '序列当前值',
+        PRIMARY KEY (CODE)
+    )
+    DEFAULT CHARSET=utf8 COMMENT='序列表';
