@@ -35,7 +35,7 @@ public class SequenceKeyGenerator implements KeyGenerator {
      * 主键表名
      */
     protected static final String KEY_SEQUENCE_TABLENAME = ConfigUtils.get().getValue(ConfigName.SCHAME_CONFIGPLAT,
-            ConfigName.SCHAME_CONFIGPLAT_DEFVAL) + ".ARES_KEY_SEQUENCE";
+            ConfigName.SCHAME_CONFIGPLAT_DEFVAL) + ".SYS_KEY_SEQUENCE";
     /**
      * 查询Sql
      */
