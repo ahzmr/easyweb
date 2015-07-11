@@ -46,3 +46,14 @@ function loading(mess){ // 显示加载框
     top.$.jBox.tip.mess = null;
     top.$.jBox.tip(mess,'loading',{opacity:0});
 }
+
+// 取消处理函数
+function cancelHander() {
+    return false;
+}
+
+// 只读处理函数
+function readonlyHander(i, e) {
+    var thiz = e && $(e) || $(this);
+    thiz.addClass("readonly").attr("readonly", "readonly").attr("onclick", cancelHander);
+}

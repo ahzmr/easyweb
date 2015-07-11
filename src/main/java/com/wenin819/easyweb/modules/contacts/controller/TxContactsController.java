@@ -18,8 +18,16 @@ import javax.servlet.http.HttpServletRequest;
  * Created by wenin819@gmail.com on 2014-09-02.
  */
 @Controller
-@RequestMapping("/contacts/")
+@RequestMapping(TxContactsController.BASE_URL)
 public class TxContactsController extends BaseCrudController<TxContacts> {
+
+    public static final String BASE_URL = "/contacts/";
+
+    @Override
+    protected String getBaseUrl() {
+        return BASE_URL;
+    }
+
     @Override
     protected TxContacts updateEntity(TxContacts entity, ActionType type, HttpServletRequest request, Model model) {
         return super.updateEntity(entity, type, request, model);

@@ -38,9 +38,11 @@ public class CodeGen {
         Template entityTpl = cfg.getTemplate("Entity.ftl");
         Template daoTpl = cfg.getTemplate("EntityDao.ftl");
         Template serviceTpl = cfg.getTemplate("EntityService.ftl");
+        Template controllerTpl = cfg.getTemplate("EntityController.ftl");
         Template sqlMapperTpl = cfg.getTemplate("SqlMapper.ftl");
-        Template sqlMapperDB2Tpl = cfg.getTemplate("SqlMapperForMysql.ftl");
         Template sqlMapperExtTpl = cfg.getTemplate("SqlMapperExt.ftl");
+        Template formTpl = cfg.getTemplate("viewForm.ftl");
+        Template listTpl = cfg.getTemplate("viewList.ftl");
 
         Collection<TableEntity> tables = DbUtils.getTables(CodegenConfigUtils.getTableSchema(),
                 CodegenConfigUtils.getTablePattern());
@@ -91,6 +93,28 @@ public class CodeGen {
                 content = FreemarkerUtils.process2String(serviceTpl, model);
                 writeFile(content, filePath, false);
                 logger.info("Service: {}", filePath);
+            }
+
+            if(null == genFileType || genFileType.contains("C")) {
+                filePath = CodegenConfigUtils.getJavaBasePath() + separator + "controller"
+                        + separator + table.getClassName() + "Controller.java";
+                content = FreemarkerUtils.process2String(controllerTpl, model);
+                writeFile(content, filePath, false);
+                logger.info("Controller: {}", filePath);
+            }
+
+            if(null == genFileType || genFileType.contains("J")) {
+                filePath = CodegenConfigUtils.getViewBasePath() + separator
+                        + table.getClassName() + "List.jsp";
+                content = FreemarkerUtils.process2String(listTpl, model);
+                writeFile(content, filePath, false);
+                logger.info("viewList: {}", filePath);
+
+                filePath = CodegenConfigUtils.getViewBasePath() + separator
+                        + table.getClassName() + "Form.jsp";
+                content = FreemarkerUtils.process2String(formTpl, model);
+                writeFile(content, filePath, false);
+                logger.info("viewForm: {}", filePath);
             }
 
         }

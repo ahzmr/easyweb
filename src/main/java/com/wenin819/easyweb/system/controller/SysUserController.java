@@ -18,11 +18,18 @@ import javax.annotation.Resource;
  * Created by wenin819@gmail.com on 2014-10-08.
  */
 @Controller
-@RequestMapping("/sys/user/")
+@RequestMapping(SysUserController.BASE_URL)
 public class SysUserController extends BaseCrudController<SysUser> {
+
+    public static final String BASE_URL = "/sys/user/";
 
     @Resource
     private SysUserService sysUserService;
+
+    @Override
+    protected String getBaseUrl() {
+        return BASE_URL;
+    }
 
     @Override
     protected String getBasePagePath() {

@@ -365,6 +365,26 @@ public class ConfigManager {
     }
 
     /**
+     * 获得系统列表型配置值
+     * @param key 键
+     * @param classType 值元素类型
+     * @param <T> 值元素泛型
+     * @return
+     */
+    public <T> List<T> getValueList(String key, Class<T> classType) {
+        String valueStr = getValue(key);
+        if(StringUtils.isBlank(valueStr)) {
+            return new ArrayList<T>(0);
+        }
+        String[] strings = valueStr.split(ConfigEnum.SYS_DEFAULT_SPLIT_STR);
+        List<T> list = new ArrayList<T>(strings.length);
+        for (String string : strings) {
+            list.add((T) ConvertUtils.convert(string, classType));
+        }
+        return list;
+    }
+
+    /**
      * 得到最终字符串，替换系统中的变量，变量用"${varName}"表示，"$$"代表一个"$"
      * @param str 原始字符串
      * @return

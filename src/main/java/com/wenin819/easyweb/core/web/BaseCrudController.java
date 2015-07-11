@@ -4,6 +4,7 @@ import com.wenin819.easyweb.core.persistence.BaseEntity;
 import com.wenin819.easyweb.core.persistence.Page;
 import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
+import com.wenin819.easyweb.core.utils.SecurityUtils;
 import com.wenin819.easyweb.core.utils.StringUtils;
 import com.wenin819.easyweb.core.utils.WebUtils;
 import org.springframework.ui.Model;
@@ -22,11 +23,21 @@ import java.util.HashMap;
 public abstract class BaseCrudController<E extends BaseEntity> {
 
 
+    protected abstract String getBaseUrl();
+
     /**
      * 得到页面路径
      * @return
      */
     protected abstract String getBasePagePath();
+
+    /**
+     * 得到基础权限标识
+     * @return
+     */
+    protected String getBasePermission() {
+        return null;
+    }
 
     /**
      * 查询页面路径
@@ -42,6 +53,18 @@ public abstract class BaseCrudController<E extends BaseEntity> {
      * @return
      */
     protected abstract MybatisBaseService<E> getService();
+
+    /**
+     * 检查权限
+     * @param subPerm
+     */
+    protected void checkPermission(String subPerm) {
+        if(null == getBasePermission()) {
+            return;
+        }
+        SecurityUtils.getSubject().checkPermission(getBasePermission() + (null != subPerm ? ":" + subPerm : ""));
+    }
+
 
     /**
      * 生成分布查询条件
@@ -74,8 +97,9 @@ public abstract class BaseCrudController<E extends BaseEntity> {
      * @param request
      * @return
      */
-    @RequestMapping({"list.html", ""})
+    @RequestMapping({"list", ""})
     public String toList(Page<E> page, E entity, Model model, HttpServletRequest request) {
+        checkPermission("view");
         entity = updateEntity(entity, ActionType.SELECT, request, model);
         CriteriaQuery example = genCriteriaes(entity, request, model);
         page = getService().queryPage(example, page);
@@ -90,8 +114,9 @@ public abstract class BaseCrudController<E extends BaseEntity> {
      * @param request
      * @return
      */
-    @RequestMapping("form.html")
+    @RequestMapping("form")
     public String toForm(E entry, Model model, HttpServletRequest request) {
+        checkPermission("view");
         E entity = getService().queryById(entry.getId());
         if(null == entity) {
             model.addAttribute(WebUtils.ENTRY, entry);
@@ -108,8 +133,9 @@ public abstract class BaseCrudController<E extends BaseEntity> {
      * @param request
      * @return
      */
-    @RequestMapping(value = "save.html", method = RequestMethod.POST)
+    @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(E entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        checkPermission("edit");
         entity = updateEntity(entity, ActionType.SAVE, request, model);
         final int success = getService().save(entity);
         if(success > 0) {

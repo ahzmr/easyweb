@@ -59,4 +59,9 @@ public class ConfigName {
      */
     public static final String SEQUENCE_KEY_DEFAULT_VALUE = "key.sequence_key_default_value";
     public static final int SEQUENCE_KEY_DEFAULT_VALUE_DEFVAL = 1000;
+
+    /**
+     * 超级管理员的用户ID配置项
+     */
+    public static final String SYSTEM_SUPER_ADMIN_USER_IDS = "system.super_admin.user_ids";
 }

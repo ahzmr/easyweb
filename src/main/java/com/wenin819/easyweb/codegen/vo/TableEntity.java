@@ -18,7 +18,7 @@ public class TableEntity {
     private String remarks;
     private String className;
     private List<TableField> fieldList;
-    private List<String> primaryKeyList = null;
+    private final List<String> primaryKeyList = new ArrayList<String>();
 
     public List<TableField> getFieldList() {
         return fieldList;
@@ -81,9 +81,7 @@ public class TableEntity {
         if (null == collumnName) {
             return;
         }
-        if (null == primaryKeyList) {
-            primaryKeyList = new ArrayList<String>();
-        }
+        collumnName = collumnName.toUpperCase();
         if (!primaryKeyList.contains(collumnName)) {
             primaryKeyList.add(collumnName);
         }
@@ -91,14 +89,16 @@ public class TableEntity {
 
     public TableField getPrimaryField() {
         if (primaryKeyList.isEmpty() || primaryKeyList.size() > 1) {
-            return null;
+            // 自动识别常用的ID
+            primaryKeyList.add("ID");
         }
         for (TableField tableField : fieldList) {
-            if (primaryKeyList.contains(tableField.getCollumnName())) {
+            if (primaryKeyList.contains(tableField.getCollumnName().toUpperCase())) {
                 return tableField;
             }
         }
-        return null;
+        // 否则默认取第一个键
+        return fieldList.get(0);
     }
 
     public List<TableField> getFieldListWithoutKey() {
