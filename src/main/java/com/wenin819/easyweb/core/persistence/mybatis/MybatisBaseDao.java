@@ -33,6 +33,13 @@ public interface MybatisBaseDao<E extends BaseEntity> {
     int updateById(E record);
 
     /**
+     * 通过主键选择性更新，更新非null字段
+     * @param record 待更新的记录
+     * @return
+     */
+    int updateByIdSelective(E record);
+
+    /**
      * 通过主键删除记录
      * @param id 待删除记录的主键
      * @return

@@ -13,11 +13,9 @@ public class ConfigEnum {
 
     public static final Charset DEFAULT_CONFIG_FILE_ENCODING = Charset.forName("UTF-8");    // 默认的配置文件编码
 
-    public static final String DICT_SYS_PARAMS = "SYS_PARAM";	// 系统配置数据字典项
-
-    public static final String FILED_NAME_CREATE_DATE = "createDate";   // 创建时间字段名称
+    public static final String FILED_NAME_CREATE_TIME = "createDate";   // 创建时间字段名称
     public static final String FILED_NAME_CREATE_BY = "createBy";   // 创建人字段名称
-    public static final String FILED_NAME_UPDATE_DATE = "updateDate";   // 更新时间字段名称
+    public static final String FILED_NAME_UPDATE_TIME = "updateDate";   // 更新时间字段名称
     public static final String FILED_NAME_UPDATE_BY = "updateBy";   // 更新人字段名称
 
     // 显示/隐藏

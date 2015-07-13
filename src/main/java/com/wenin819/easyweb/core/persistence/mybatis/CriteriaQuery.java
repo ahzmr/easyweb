@@ -142,9 +142,9 @@ public class CriteriaQuery implements DBQuery {
      * @param isAsc 是否正序
      * @return
      */
-    public CriteriaQuery addOrder(String filedName, boolean isAsc) {
+    public CriteriaQuery addOrder(IFiledEnum filedName, boolean isAsc) {
         if (null == orderByClause) {
-            orderByClause = new StringBuilder(filedName);
+            orderByClause = new StringBuilder(filedName.getFiledName());
         } else {
             orderByClause.append(", ");
             orderByClause.append(filedName);
@@ -159,7 +159,7 @@ public class CriteriaQuery implements DBQuery {
      * @param isAscs 排序类型集合
      * @return
      */
-    public CriteriaQuery setOrders(String[] filedNames, boolean[] isAscs) {
+    public CriteriaQuery setOrders(IFiledEnum[] filedNames, boolean[] isAscs) {
         orderByClause = null;
         if(null == filedNames || filedNames.length == 0) {
             return this;

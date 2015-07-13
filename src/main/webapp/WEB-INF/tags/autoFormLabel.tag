@@ -15,6 +15,7 @@
 </c:if>
 <script>
     $(function() {
+        $(".readonly").each(readonlyHander);
         $(".hide-${optType}").hide();
         $(".readonly-${optType}").each(readonlyHander);
         //<c:if test="${optType == 'view'}">
@@ -23,6 +24,7 @@
         //</c:if>
         //<c:if test="${optType != 'view'}">
         $(".hide-edit").hide();
+        $(".readonly-edit").each(readonlyHander);
         //</c:if>
         $('select.readonly option').not(":selected").hide().attr('disabled', true);
     })

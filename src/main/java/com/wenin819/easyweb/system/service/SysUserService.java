@@ -4,15 +4,13 @@ import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
 import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.exception.DataException;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
-import com.wenin819.easyweb.core.utils.ConfigName;
-import com.wenin819.easyweb.core.utils.ConfigUtils;
-import com.wenin819.easyweb.core.utils.SecurityUtils;
-import com.wenin819.easyweb.core.utils.StringUtils;
+import com.wenin819.easyweb.core.utils.*;
 import com.wenin819.easyweb.system.dao.SysUserDao;
 import com.wenin819.easyweb.system.model.SysUser;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +37,11 @@ public class SysUserService extends MybatisBaseService<SysUser> {
         return sysUserDao;
     }
 
+    /**
+     * 通过登录名查询
+     * @param username 登录名
+     * @return
+     */
     public SysUser queryByLoginName(String username) {
         if(StringUtils.isBlank(username)) {
             return null;
@@ -53,6 +56,11 @@ public class SysUserService extends MybatisBaseService<SysUser> {
         }
     }
 
+    /**
+     * 判断登录名是否已经存在
+     * @param loginName 登录名
+     * @return
+     */
     public boolean checkLoginNameExists(String loginName) {
         if(StringUtils.isBlank(loginName)) {
             return true;
@@ -62,6 +70,11 @@ public class SysUserService extends MybatisBaseService<SysUser> {
         return getDao().countByCriteria(query) > 0;
     }
 
+    /**
+     * 修改登录密码
+     * @param loginName 登录名
+     * @param password 登录密码
+     */
     public void modifyPwd(String loginName, String password) {
         final SysUser currentUser = SecurityUtils.getCurrentUser();
         if(null == currentUser || StringUtils.isBlank(currentUser.getId())) {
@@ -78,4 +91,16 @@ public class SysUserService extends MybatisBaseService<SysUser> {
             save(currentUser);
         }
     }
+
+    /**
+     * 更新最后访问时间和访问IP
+     * @param loginName 登录名称
+     */
+    public void updateUserLoginInfo(String loginName) {
+        SysUser user = queryByLoginName(loginName);
+        user.setLoginIp(WebUtils.getRealRemoteAddr());
+        user.setLoginDate(new Date());
+        save(user);
+    }
+
 }

@@ -35,7 +35,7 @@
     </script>
 </head>
 <body>
-<div class="container-fluid" style="max-width: 540px; margin: 0 auto;">
+<div class="container-fluid" >
 <form:form id="inputForm" modelAttribute="entry" action="${baseUrl}/contacts/save.html"
            method="post" class="form-horizontal">
     <tags:message />

@@ -12,11 +12,18 @@ $.validator.addMethod("mobileOrPhoneCN", function(phone_number, element) {
                                       phone_number.match(/^(\d{3,4}-?\d{7,9})$/));
 }, "请输入正常的手机或电话号码");
 
-function initForm(options, form) {
-    if(!form) {
+function initForm(form, options) {
+    if(!form || 0 == $(form).length) {
         form = $("#inputForm") || $("form").first();
+        options = form;
+    } else {
+        form = $(form);
     }
     form.find("input:text").not("[readonly]").first().focus();
+    form.find("input[data-defVal]").each(function() {
+        var input = $(this);
+        input.val(input.attr("data-defVal"));
+    });
     options = $.extend({}, {
         submitHandler: function(form){
             loading('正在提交，请稍等...');

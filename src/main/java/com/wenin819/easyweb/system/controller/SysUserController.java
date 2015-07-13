@@ -1,5 +1,6 @@
 package com.wenin819.easyweb.system.controller;
 
+import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.utils.SecurityUtils;
 import com.wenin819.easyweb.core.utils.StringUtils;
 import com.wenin819.easyweb.core.utils.WebUtils;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by wenin819@gmail.com on 2014-10-08.
@@ -21,7 +23,7 @@ import javax.annotation.Resource;
 @RequestMapping(SysUserController.BASE_URL)
 public class SysUserController extends BaseCrudController<SysUser> {
 
-    public static final String BASE_URL = "/sys/user/";
+    public static final String BASE_URL = "/system/SysUser/";
 
     @Resource
     private SysUserService sysUserService;
@@ -33,12 +35,31 @@ public class SysUserController extends BaseCrudController<SysUser> {
 
     @Override
     protected String getBasePagePath() {
-        return "system/user";
+        return "system/SysUser";
     }
 
     @Override
     protected SysUserService getService() {
         return sysUserService;
+    }
+
+    @Override
+    protected CriteriaQuery genCriteriaes(SysUser entity, HttpServletRequest request, Model model) {
+        CriteriaQuery query = super.genCriteriaes(entity, request, model);
+        if(StringUtils.isNoneBlank(entity.getLoginName())) {
+            query.createAndCriteria().like(SysUser.TE.loginName, "%" + entity.getLoginName() + "%");
+        }
+        if(StringUtils.isNoneBlank(entity.getNo())) {
+            query.createAndCriteria().like(SysUser.TE.no, "%" + entity.getNo() + "%");
+        }
+        if(StringUtils.isNoneBlank(entity.getName())) {
+            query.createAndCriteria().like(SysUser.TE.name, "%" + entity.getName() + "%");
+        }
+        if(StringUtils.isNoneBlank(entity.getMobile())) {
+            query.createAndCriteria().like(SysUser.TE.mobile, "%" + entity.getMobile() + "%");
+        }
+        query.addOrder(SysUser.TE.no, true);
+        return query;
     }
 
     @RequiresAuthentication

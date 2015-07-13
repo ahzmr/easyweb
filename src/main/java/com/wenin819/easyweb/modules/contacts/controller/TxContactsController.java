@@ -3,10 +3,12 @@ package com.wenin819.easyweb.modules.contacts.controller;
 import com.wenin819.easyweb.core.persistence.mybatis.Criteria;
 import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
+import com.wenin819.easyweb.core.utils.StringUtils;
 import com.wenin819.easyweb.core.web.ActionType;
 import com.wenin819.easyweb.core.web.BaseCrudController;
 import com.wenin819.easyweb.modules.contacts.model.TxContacts;
 import com.wenin819.easyweb.modules.contacts.service.TxContactsService;
+import com.wenin819.easyweb.system.model.SysUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,8 +38,8 @@ public class TxContactsController extends BaseCrudController<TxContacts> {
     @Override
     protected CriteriaQuery genCriteriaes(TxContacts entity, HttpServletRequest request, Model model) {
         String viewType = request.getParameter("viewType");
-        final CriteriaQuery criteriaQuery = super.genCriteriaes(entity, request, model);
-        final Criteria criteria = criteriaQuery.createAndCriteria();
+        final CriteriaQuery query = super.genCriteriaes(entity, request, model);
+        final Criteria criteria = query.createAndCriteria();
         if(null == viewType) {
             viewType = "1";
         }
@@ -51,8 +53,20 @@ public class TxContactsController extends BaseCrudController<TxContacts> {
             default:
                 break;
         }
+        if(StringUtils.isNoneBlank(entity.getName())) {
+            query.createAndCriteria().like(TxContacts.TE.name, "%" + entity.getName() + "%");
+        }
+        if(StringUtils.isNoneBlank(entity.getAddress())) {
+            query.createAndCriteria().like(TxContacts.TE.address, "%" + entity.getAddress() + "%");
+        }
+        if(StringUtils.isNoneBlank(entity.getWorkAddr())) {
+            query.createAndCriteria().like(TxContacts.TE.workAddr, "%" + entity.getWorkAddr() + "%");
+        }
+        if(StringUtils.isNoneBlank(entity.getCompany())) {
+            query.createAndCriteria().like(TxContacts.TE.company, "%" + entity.getCompany() + "%");
+        }
         model.addAttribute("viewType", viewType);
-        return criteriaQuery;
+        return query;
     }
 
     @Resource

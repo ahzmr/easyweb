@@ -56,7 +56,7 @@ public abstract class MybatisBaseService<E extends BaseEntity> {
      * @return
      */
     public boolean autoGenId() {
-        return false;
+        return true;
     }
 
     /**
@@ -113,7 +113,7 @@ public abstract class MybatisBaseService<E extends BaseEntity> {
         Object id = getId(params);
 
         Date nowDate = new Date();
-        BeanUtils.setProperty(params, ConfigEnum.FILED_NAME_UPDATE_DATE, nowDate, false);
+        BeanUtils.setProperty(params, ConfigEnum.FILED_NAME_UPDATE_TIME, nowDate, false);
         String curUserCode = null;
         if(null != currentUserInfoDao) {
             curUserCode = currentUserInfoDao.getLoginName();
@@ -122,7 +122,9 @@ public abstract class MybatisBaseService<E extends BaseEntity> {
             BeanUtils.setProperty(params, ConfigEnum.FILED_NAME_UPDATE_BY, curUserCode, false);
         }
         if(null == id || "".equals(id)) {
-            id = genId();
+            if(autoGenId()) {
+                id = genId();
+            }
             BeanUtils.setProperty(params, getIdKey(), id, false);
             updateCreateEntity(params, nowDate, curUserCode);
             return getDao().insert(params);
@@ -144,7 +146,7 @@ public abstract class MybatisBaseService<E extends BaseEntity> {
      * @param curUserCode   创建人
      */
     private void updateCreateEntity(E entity, Date createDate, String curUserCode) {
-        BeanUtils.setProperty(entity, ConfigEnum.FILED_NAME_CREATE_DATE, createDate, false);
+        BeanUtils.setProperty(entity, ConfigEnum.FILED_NAME_CREATE_TIME, createDate, false);
         if(null != curUserCode) {
             BeanUtils.setProperty(entity, ConfigEnum.FILED_NAME_CREATE_BY, curUserCode, false);
         }

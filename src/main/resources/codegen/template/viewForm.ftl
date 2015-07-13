@@ -2,7 +2,7 @@
 <#assign basePath = "${r'${baseUrl}'}/${moduleName}/${table.className}/" />
 <#assign basePerm = "${moduleName}:${table.className}" />
 <#assign entityIdRef = "${r'${'}entry.${table.primaryField.name}}" />
-<%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" isELIgnored="false" %>
 <%@include file="/WEB-INF/includes/taglib.jsp"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -35,9 +35,10 @@
                 <input id="${field.name}" name="${field.name}" type="text" readonly="readonly" maxlength="20"
                        class="Wdate form-control" value="<fmt:formatDate value="${r'${entry.'}${field.name}}" pattern="yyyy-MM-dd HH:mm:ss"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
             <#else>
-                <form:input path="${field.name}" css="form-control" />
+                <form:input path="${field.name}" class="form-control" />
             </#if>
         </div>
+    </div>
     </#list>
     <div class="form-group">
         <div class="col-sm-12 text-center">

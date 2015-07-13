@@ -57,44 +57,44 @@
     <update id="updateById" parameterType="SysUser">
         update <include refid="TableClause" />
         <set>
-        login_name=#{loginName},
-        password=#{password},
-        no=#{no},
-        name=#{name},
-        email=#{email},
-        phone=#{phone},
-        mobile=#{mobile},
-        login_ip=#{loginIp},
-        login_date=#{loginDate},
-        create_by=#{createBy},
-        create_date=#{createDate},
-        update_by=#{updateBy},
-        update_date=#{updateDate},
-        remarks=#{remarks},
-        del_flag=#{delFlag}
+            login_name=#{loginName},
+            password=#{password},
+            no=#{no},
+            name=#{name},
+            email=#{email},
+            phone=#{phone},
+            mobile=#{mobile},
+            login_ip=#{loginIp},
+            login_date=#{loginDate},
+            create_by=#{createBy},
+            create_date=#{createDate},
+            update_by=#{updateBy},
+            update_date=#{updateDate},
+            remarks=#{remarks},
+            del_flag=#{delFlag}
         </set> <include refid="WhereClause4Id" />
     </update>
 
-    <update id="updateByIdSelective" parameterType="SysUser">
-        update <include refid="TableClause" />
-        <set>
-            <if test="loginName!=null">login_name=#{loginName},</if>
-            <if test="password!=null">password=#{password},</if>
-            <if test="no!=null">no=#{no},</if>
-            <if test="name!=null">name=#{name},</if>
-            <if test="email!=null">email=#{email},</if>
-            <if test="phone!=null">phone=#{phone},</if>
-            <if test="mobile!=null">mobile=#{mobile},</if>
-            <if test="loginIp!=null">login_ip=#{loginIp},</if>
-            <if test="loginDate!=null">login_date=#{loginDate},</if>
-            <if test="createBy!=null">create_by=#{createBy},</if>
-            <if test="createDate!=null">create_date=#{createDate},</if>
-            <if test="updateBy!=null">update_by=#{updateBy},</if>
-            <if test="updateDate!=null">update_date=#{updateDate},</if>
-            <if test="remarks!=null">remarks=#{remarks},</if>
-            <if test="delFlag!=null">del_flag=#{delFlag}</if>
-        </set> <include refid="WhereClause4Id" />
-    </update>
+     <update id="updateByIdSelective" parameterType="SysUser">
+            update <include refid="TableClause" />
+            <set>
+                <if test="loginName!=null">login_name=#{loginName},</if>
+                <if test="password!=null">password=#{password},</if>
+                <if test="no!=null">no=#{no},</if>
+                <if test="name!=null">name=#{name},</if>
+                <if test="email!=null">email=#{email},</if>
+                <if test="phone!=null">phone=#{phone},</if>
+                <if test="mobile!=null">mobile=#{mobile},</if>
+                <if test="loginIp!=null">login_ip=#{loginIp},</if>
+                <if test="loginDate!=null">login_date=#{loginDate},</if>
+                <if test="createBy!=null">create_by=#{createBy},</if>
+                <if test="createDate!=null">create_date=#{createDate},</if>
+                <if test="updateBy!=null">update_by=#{updateBy},</if>
+                <if test="updateDate!=null">update_date=#{updateDate},</if>
+                <if test="remarks!=null">remarks=#{remarks},</if>
+                <if test="delFlag!=null">del_flag=#{delFlag}</if>
+            </set> <include refid="WhereClause4Id" />
+     </update>
 
 
     <update id="deleteById" parameterType="string">

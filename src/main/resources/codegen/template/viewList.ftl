@@ -2,7 +2,7 @@
 <#assign basePath = "${r'${baseUrl}'}/${moduleName}/${table.className}/" />
 <#assign basePerm = "${moduleName}:${table.className}" />
 <#assign entityIdRef = "${r'${'}entity.${table.primaryField.name}}" />
-<%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" isELIgnored="false" %>
 <%@include file="/WEB-INF/includes/taglib.jsp"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -21,8 +21,13 @@
     <tags:message />
     <form id="searchForm" class="form-horizontal"
           action="${basePath}" method="post">
-        <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-        <input class="btn" type="reset" value="重置"/>
+
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+                <input class="btn" type="reset" value="重置"/>
+            </div>
+        </div>
     </form>
     <table class="table table-condensed table-hover table-striped table-bordered" >
         <thead>
