@@ -13,9 +13,9 @@ $.validator.addMethod("mobileOrPhoneCN", function(phone_number, element) {
 }, "请输入正常的手机或电话号码");
 
 function initForm(form, options) {
-    if(!form || 0 == $(form).length) {
-        form = $("#inputForm") || $("form").first();
+    if(!form || typeof form !== 'string') {
         options = form;
+        form = $("#inputForm") || $("form").first();
     } else {
         form = $(form);
     }
