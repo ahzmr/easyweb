@@ -76,6 +76,13 @@
                    placeholder="密码"/>
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="checkbox" id="rememberMe" name="rememberMe" value="true"/>
+                <label class="control-label" for="rememberMe">下次自动登录</label>
+            </div>
+        </div>
         <br />
         <div class="form-group text-center">
             <div class="col-md-12">

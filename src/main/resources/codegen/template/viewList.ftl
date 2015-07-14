@@ -19,22 +19,15 @@
 </ul>
 <div class="container-fluid table-responsive">
     <tags:message />
-    <form id="searchForm" class="form-horizontal"
-          action="${basePath}" method="post">
-
-        <div class="form-group">
-            <div class="col-sm-12 text-center">
-                <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-                <input class="btn" type="reset" value="重置"/>
-            </div>
-        </div>
-    </form>
     <table class="table table-condensed table-hover table-striped table-bordered" >
         <thead>
         <tr>
         <#list table.fieldList as field>
             <th>${field.remarks}</th>
         </#list>
+        <shiro:hasPermission name="system:SysRole:edit">
+            <th>操作</th>
+        </shiro:hasPermission>
         </tr>
         </thead>
         <tbody>

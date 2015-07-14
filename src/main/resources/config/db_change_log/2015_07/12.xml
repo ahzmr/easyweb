@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="20150712001" author="lichao" failOnError="false">
+        <preConditions>
+            <not>
+                <tableExists tableName="SYS_ROLE" />
+            </not>
+        </preConditions>
+        <comment>增加角色表</comment>
+        <sqlFile path="${jdbc.type}/12_001_init_sys_role.sql" relativeToChangelogFile="true" />
+    </changeSet>
+    <changeSet id="20150712002" author="lichao" failOnError="false">
+        <preConditions>
+            <not>
+                <tableExists tableName="SYS_ROLE_USER" />
+            </not>
+        </preConditions>
+        <comment>增加角色用户关系表</comment>
+        <sqlFile path="${jdbc.type}/12_002_init_sys_role_user.sql" relativeToChangelogFile="true" />
+    </changeSet>
+    
+</databaseChangeLog>

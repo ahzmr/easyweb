@@ -23,11 +23,11 @@
         ${entityLable}<tags:autoFormLabel editPermission="${basePerm}:edit" id="${entityIdRef}" /></a></li>
     </ul><br/>
 <form:form id="inputForm" modelAttribute="entry" action="${basePath}save"
-           method="post" class="form-horizontal">
+           method="post" class="form-horizontal inputForm">
     <tags:message />
     <#list table.fieldList as field>
     <div class="form-group">
-        <label class="col-sm-3  control-label">${field.remarks}：</label>
+        <label class="col-sm-3 control-label" for="${field.name}">${field.remarks}：</label>
         <div class="col-sm-9">
             <#if field.javaTypeName == 'Integer' || field.javaTypeName == 'Long' >
                 <form:input path="${field.name}" class="number form-control"/>

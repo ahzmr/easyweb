@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenin819.easyweb.system.dao.SysMenuDao">
+    <resultMap id="BaseResultMap" type="SysMenu">
+        <id property="id" column="id" jdbcType="VARCHAR" />
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR" />
+        <result property="parentIds" column="parent_ids" jdbcType="VARCHAR" />
+        <result property="name" column="name" jdbcType="VARCHAR" />
+        <result property="sort" column="sort" jdbcType="DECIMAL" />
+        <result property="href" column="href" jdbcType="VARCHAR" />
+        <result property="icon" column="icon" jdbcType="VARCHAR" />
+        <result property="isShow" column="is_show" jdbcType="CHAR" />
+        <result property="permission" column="permission" jdbcType="VARCHAR" />
+        <result property="remarks" column="remarks" jdbcType="VARCHAR" />
+        <result property="createBy" column="create_by" jdbcType="VARCHAR" />
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP" />
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR" />
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP" />
+        <result property="delFlag" column="del_flag" jdbcType="CHAR" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id,parent_id,parent_ids,name,sort,
+        href,icon,is_show,permission,remarks,
+        create_by,create_date,update_by,update_date,del_flag
+    </sql>
+
+    <sql id="BaseColumnValueList">
+        #{id},#{parentId},#{parentIds},#{name},#{sort},
+        #{href},#{icon},#{isShow},#{permission},#{remarks},
+        #{createBy},#{createDate},#{updateBy},#{updateDate},#{delFlag}
+    </sql>
+
+    <sql id="TableClause"> ${schema.configPlat}.sys_menu </sql>
+
+    <sql id="WhereClause4Id">
+        <where>
+            id = #{id}
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="SysMenu">
+        insert into <include refid="TableClause" /> (
+        <include refid="BaseColumnList" />
+        ) values (
+        <include refid="BaseColumnValueList" />
+        )
+    </insert>
+
+    <select id="queryById" resultMap="BaseResultMap">
+        <include refid="public.SelectById" />
+    </select>
+
+    <update id="updateById" parameterType="SysMenu">
+        update <include refid="TableClause" />
+        <set>
+            parent_id=#{parentId},
+            parent_ids=#{parentIds},
+            name=#{name},
+            sort=#{sort},
+            href=#{href},
+            icon=#{icon},
+            is_show=#{isShow},
+            permission=#{permission},
+            remarks=#{remarks},
+            create_by=#{createBy},
+            create_date=#{createDate},
+            update_by=#{updateBy},
+            update_date=#{updateDate},
+            del_flag=#{delFlag}
+        </set> <include refid="WhereClause4Id" />
+    </update>
+
+     <update id="updateByIdSelective" parameterType="SysMenu">
+            update <include refid="TableClause" />
+            <set>
+                <if test="parentId!=null">parent_id=#{parentId},</if>
+                <if test="parentIds!=null">parent_ids=#{parentIds},</if>
+                <if test="name!=null">name=#{name},</if>
+                <if test="sort!=null">sort=#{sort},</if>
+                <if test="href!=null">href=#{href},</if>
+                <if test="icon!=null">icon=#{icon},</if>
+                <if test="isShow!=null">is_show=#{isShow},</if>
+                <if test="permission!=null">permission=#{permission},</if>
+                <if test="remarks!=null">remarks=#{remarks},</if>
+                <if test="createBy!=null">create_by=#{createBy},</if>
+                <if test="createDate!=null">create_date=#{createDate},</if>
+                <if test="updateBy!=null">update_by=#{updateBy},</if>
+                <if test="updateDate!=null">update_date=#{updateDate},</if>
+                <if test="delFlag!=null">del_flag=#{delFlag}</if>
+            </set> <include refid="WhereClause4Id" />
+     </update>
+
+
+    <update id="deleteById" parameterType="string">
+        <include refid="public.DeleteById" />
+    </update>
+
+    <select id="queryByCriteria" resultMap="BaseResultMap" parameterType="CriteriaQuery">
+        <include refid="public.Select4Query" />
+    </select>
+
+    <select id="countByCriteria" resultType="int" parameterType="CriteriaQuery">
+        <include refid="public.Count4Query" />
+    </select>
+
+    <select id="deleteByCriteria" resultType="int" parameterType="CriteriaQuery">
+        <include refid="public.Delete4Query" />
+    </select>
+</mapper>

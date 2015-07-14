@@ -25,16 +25,6 @@ public class ${table.className}Controller extends BaseCrudController<${table.cla
     public static final String BASE_URL = "/${moduleName}/${table.className}/";
     private static final String BASE_PATH = "modules/${moduleName}/${table.className}";
 
-    @Override
-    protected  ${table.className} updateEntity(${table.className} entity, ActionType type, HttpServletRequest request, Model model) {
-        return super.updateEntity(entity, type, request, model);
-    }
-
-    @Override
-    protected CriteriaQuery genCriteriaes(${table.className} entity, HttpServletRequest request, Model model) {
-        return super.genCriteriaes(entity, request, model);
-    }
-
     @Resource
     private ${table.className}Service ${serviceName};
 
@@ -56,5 +46,10 @@ public class ${table.className}Controller extends BaseCrudController<${table.cla
     @Override
     protected MybatisBaseService<${table.className}> getService() {
         return ${serviceName};
+    }
+
+    @Override
+    protected CriteriaQuery genCriteriaes(${table.className} entity, HttpServletRequest request, Model model) {
+        return super.genCriteriaes(entity, request, model);
     }
 }

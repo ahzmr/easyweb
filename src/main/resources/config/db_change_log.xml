@@ -7,7 +7,7 @@
 
     <property file="easyweb.properties" />
 
-    <includeAll path="db_change_log/2015_06" relativeToChangelogFile="true"
+    <includeAll path="db_change_log" relativeToChangelogFile="true"
                 resourceFilter="com.wenin819.easyweb.filter.liquibase.IncludeXmlFilter" />
     
 </databaseChangeLog>

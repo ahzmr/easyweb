@@ -35,8 +35,8 @@ public class AuthorController extends BaseController {
     }
 
     @RequestMapping(value = "login.html", method = RequestMethod.POST)
-    public String login(String username, String password, Model model, RedirectAttributes attributes) {
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+    public String login(String username, String password, boolean rememberMe, Model model, RedirectAttributes attributes) {
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         try {
             SecurityUtils.getSubject().login(token);
             if (logger.isInfoEnabled()) {
