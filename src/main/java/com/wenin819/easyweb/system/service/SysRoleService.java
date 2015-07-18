@@ -54,7 +54,7 @@ public class SysRoleService extends MybatisBaseService<SysRole> {
      * @param role 角色
      * @param menuIds 菜单标识列表
      */
-    public void saveRoleMenuRelations(SysRole role, String[] menuIds) {
+    public void saveRoleMenuRelations(SysRole role, List<String> menuIds) {
         Assert.notNull(role, "role不能为空");
         sysRoleDao.deleteMenuRelationByRole(role);
         if(null != menuIds) {

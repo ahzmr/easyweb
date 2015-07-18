@@ -66,7 +66,7 @@ public class SysRoleController extends BaseCrudController<SysRole> {
         String toForm = super.toForm(entry, model, request);
         entry = (SysRole) model.asMap().get(WebUtils.ENTRY);
 
-        entry.setMenuIds(StringUtils.join(sysRoleService.queryMenuIdsByRole(entry), ","));
+        entry.setMenuIds(sysRoleService.queryMenuIdsByRole(entry));
         model.addAttribute("menus", sysMenuService.queryAllMenu());
         return toForm;
     }
@@ -74,7 +74,7 @@ public class SysRoleController extends BaseCrudController<SysRole> {
     @Override
     public String save(SysRole entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         String save = super.save(entity, model, redirectAttributes, request);
-        sysRoleService.saveRoleMenuRelations(entity, null == entity.getMenuIds() ? null : entity.getMenuIds().split(","));
+        sysRoleService.saveRoleMenuRelations(entity, entity.getMenuIds());
         return save;
     }
 }

@@ -40,4 +40,25 @@ public class ConfigUtils {
     public static ConfigManager get(String bootstrapConfigFile) {
         return ConfigManager.getInstance(bootstrapConfigFile);
     }
+
+
+
+    /**
+     * 获得系统配置值
+     * @param key 键
+     * @param defaultVal 默认值
+     * @return string类型值
+     */
+    public static String getValue(String key, String defaultVal) {
+        return get().getValue(key, String.class, defaultVal);
+    }
+
+    /**
+     * 获得系统配置值
+     * @param key 键
+     * @return string类型值
+     */
+    public static String getValue(String key) {
+        return get().getValue(key, null);
+    }
 }

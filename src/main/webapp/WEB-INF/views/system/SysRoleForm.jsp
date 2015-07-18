@@ -13,12 +13,12 @@
                     for(var i=0; i<nodes.length; i++) {
                         ids.push(nodes[i].id);
                     }
-                    $("#menuIds").val(ids.join(","));
+                    $("#menuIds").val(ids);
                     loading('正在提交，请稍等...');
                     form.submit();
                 }
             });
-            var selectIds = "${entry.menuIds}";
+            var selectIds = "${fns:join(entry.menuIds, ',')}";
             var map = {};
             if(selectIds) {
                 var split = selectIds.split(",");

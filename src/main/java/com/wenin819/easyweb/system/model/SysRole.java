@@ -7,6 +7,7 @@ import com.wenin819.easyweb.core.persistence.BaseEntity;
 import com.wenin819.easyweb.core.persistence.IFiledEnum;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 角色表
@@ -29,7 +30,7 @@ public class SysRole extends BaseEntity<SysRole.TE> {
     /**
      * 关联菜单列表
      */
-    private String menuIds;
+    private List<String> menuIds;
     /**
      * 创建者
      */
@@ -80,11 +81,11 @@ public class SysRole extends BaseEntity<SysRole.TE> {
         return createBy;
     }
 
-    public String getMenuIds() {
+    public List<String> getMenuIds() {
         return menuIds;
     }
 
-    public void setMenuIds(String menuIds) {
+    public void setMenuIds(List<String> menuIds) {
         this.menuIds = menuIds;
     }
 

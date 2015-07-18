@@ -36,7 +36,6 @@
             <th>更新者</th>
             <th>更新时间</th>
             <th>备注信息</th>
-            <th>删除标记</th>
             <shiro:hasPermission name="system:SysRole:edit">
                 <th>操作</th>
             </shiro:hasPermission>
@@ -53,7 +52,6 @@
                     <td>${entity.updateBy}</td>
                     <td><fmt:formatDate value="${entity.updateDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                     <td>${entity.remarks}</td>
-                    <td>${entity.delFlag}</td>
                 <shiro:hasPermission name="system:SysRole:edit"><td>
                     <a href="${baseUrl}/system/SysRole/form?id=${entity.id}">修改</a>
                     <a href="${baseUrl}/system/SysRole/delete?id=${entity.id}" onclick="return confirmx('确认要删除该角色吗？', this.href)">删除</a>
