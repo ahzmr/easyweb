@@ -8,6 +8,11 @@ import java.util.Map;
  */
 public abstract class BaseEntity<TE extends IFiledEnum> {
 
+    /**
+     * 主键
+     */
+    private String id;
+
     private final Map<String, Object> extPropertiesMap = new HashMap<String, Object>();
 
     public void setFieldLable(TE field, Object v) {
@@ -32,7 +37,11 @@ public abstract class BaseEntity<TE extends IFiledEnum> {
         return field.getFiledName() + "_Lable";
     }
 
-    public abstract String getId();
+    public String getId() {
+        return id;
+    }
 
-    public abstract void setId(String id);
+    public void setId(String id) {
+        this.id = id;
+    }
 }

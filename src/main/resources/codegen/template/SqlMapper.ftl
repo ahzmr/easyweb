@@ -64,9 +64,9 @@
      </update>
 
 
-    <update id="deleteById" parameterType="string">
+    <delete id="deleteById" parameterType="string">
         <include refid="public.DeleteById" />
-    </update>
+    </delete>
 
     <select id="queryByCriteria" resultMap="BaseResultMap" parameterType="CriteriaQuery">
         <include refid="public.Select4Query" />
@@ -76,7 +76,7 @@
         <include refid="public.Count4Query" />
     </select>
 
-    <select id="deleteByCriteria" resultType="int" parameterType="CriteriaQuery">
+    <delete id="deleteByCriteria" parameterType="CriteriaQuery">
         <include refid="public.Delete4Query" />
-    </select>
+    </delete>
 </mapper>

@@ -52,5 +52,6 @@
         <property name="securityManager" ref="securityManager"/>
     </bean>
 
+    <bean class="com.wenin819.easyweb.core.security.shiro.ShiroCurrentUserInfoDao"/>
 
 </beans>

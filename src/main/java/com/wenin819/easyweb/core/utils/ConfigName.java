@@ -64,4 +64,11 @@ public class ConfigName {
      * 超级管理员的用户ID配置项
      */
     public static final String SYSTEM_SUPER_ADMIN_USER_IDS = "system.super_admin.user_ids";
+
+    /**
+     * 树形实体根默认ID
+     */
+    public static final String treeEntityRootId() {
+        return ConfigUtils.get().getValue("entity.tree_entity_root_id", "0");
+    }
 }

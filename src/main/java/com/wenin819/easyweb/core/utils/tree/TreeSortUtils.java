@@ -1,5 +1,8 @@
 package com.wenin819.easyweb.core.utils.tree;
 
+import com.wenin819.easyweb.core.utils.tree.adapter.MapTreeNodeAdapter;
+import com.wenin819.easyweb.core.utils.tree.adapter.ObjectTreeNodeAdapter;
+import com.wenin819.easyweb.core.utils.tree.adapter.TreeNodeAdapter;
 import org.springframework.util.Assert;
 
 import java.util.*;
@@ -35,7 +38,10 @@ public class TreeSortUtils {
         if(null == list || list.isEmpty()) {
             return new ArrayList<E>(0);
         }
-        if(list.get(0) instanceof Map) {
+        E e = list.get(0);
+        if(e instanceof ITreeNode) {
+            return sort4Tree(addRoot, list, startWith, (ITreeNodeAdapter<E>) new TreeNodeAdapter());
+        } else if(e instanceof Map) {
             return sort4Tree(addRoot, list, startWith, (ITreeNodeAdapter<E>) MapTreeNodeAdapter.getDefaultInstance());
         } else {
             return sort4Tree(addRoot, list, startWith, (ITreeNodeAdapter<E>) ObjectTreeNodeAdapter.getDefaultInstance());

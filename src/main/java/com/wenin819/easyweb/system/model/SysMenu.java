@@ -3,16 +3,17 @@
 */
 package com.wenin819.easyweb.system.model;
 
-import com.wenin819.easyweb.core.persistence.BaseEntity;
 import com.wenin819.easyweb.core.persistence.IFiledEnum;
+import com.wenin819.easyweb.core.persistence.TreeEntity;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
+
 import java.util.Date;
 
 /**
  * 菜单表
  * @author wenin819@gmail.com
  */
-public class SysMenu extends BaseEntity<SysMenu.TE> {
+public class SysMenu extends TreeEntity<SysMenu.TE> {
 
     /**
      * 编号

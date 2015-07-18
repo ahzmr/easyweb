@@ -7,7 +7,7 @@
     <title>菜单列表</title>
     <script>
         $(function() {
-            $("#treeTable").treetable({expandLevel: 2});
+            $("#treeTable").treetable({expandable: true});
         });
     </script>
 </head>
@@ -18,7 +18,7 @@
 </ul>
 <div class="container-fluid table-responsive">
     <tags:message />
-    <table id="treeTable" class="table table-condensed table-hover table-striped table-bordered" >
+    <table id="treeTable" class="table table-condensed table-hover table-striped table-bordered treetable" >
         <thead>
         <tr>
             <th>名称</th>
@@ -29,14 +29,13 @@
         <shiro:hasPermission name="system:SysRole:edit">
             <th>操作</th>
         </shiro:hasPermission>
-        </tr id="${entity.id}" pid="${entity.parentId}" >
+        </tr >
         </thead>
         <tbody>
         <c:forEach items="${page}" var="entity">
-            <tr>
+            <tr data-tt-id="${entity.id}" data-tt-parent-id="${entity.parentId}">
                     <td><a href="${baseUrl}/system/SysMenu/form?isView=1&id=${entity.id}">${entity.name}</a></td>
                     <td>${entity.href}</td>
-                    <td>${entity.icon}</td>
                     <td>${entity.isShow}</td>
                     <td>${entity.permission}</td>
                     <td>${entity.remarks}</td>

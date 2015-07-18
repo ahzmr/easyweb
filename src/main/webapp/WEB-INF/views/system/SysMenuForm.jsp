@@ -30,7 +30,9 @@
     <div class="form-group">
         <label class="col-sm-3 control-label" for="parentId">父编号：</label>
         <div class="col-sm-9">
-                <form:input path="parentId" class="form-control" />
+            <tags:treeselect id="parentId" name="parentId" value="${entry.parentId}"
+                             labelName="parentIdLabel" labelValue="${entry.parentId}" allowClear="true"
+                             title="父菜单" url="${baseUrl}/system/SysMenu/queryByParent.json" />
         </div>
     </div>
     <input type="hidden" name="parentIds" value="${entry.parentIds}" />
@@ -52,16 +54,16 @@
                 <form:input path="href" class="form-control" />
         </div>
     </div>
-    <div class="form-group">
+    <%--<div class="form-group">
         <label class="col-sm-3 control-label" for="icon">图标：</label>
         <div class="col-sm-9">
                 <form:input path="icon" class="form-control" />
         </div>
-    </div>
+    </div>--%>
     <div class="form-group">
         <label class="col-sm-3 control-label" for="isShow">是否显示：</label>
-        <div class="col-sm-9">
-                <form:checkbox path="isShow" value="1" />
+        <div class="col-sm-9 checkbox">
+                <label><form:checkbox path="isShow" value="1" />显示</label>
         </div>
     </div>
     <div class="form-group">
@@ -77,9 +79,9 @@
         </div>
     </div>
     <div class="form-group hide-add">
-        <label class="col-sm-3 control-label readonly" for="createBy">创建者：</label>
+        <label class="col-sm-3 control-label" for="createBy">创建者：</label>
         <div class="col-sm-9">
-                <form:input path="createBy" class="form-control" />
+                <form:input path="createBy" class="form-control readonly" />
         </div>
     </div>
     <div class="form-group hide-add">

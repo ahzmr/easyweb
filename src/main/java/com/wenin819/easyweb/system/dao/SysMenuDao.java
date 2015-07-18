@@ -4,6 +4,7 @@
 package com.wenin819.easyweb.system.dao;
 
 import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
+import com.wenin819.easyweb.core.persistence.mybatis.MybatisTreeBaseDao;
 import com.wenin819.easyweb.system.model.SysMenu;
 
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @author wenin819@gmail.com
  */
 @Repository
-public interface SysMenuDao extends MybatisBaseDao<SysMenu> {
+public interface SysMenuDao extends MybatisTreeBaseDao<SysMenu> {
 
 }

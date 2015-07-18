@@ -20,7 +20,7 @@ import java.util.HashMap;
 /**
  * Created by wenin819@gmail.com on 2014-09-02.
  */
-public abstract class BaseCrudController<E extends BaseEntity> {
+public abstract class BaseCrudController<E extends BaseEntity> extends BaseController {
 
 
     protected abstract String getBaseUrl();
@@ -146,5 +146,17 @@ public abstract class BaseCrudController<E extends BaseEntity> {
             model.addAttribute(WebUtils.ENTRY, entity);
             return pagePathForm;
         }
+    }
+
+    @RequestMapping("delete")
+    public String delete(E entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        checkPermission("edit");
+        final int success = getService().delete(entity);
+        if(success > 0) {
+            redirectAttributes.addAttribute(WebUtils.MSG, "删除成功");
+        } else {
+            redirectAttributes.addAttribute(WebUtils.MSG, "删除失败，请重试");
+        }
+        return "redirect:list.html";
     }
 }

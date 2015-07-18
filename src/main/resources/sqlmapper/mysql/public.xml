@@ -21,6 +21,12 @@
         </where>
     </sql>
 
+    <sql id="batchUpdateChildrenParentIds">
+        update <include refid="TableClause" />
+        set parent_ids = CONCAT(#{parentIds}, SUBSTRING(parent_ids, 1 + INSTR(parent_ids, CONCAT(';', #{id}, ';'))))
+        where parent_ids like CONCAT('%;', #{id}, ';%')
+    </sql>
+
     <sql id="SelectById">
         select
         <include refid="BaseColumnList" />

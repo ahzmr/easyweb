@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.wenin819.easyweb.core.persistence.BaseEntity;
 import com.wenin819.easyweb.core.persistence.CurrentUserInfoDao;
 import com.wenin819.easyweb.core.persistence.Page;
+import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.persistence.mybatis.DBQuery;
 import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
 import com.wenin819.easyweb.core.utils.BeanUtils;
@@ -17,7 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
+import java.beans.Transient;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -102,10 +105,23 @@ public abstract class MybatisBaseService<E extends BaseEntity> {
     }
 
     /**
+     * 条件查询，不分页
+     * @param query 查询条件
+     * @return
+     */
+    public List<E> queryByCriteria(DBQuery query) {
+        if(null == query) {
+            query = new CriteriaQuery();
+        }
+        return getDao().queryByCriteria(query);
+    }
+
+    /**
      * 增加或修改
      * @param params 参数
      * @return 增加或修改的记录数
      */
+    @Transient
     public int save(E params) {
         if(null == params) {
             return -1;
@@ -158,6 +174,7 @@ public abstract class MybatisBaseService<E extends BaseEntity> {
      * @param params 参数
      * @return 删除的记录数
      */
+    @Transient
     public int delete(Object params) {
         return getDao().deleteById(params);
     }

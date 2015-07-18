@@ -78,9 +78,8 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-12">
-                <input type="checkbox" id="rememberMe" name="rememberMe" value="true"/>
-                <label class="control-label" for="rememberMe">下次自动登录</label>
+            <div class="checkbox pull-right">
+                <label><input type="checkbox" id="rememberMe" name="rememberMe" value="true"/>下次自动登录</label>
             </div>
         </div>
         <br />
