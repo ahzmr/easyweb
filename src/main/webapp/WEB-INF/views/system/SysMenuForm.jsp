@@ -31,7 +31,7 @@
         <label class="col-sm-3 control-label" for="parentId">父编号：</label>
         <div class="col-sm-9">
             <tags:treeselect id="parentId" name="parentId" value="${entry.parentId}"
-                             labelName="parentIdLabel" labelValue="${entry.parentId}" allowClear="true"
+                             labelName="parentIdLabel" labelValue="${entry.parentName}" allowClear="true"
                              title="父菜单" url="${baseUrl}/system/SysMenu/queryByParent.json" />
         </div>
     </div>

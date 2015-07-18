@@ -8,6 +8,13 @@ function winResize() {  // 自动计算高度并设置
     $("#mainFrame").css(
         { 'height': $(document).height() - $("#navtoolbar").outerHeight(true) - 18
         });
+    $("#mainFrame").ready(function() {
+        $('a[href][target="_blank"]').click(function(e) {
+            e.preventDefault();
+            toPage($(this.href));
+            return true;
+        });
+    });
 }
 
 function initPage() {   // 初始化页面
@@ -23,10 +30,15 @@ function initPage() {   // 初始化页面
 function initDoc() {
     winResize();
 
-    $("#navbar-collapse ul.navbar-nav > li > a[id]").click(function() {
-        return updateActive(this) || true;
+    $("#navbar-collapse ul.navbar-nav > li > a[id]").click(function(e) {
+        if(!$(this).attr("href")) {
+            return true;
+        }
+        e.preventDefault();
+        return updateActive(this, $(this).attr("id")) || true;
     });
-    $("#navbar-collapse ul.dropdown-menu > li > a[id]").click(function() {
+    $("#navbar-collapse ul.dropdown-menu > li > a[id]").click(function(e) {
+        e.preventDefault();
         return updateActive(this) || true;
     });
 
@@ -50,8 +62,8 @@ function goIndex() {
 }
 
 function updateActive(thiz) { // 更新工具栏选择状态
-    $("#navbar-collapse li").removeClass("active");
     $(thiz).parent().addClass("active");
+    $("#navbar-collapse li").not($(thiz)).removeClass("active");
     toPage(thiz);
     return false;
 }

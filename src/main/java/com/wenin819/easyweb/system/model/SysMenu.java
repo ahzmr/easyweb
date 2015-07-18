@@ -24,6 +24,11 @@ public class SysMenu extends TreeEntity<SysMenu.TE> {
      */
     private String parentId;
     /**
+     * 父菜单名称
+     */
+    private String parentName;
+
+    /**
      * 所有父编号
      */
     private String parentIds;
@@ -34,7 +39,7 @@ public class SysMenu extends TreeEntity<SysMenu.TE> {
     /**
      * 排序
      */
-    private Long sort;
+    private Integer sort;
     /**
      * 链接
      */
@@ -87,6 +92,14 @@ public class SysMenu extends TreeEntity<SysMenu.TE> {
         return parentId;
     }
 
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
     public void setParentId(String parentId) {
         this.parentId = parentId;
     }
@@ -104,11 +117,11 @@ public class SysMenu extends TreeEntity<SysMenu.TE> {
     public void setName(String name) {
         this.name = name;
     }
-    public Long getSort() {
+    public Integer getSort() {
         return sort;
     }
 
-    public void setSort(Long sort) {
+    public void setSort(Integer sort) {
         this.sort = sort;
     }
     public String getHref() {

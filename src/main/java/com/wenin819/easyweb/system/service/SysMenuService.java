@@ -6,9 +6,13 @@ import com.wenin819.easyweb.core.service.mybatis.MybatisTreeBaseService;
 import com.wenin819.easyweb.core.utils.ConfigName;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
 import com.wenin819.easyweb.core.utils.StringUtils;
+import com.wenin819.easyweb.core.utils.tree.ITreeNodeAdapter;
+import com.wenin819.easyweb.core.utils.tree.TreeSortUtils;
+import com.wenin819.easyweb.core.utils.tree.adapter.ObjectTreeNodeAdapter;
 import com.wenin819.easyweb.system.dao.SysMenuDao;
 import com.wenin819.easyweb.system.model.SysMenu;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +27,31 @@ public class SysMenuService extends MybatisTreeBaseService<SysMenu> {
     @Resource
     private SysMenuDao sysMenuDao;
 
+    /**
+     * 菜单的树结构适配器
+     */
+    public final ITreeNodeAdapter<SysMenu> menuTreeNodeAdapter = new ObjectTreeNodeAdapter<SysMenu>() {
+        @Override
+        public Boolean getIsParent(SysMenu node) {
+            return isParent(node);
+        }
+
+        @Override
+        public String getId(SysMenu node) {
+            return null == node ? null : node.getId();
+        }
+
+        @Override
+        public String getPid(SysMenu node) {
+            return null == node ? null : node.getParentId();
+        }
+
+        @Override
+        public String getName(SysMenu node) {
+            return null == node ? null : node.getName();
+        }
+    };
+
     @Override
     public String getTableName() {
         return ConfigUtils.get().getValue("schema.configPlat") + ".sys_menu";
@@ -36,6 +65,13 @@ public class SysMenuService extends MybatisTreeBaseService<SysMenu> {
     @Override
     public MybatisTreeBaseDao<SysMenu> getDao() {
         return sysMenuDao;
+    }
+
+    public List<SysMenu> queryAllMenu() {
+        CriteriaQuery query = new CriteriaQuery();
+        query.addOrder(SysMenu.TE.sort, true);
+        List<SysMenu> sysMenus = getDao().queryByCriteria(query);
+        return TreeSortUtils.sort4Tree(sysMenus, null, menuTreeNodeAdapter);
     }
 
     /**
@@ -69,5 +105,34 @@ public class SysMenuService extends MybatisTreeBaseService<SysMenu> {
             query.createAndCriteria().equalTo(SysMenu.TE.parentId, ConfigName.treeEntityRootId());
         }
         return getDao().countByCriteria(query) > 0;
+    }
+
+    /**
+     * 批量保存排序
+     * @param ids
+     * @param oldSorts
+     * @param sorts
+     */
+    public void batchUpdateSorts(String[] ids, Integer[] oldSorts, Integer[] sorts) {
+        if(null == ids) {
+            return;
+        }
+        Assert.notNull(sorts, "sorts不能为空");
+        Assert.isTrue(null == oldSorts || ids.length == oldSorts.length, "oldSorts长度不正确");
+        Assert.isTrue(ids.length == sorts.length, "sorts长度不正确");
+        SysMenu menu = new SysMenu();
+        for (int i = 0; i < ids.length; i++) {
+            Integer sort = sorts[i];
+            if(null != oldSorts) {
+                Integer oldSort = oldSorts[i];
+                if(null != sort && sort.equals(oldSort)) {
+                    continue;
+                }
+            }
+            String id = ids[i];
+            menu.setId(id);
+            menu.setSort(sort);
+            getDao().updateByIdSelective(menu);
+        }
     }
 }

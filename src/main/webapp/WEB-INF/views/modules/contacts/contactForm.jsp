@@ -37,7 +37,7 @@
 <body>
 <div class="container-fluid" >
 <form:form id="inputForm" modelAttribute="entry" action="${baseUrl}/contacts/save.html"
-           method="post" class="form-horizontal">
+           method="post" class="form-horizontal inputForm">
     <tags:message />
     <div class="form-group">
         <label class="col-sm-3 control-label">学号:</label>

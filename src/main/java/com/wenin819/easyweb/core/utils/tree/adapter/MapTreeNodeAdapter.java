@@ -42,10 +42,6 @@ public class MapTreeNodeAdapter<E extends Map> extends ITreeNodeAdapter<E> {
         this.nameKey = nameKey;
     }
 
-    public String getIsParent() {
-        return isParent;
-    }
-
     public ITreeNodeAdapter<E> setIsParent(String isParent) {
         this.isParent = isParent;
         return this;

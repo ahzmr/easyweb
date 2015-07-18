@@ -47,7 +47,10 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
      * 查看修改页面路径
      */
     protected final String pagePathForm = getBasePagePath() + "Form";
-
+    /**
+     * 跳转到列表页面的路径
+     */
+    protected final String redirect2ListPage = "redirect:list.html";
     /**
      * 得到对应service实现
      * @return
@@ -117,8 +120,8 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
     @RequestMapping("form")
     public String toForm(E entry, Model model, HttpServletRequest request) {
         checkPermission("view");
-        E entity = getService().queryById(entry.getId());
-        if(null == entity) {
+        E entity;
+        if(null == entry.getId() || null == (entity = getService().queryById(entry.getId()))) {
             model.addAttribute(WebUtils.ENTRY, entry);
         } else {
             model.addAttribute(WebUtils.ENTRY, entity);
@@ -140,7 +143,7 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
         final int success = getService().save(entity);
         if(success > 0) {
             redirectAttributes.addAttribute(WebUtils.MSG, "保存成功");
-            return "redirect:list.html";
+            return redirect2ListPage;
         } else {
             model.addAttribute(WebUtils.MSG, "保存失败，请重试");
             model.addAttribute(WebUtils.ENTRY, entity);
@@ -157,6 +160,6 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
         } else {
             redirectAttributes.addAttribute(WebUtils.MSG, "删除失败，请重试");
         }
-        return "redirect:list.html";
+        return redirect2ListPage;
     }
 }

@@ -86,15 +86,16 @@ public class SysMenuController extends BaseCrudController<SysMenu> {
     public List<TreeNodeWrapper<SysMenu>> queryByParent(SysMenu entity) {
         List<SysMenu> sysMenus = sysMenuService.queryByParent(entity);
         List<TreeNodeWrapper<SysMenu>> list = new ArrayList<TreeNodeWrapper<SysMenu>>(sysMenus.size());
-        ITreeNodeAdapter<SysMenu> adapter = new ObjectTreeNodeAdapter<SysMenu>("id", "parentId", "name") {
-            @Override
-            public Boolean getIsParent(SysMenu node) {
-                return sysMenuService.isParent(node);
-            }
-        };
+        ITreeNodeAdapter<SysMenu> adapter = sysMenuService.menuTreeNodeAdapter;
         for (SysMenu sysMenu : sysMenus) {
             list.add(new TreeNodeWrapper<SysMenu>(sysMenu, adapter));
         }
         return list;
+    }
+
+    @RequestMapping("saveSorts")
+    public String saveSorts(String[] ids, Integer[] oldSorts, Integer[] sorts) {
+        sysMenuService.batchUpdateSorts(ids, oldSorts, sorts);
+        return redirect2ListPage;
     }
 }

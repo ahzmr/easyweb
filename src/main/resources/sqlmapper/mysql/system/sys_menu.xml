@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="SysMenu">
         <id property="id" column="id" jdbcType="VARCHAR" />
         <result property="parentId" column="parent_id" jdbcType="VARCHAR" />
+        <result property="parentName" column="parent_name" jdbcType="VARCHAR" />
         <result property="parentIds" column="parent_ids" jdbcType="VARCHAR" />
         <result property="name" column="name" jdbcType="VARCHAR" />
         <result property="sort" column="sort" jdbcType="DECIMAL" />
@@ -20,6 +21,13 @@
     </resultMap>
 
     <sql id="BaseColumnList">
+        id,parent_id,parent_ids,name,sort,
+        href,icon,is_show,permission,remarks,
+        create_by,create_date,update_by,update_date,del_flag,
+        (select t1.name from sys_menu t1 where t1.id = sys_menu.parent_id) parent_name
+    </sql>
+
+    <sql id="ColumnList">
         id,parent_id,parent_ids,name,sort,
         href,icon,is_show,permission,remarks,
         create_by,create_date,update_by,update_date,del_flag
@@ -41,7 +49,7 @@
 
     <insert id="insert" parameterType="SysMenu">
         insert into <include refid="TableClause" /> (
-        <include refid="BaseColumnList" />
+        <include refid="ColumnList" />
         ) values (
         <include refid="BaseColumnValueList" />
         )
