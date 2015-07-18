@@ -1,6 +1,6 @@
 package com.wenin819.easyweb.core.utils.key;
 
-import com.wenin819.easyweb.core.utils.ConfigName;
+import com.wenin819.easyweb.core.utils.Configs;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
 import com.wenin819.easyweb.core.utils.key.sequence.SequenceKeyGenerator;
 import com.wenin819.easyweb.core.utils.key.uuid.UUIDKeyGenerator;
@@ -30,8 +30,8 @@ public class KeyFactory {
             if(null != keyGenerator) {
                 return keyGenerator;
             }
-            String value = ConfigUtils.get().getValue(ConfigName.KEY_GENERATOR_TYPE,
-                    ConfigName.KEY_GENERATOR_TYPE_DEFVAL);
+            String value = ConfigUtils.get().getValue(Configs.KEY_GENERATOR_TYPE,
+                    Configs.KEY_GENERATOR_TYPE_DEFVAL);
             if("sequence".equalsIgnoreCase(value)) {
                 keyGenerator = new SequenceKeyGenerator(tableName);
             } else {    // uuid

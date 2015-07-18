@@ -1,10 +1,13 @@
 package com.wenin819.easyweb.core.utils;
 
+import javax.servlet.jsp.jstl.core.Config;
+import java.util.List;
+
 /**
  * 本工程系统配置配置名称统一管理类
  * @author wenin819@gmail.com
  */
-public class ConfigName {
+public class Configs {
 
     /**
      * 数据库类型： 可选值为 oracle, db2, mysql等
@@ -63,7 +66,9 @@ public class ConfigName {
     /**
      * 超级管理员的用户ID配置项
      */
-    public static final String SYSTEM_SUPER_ADMIN_USER_IDS = "system.super_admin.user_ids";
+    public static final List<String> systemSuperAdminUserIds() {
+        return ConfigUtils.get().getValueList("system.super_admin.user_ids", String.class);
+    }
 
     /**
      * 树形实体根默认ID

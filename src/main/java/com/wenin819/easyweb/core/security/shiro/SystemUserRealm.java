@@ -1,6 +1,6 @@
 package com.wenin819.easyweb.core.security.shiro;
 
-import com.wenin819.easyweb.core.utils.ConfigName;
+import com.wenin819.easyweb.core.utils.Configs;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
 import com.wenin819.easyweb.system.model.SysUser;
 import com.wenin819.easyweb.system.service.SysUserService;
@@ -32,7 +32,7 @@ public class SystemUserRealm extends AuthorizingRealm {
         info.addStringPermission("contacts:edit:" + user.getNo());
 
         // 处理超级管理员权限
-        if(ConfigUtils.get().getValueList(ConfigName.SYSTEM_SUPER_ADMIN_USER_IDS, String.class).contains(user.getId())) {
+        if(Configs.systemSuperAdminUserIds().contains(user.getId())) {
             info.addStringPermission("*");
         }
 

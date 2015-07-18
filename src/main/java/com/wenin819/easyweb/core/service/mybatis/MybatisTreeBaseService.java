@@ -5,7 +5,7 @@ import com.wenin819.easyweb.core.persistence.TreeEntity;
 import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.persistence.mybatis.MybatisTreeBaseDao;
 import com.wenin819.easyweb.core.utils.ConfigEnum;
-import com.wenin819.easyweb.core.utils.ConfigName;
+import com.wenin819.easyweb.core.utils.Configs;
 import com.wenin819.easyweb.core.utils.StringUtils;
 
 /**
@@ -29,7 +29,7 @@ public abstract class MybatisTreeBaseService<E extends TreeEntity> extends Mybat
                     parentId, ConfigEnum.SYS_DEFAULT_SPLIT_STR);
             params.setParentIds(parentIds);
         } else {
-            params.setParentId(ConfigName.treeEntityRootId());
+            params.setParentId(Configs.treeEntityRootId());
             params.setParentIds(params.getParentId() + ConfigEnum.SYS_DEFAULT_SPLIT_STR);
         }
         int save = super.save(params);

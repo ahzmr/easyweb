@@ -86,33 +86,33 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="remarks">角色授权：</label>
+        <label class="col-sm-3 control-label" for="menuIds">角色授权：</label>
         <div class="col-sm-9">
             <input id="menuIds" type="hidden" name="menuIds"/>
             <div id="menuTree" class="ztree"></div>
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label hide-add" for="createBy">创建者：</label>
+    <div class="form-group hide-add">
+        <label class="col-sm-3 control-label" for="createBy">创建者：</label>
         <div class="col-sm-9">
                 <form:input path="createBy" class="form-control readonly" />
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label hide-add" for="createDate">创建时间：</label>
+    <div class="form-group hide-add">
+        <label class="col-sm-3 control-label" for="createDate">创建时间：</label>
         <div class="col-sm-9">
                 <input id="createDate" name="createDate" type="text" readonly="readonly" maxlength="20"
                        class="Wdate form-control readonly" value="<fmt:formatDate value="${entry.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label hide-add" for="updateBy">更新者：</label>
+    <div class="form-group hide-add">
+        <label class="col-sm-3 control-label" for="updateBy">更新者：</label>
         <div class="col-sm-9">
                 <form:input path="updateBy" class="form-control readonly" />
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label hide-add" for="updateDate">更新时间：</label>
+    <div class="form-group hide-add">
+        <label class="col-sm-3 control-label" for="updateDate">更新时间：</label>
         <div class="col-sm-9">
                 <input id="updateDate" name="updateDate" type="text" readonly="readonly" maxlength="20"
                        class="Wdate form-control" value="<fmt:formatDate value="${entry.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>

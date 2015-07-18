@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.beans.Transient;
 
 /**
  * @author wenin819@gmail.com
@@ -72,6 +73,7 @@ public class SysRoleController extends BaseCrudController<SysRole> {
     }
 
     @Override
+    @Transient
     public String save(SysRole entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         String save = super.save(entity, model, redirectAttributes, request);
         sysRoleService.saveRoleMenuRelations(entity, entity.getMenuIds());

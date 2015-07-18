@@ -3,7 +3,7 @@ package com.wenin819.easyweb.system.service;
 import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.persistence.mybatis.MybatisTreeBaseDao;
 import com.wenin819.easyweb.core.service.mybatis.MybatisTreeBaseService;
-import com.wenin819.easyweb.core.utils.ConfigName;
+import com.wenin819.easyweb.core.utils.Configs;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
 import com.wenin819.easyweb.core.utils.StringUtils;
 import com.wenin819.easyweb.core.utils.tree.ITreeNodeAdapter;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.beans.Transient;
 import java.util.List;
 
 /**
@@ -84,7 +85,7 @@ public class SysMenuService extends MybatisTreeBaseService<SysMenu> {
         if(StringUtils.isNotBlank(parent.getId())) {
             query.createAndCriteria().equalTo(SysMenu.TE.parentId, parent.getId());
         } else {
-            query.createAndCriteria().equalTo(SysMenu.TE.parentId, ConfigName.treeEntityRootId());
+            query.createAndCriteria().equalTo(SysMenu.TE.parentId, Configs.treeEntityRootId());
         }
         return getDao().queryByCriteria(query);
     }
@@ -102,7 +103,7 @@ public class SysMenuService extends MybatisTreeBaseService<SysMenu> {
         if(StringUtils.isNotBlank(parent.getId())) {
             query.createAndCriteria().equalTo(SysMenu.TE.parentId, parent.getId());
         } else {
-            query.createAndCriteria().equalTo(SysMenu.TE.parentId, ConfigName.treeEntityRootId());
+            query.createAndCriteria().equalTo(SysMenu.TE.parentId, Configs.treeEntityRootId());
         }
         return getDao().countByCriteria(query) > 0;
     }
@@ -113,6 +114,7 @@ public class SysMenuService extends MybatisTreeBaseService<SysMenu> {
      * @param oldSorts
      * @param sorts
      */
+    @Transient
     public void batchUpdateSorts(String[] ids, Integer[] oldSorts, Integer[] sorts) {
         if(null == ids) {
             return;

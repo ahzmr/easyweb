@@ -2,7 +2,7 @@ package com.wenin819.easyweb.modules.contacts.service;
 
 import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
-import com.wenin819.easyweb.core.utils.ConfigName;
+import com.wenin819.easyweb.core.utils.Configs;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
 import com.wenin819.easyweb.modules.contacts.dao.TxContactsDao;
 import com.wenin819.easyweb.modules.contacts.model.TxContacts;
@@ -21,7 +21,7 @@ public class TxContactsService extends MybatisBaseService<TxContacts> {
 
     @Override
     public String getTableName() {
-        return ConfigUtils.get().getValue(ConfigName.SCHAME_CONFIGPLAT) + ".tx_contacts";
+        return ConfigUtils.get().getValue(Configs.SCHAME_CONFIGPLAT) + ".tx_contacts";
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.wenin819.easyweb.core.utils.key.sequence;
 
-import com.wenin819.easyweb.core.utils.ConfigName;
+import com.wenin819.easyweb.core.utils.Configs;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
 import com.wenin819.easyweb.core.utils.SpringContextUtils;
 import com.wenin819.easyweb.core.utils.key.KeyGenerator;
@@ -34,8 +34,8 @@ public class SequenceKeyGenerator implements KeyGenerator {
     /**
      * 主键表名
      */
-    protected static final String KEY_SEQUENCE_TABLENAME = ConfigUtils.get().getValue(ConfigName.SCHAME_CONFIGPLAT,
-            ConfigName.SCHAME_CONFIGPLAT_DEFVAL) + ".SYS_KEY_SEQUENCE";
+    protected static final String KEY_SEQUENCE_TABLENAME = ConfigUtils.get().getValue(Configs.SCHAME_CONFIGPLAT,
+            Configs.SCHAME_CONFIGPLAT_DEFVAL) + ".SYS_KEY_SEQUENCE";
     /**
      * 查询Sql
      */
@@ -70,14 +70,14 @@ public class SequenceKeyGenerator implements KeyGenerator {
 
     private void getAndUpdateKeyFromDB() {
         JdbcTemplate jdbcTemplate = getJdbcTemplate();
-        int cacheNum = ConfigUtils.get().getValue(ConfigName.SEQUENCE_KEY_CACHE_NUM,
-                ConfigName.SEQUENCE_KEY_CACHE_NUM_DEFVAL);
+        int cacheNum = ConfigUtils.get().getValue(Configs.SEQUENCE_KEY_CACHE_NUM,
+                Configs.SEQUENCE_KEY_CACHE_NUM_DEFVAL);
         // 乐观锁尝试100次
         for (int i = 0; i < 100; i++) {
             List<String> strings = jdbcTemplate.queryForList(selectSql, new Object[]{tableName}, String.class);
             if(null == strings || strings.isEmpty()) {
-                int defVal = ConfigUtils.get().getValue(ConfigName.SEQUENCE_KEY_DEFAULT_VALUE,
-                        ConfigName.SEQUENCE_KEY_DEFAULT_VALUE_DEFVAL);
+                int defVal = ConfigUtils.get().getValue(Configs.SEQUENCE_KEY_DEFAULT_VALUE,
+                        Configs.SEQUENCE_KEY_DEFAULT_VALUE_DEFVAL);
                 int update = jdbcTemplate.update(insertSql, tableName, defVal);
                 if(0 == update) {
                     continue;

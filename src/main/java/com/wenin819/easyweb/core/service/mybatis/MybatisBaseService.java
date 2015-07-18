@@ -142,12 +142,12 @@ public abstract class MybatisBaseService<E extends BaseEntity> {
                 id = genId();
             }
             BeanUtils.setProperty(params, getIdKey(), id, false);
-            updateCreateEntity(params, nowDate, curUserCode);
+            updateCreateEntity(params);
             return getDao().insert(params);
         } else {
             int count = getDao().updateById(params);
             if(0 == count) {
-                updateCreateEntity(params, nowDate, curUserCode);
+                updateCreateEntity(params);
                 return getDao().insert(params);
             } else {
                 return count;
@@ -158,14 +158,13 @@ public abstract class MybatisBaseService<E extends BaseEntity> {
     /**
      * 更新新创建的实体
      * @param entity 新实体
-     * @param createDate 创建时间
-     * @param curUserCode   创建人
      */
-    private void updateCreateEntity(E entity, Date createDate, String curUserCode) {
-        BeanUtils.setProperty(entity, ConfigEnum.FILED_NAME_CREATE_TIME, createDate, false);
-        if(null != curUserCode) {
-            BeanUtils.setProperty(entity, ConfigEnum.FILED_NAME_CREATE_BY, curUserCode, false);
+    protected void updateCreateEntity(Object entity) {
+        Date createDate = new Date();
+        if(null != currentUserInfoDao) {
+            BeanUtils.setProperty(entity, ConfigEnum.FILED_NAME_CREATE_BY, currentUserInfoDao.getLoginName(), false);
         }
+        BeanUtils.setProperty(entity, ConfigEnum.FILED_NAME_CREATE_TIME, createDate, false);
         BeanUtils.setProperty(entity, ConfigEnum.FIELD_DEL_FLAG, ConfigEnum.DEL_FLAG_NORMAL, false);
     }
 

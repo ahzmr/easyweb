@@ -71,6 +71,13 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-sm-3  control-label" for="remarks">用户角色：</label>
+        <div class="col-sm-9">
+            <form:checkboxes items="${menus}" itemLabel="name" itemValue="id"
+                             path="roleIds" />
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-sm-3  control-label" for="loginIp">最后登陆IP：</label>
         <div class="col-sm-9">
                 <form:input path="loginIp" class="form-control readonly" />
@@ -83,26 +90,26 @@
                        class="Wdate form-control" value="<fmt:formatDate value="${entry.loginDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group hide-add">
         <label class="col-sm-3  control-label" for="createBy">创建者：</label>
         <div class="col-sm-9">
                 <form:input path="createBy" class="form-control readonly" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group hide-add">
         <label class="col-sm-3  control-label" for="createDate">创建时间：</label>
         <div class="col-sm-9">
                 <input id="createDate" name="createDate" type="text" readonly="readonly" maxlength="20"
                        class="Wdate form-control" value="<fmt:formatDate value="${entry.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group hide-add">
         <label class="col-sm-3  control-label" for="updateBy">更新者：</label>
         <div class="col-sm-9">
                 <form:input path="updateBy" class="form-control readonly" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group hide-add">
         <label class="col-sm-3  control-label" for="updateDate">更新时间：</label>
         <div class="col-sm-9">
                 <input id="updateDate" name="updateDate" type="text" readonly="readonly" maxlength="20"

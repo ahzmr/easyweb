@@ -9,6 +9,7 @@ import com.wenin819.easyweb.core.utils.ConfigUtils;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户表
@@ -49,6 +50,10 @@ public class SysUser extends BaseEntity<SysUser.TE> implements Serializable {
      * 手机
      */
     private String mobile;
+    /**
+     * 角色标识列表
+     */
+    private List<String> roleIds;
     /**
      * 最后登陆IP
      */
@@ -140,6 +145,14 @@ public class SysUser extends BaseEntity<SysUser.TE> implements Serializable {
     }
     public String getLoginIp() {
         return loginIp;
+    }
+
+    public List<String> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<String> roleIds) {
+        this.roleIds = roleIds;
     }
 
     public void setLoginIp(String loginIp) {

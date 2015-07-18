@@ -83,11 +83,11 @@ public class ConfigManager {
             throw new RuntimeException("加载启动配置文件失败：" + bootstrapConfigFile, e);
         }
 
-        int defualtRefrechTime = ConfigName.CONFIG_FILE_REFRESH_SECOND_DEFVAL;
-        int value = getValue(ConfigName.CONFIG_FILE_REFRESH_SECOND, defualtRefrechTime);
+        int defualtRefrechTime = Configs.CONFIG_FILE_REFRESH_SECOND_DEFVAL;
+        int value = getValue(Configs.CONFIG_FILE_REFRESH_SECOND, defualtRefrechTime);
         if(value < 0) {
             logger.error("系统配置项{}有问题，为大于等于0的正整数，请检查，暂采用默认时间{}",
-                    ConfigName.CONFIG_FILE_REFRESH_SECOND, defualtRefrechTime);
+                    Configs.CONFIG_FILE_REFRESH_SECOND, defualtRefrechTime);
             value = defualtRefrechTime;
         }
         if(value > 0) {
@@ -107,7 +107,7 @@ public class ConfigManager {
      * 加载扩展配置文件配置
      */
     private synchronized void loadExtProperties() {
-        String extConfigFiles = getValue(ConfigName.EXT_CONFIG_FILES);
+        String extConfigFiles = getValue(Configs.EXT_CONFIG_FILES);
         logger.debug("开始加载扩展配置文件集合：" + extConfigFiles);
         Properties extProps = new Properties();
         if(StringUtils.isNotBlank(extConfigFiles)) {
@@ -118,7 +118,7 @@ public class ConfigManager {
         }
         logger.debug("完成加载扩展配置文件集合：" + extConfigFiles);
 
-        String extConfigBeans = getValue(ConfigName.EXT_CONFIG_BEANs);
+        String extConfigBeans = getValue(Configs.EXT_CONFIG_BEANs);
         if (StringUtils.isNotBlank(extConfigBeans)) {
             loadBeanProps(extConfigBeans, extProps);
         }

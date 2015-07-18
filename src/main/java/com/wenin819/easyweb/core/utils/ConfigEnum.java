@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
  */
 public class ConfigEnum {
 
-    public static final String SYS_DEFAULT_SPLIT_STR = ";"; // 系统默认分隔符
+    public static final String SYS_DEFAULT_SPLIT_STR = ","; // 系统默认分隔符
     public static final char SYS_DEFAULT_VAR_SIGN = '$';    // 变量开始标志
 
     public static final Charset DEFAULT_CONFIG_FILE_ENCODING = Charset.forName("UTF-8");    // 默认的配置文件编码

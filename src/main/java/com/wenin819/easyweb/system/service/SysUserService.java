@@ -1,8 +1,8 @@
 package com.wenin819.easyweb.system.service;
 
-import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
-import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.exception.DataException;
+import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
+import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
 import com.wenin819.easyweb.core.utils.*;
 import com.wenin819.easyweb.system.dao.SysUserDao;
@@ -24,7 +24,7 @@ public class SysUserService extends MybatisBaseService<SysUser> {
 
     @Override
     public String getTableName() {
-        return ConfigUtils.get().getValue(ConfigName.SCHAME_CONFIGPLAT) + ".sys_user";
+        return ConfigUtils.get().getValue(Configs.SCHAME_CONFIGPLAT) + ".sys_user";
     }
 
     @Override
@@ -102,5 +102,4 @@ public class SysUserService extends MybatisBaseService<SysUser> {
         user.setLoginDate(new Date());
         save(user);
     }
-
 }
