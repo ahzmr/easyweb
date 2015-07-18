@@ -27,6 +27,10 @@ public class SysRole extends BaseEntity<SysRole.TE> {
      */
     private String code;
     /**
+     * 关联菜单列表
+     */
+    private String menuIds;
+    /**
      * 创建者
      */
     private String createBy;
@@ -74,6 +78,14 @@ public class SysRole extends BaseEntity<SysRole.TE> {
     }
     public String getCreateBy() {
         return createBy;
+    }
+
+    public String getMenuIds() {
+        return menuIds;
+    }
+
+    public void setMenuIds(String menuIds) {
+        this.menuIds = menuIds;
     }
 
     public void setCreateBy(String createBy) {

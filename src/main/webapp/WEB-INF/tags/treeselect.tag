@@ -64,15 +64,15 @@
                 }
             }
         };
-        var tree = $.fn.zTree.init($("#selectTree"), ztreeSetting);
+        var selectTree = $.fn.zTree.init($("#selectTree"), ztreeSetting);
         $("#saveSelectTree").click(function(e) {
             var nodes;
             var ids = [];
             var names = [];
             if ("${checked}" == "true"){
-                nodes = tree.getCheckedNodes(true);
+                nodes = selectTree.getCheckedNodes(true);
             }else{
-                nodes = tree.getSelectedNodes();
+                nodes = selectTree.getSelectedNodes();
             }
             for(var i=0; i<nodes.length; i++) {//<c:if test="${checked && notAllowSelectParent}">
                 if (nodes[i].isParent){

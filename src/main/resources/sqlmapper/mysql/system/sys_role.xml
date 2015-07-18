@@ -87,4 +87,16 @@
     <select id="deleteByCriteria" resultType="int" parameterType="CriteriaQuery">
         <include refid="public.Delete4Query" />
     </select>
+
+    <select id="queryMenuIdsByRole" resultType="string" parameterType="SysRole">
+        select distinct menu_id from ${schema.configPlat}.sys_role_menu where role_id = #{id}
+    </select>
+    
+    <delete id="deleteMenuRelationByRole" parameterType="SysRole">
+        delete from ${schema.configPlat}.sys_role_menu where role_id = #{id}
+    </delete>
+
+    <insert id="insertMenuRoleRelation">
+        insert into ${schema.configPlat}.sys_role_menu(role_id, menu_id) values (#{roleId}, #{menuId})
+    </insert>
 </mapper>

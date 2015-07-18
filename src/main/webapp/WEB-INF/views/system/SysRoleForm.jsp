@@ -3,11 +3,51 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta name="decorator" content="default"/>
+    <meta name="decorator" content="tree"/>
     <title>角色管理</title>
     <script>
         $(function() {
-           initForm();
+            initForm("#inputForm", {
+                submitHandler: function(form){
+                    var ids = [], nodes = menuTree.getCheckedNodes(true);
+                    for(var i=0; i<nodes.length; i++) {
+                        ids.push(nodes[i].id);
+                    }
+                    $("#menuIds").val(ids.join(","));
+                    loading('正在提交，请稍等...');
+                    form.submit();
+                }
+            });
+            var selectIds = "${entry.menuIds}";
+            var map = {};
+            if(selectIds) {
+                var split = selectIds.split(",");
+                for(var i = 0; i < split.length; i++) {
+                    map[split[i]] = true;
+                }
+            }
+            var menus = [
+                    <c:forEach items="${menus}" var="menu">{id: "${menu.id}", pId: "${menu.parentId}", name: "${menu.name}", checked: map["${menu.id}"]},
+                </c:forEach>];
+            var settings = {
+                check: {
+                    enable: true,
+                    nocheckInherit: true
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                callback: {
+                    beforeClick: function(treeId, treeNode, clickFlag) {
+                        menuTree.checkNode(treeNode, !treeNode.checked);
+                        return false;
+                    }
+                }
+            }
+            var menuTree = $.fn.zTree.init($("#menuTree"), settings, menus);
+            menuTree.expandAll(true);
         });
     </script>
 </head>
@@ -43,6 +83,13 @@
         <label class="col-sm-3 control-label" for="remarks">备注信息：</label>
         <div class="col-sm-9">
             <form:input path="remarks" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="remarks">角色授权：</label>
+        <div class="col-sm-9">
+            <input id="menuIds" type="hidden" name="menuIds"/>
+            <div id="menuTree" class="ztree"></div>
         </div>
     </div>
     <div class="form-group">
