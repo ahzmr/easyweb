@@ -1,4 +1,4 @@
-DELETE sys_menu WHERE id in ("1", "11", "12", "2", "3", "4", "5", "6", "7");
+DELETE FROM sys_menu WHERE id in ('1', '11', '12', '2', '3', '4', '5', '6', '7');
 
 INSERT INTO sys_menu (id, parent_id, parent_ids, name, sort, href, icon, is_show, permission, remarks, create_by, create_date, update_by, update_date, del_flag) VALUES ('1', '0', '0,', '系统管理', 90, null, null, null, null, '系统管理', 'wenin819', '2015-07-17 15:24:40', 'wenin819', '2015-07-19 10:11:30', '0');
 INSERT INTO sys_menu (id, parent_id, parent_ids, name, sort, href, icon, is_show, permission, remarks, create_by, create_date, update_by, update_date, del_flag) VALUES ('11', '0', '0,', '通讯录', 50, null, null, null, null, null, 'wenin819', '2015-07-18 12:18:35', 'wenin819', '2015-07-19 10:12:09', '0');
