@@ -15,5 +15,4 @@ CREATE TABLE
         INDEX sys_role_del_flag (del_flag)
     ) DEFAULT CHARSET=utf8 COMMENT='角色表';
 
-insert into sys_role (id, name, code, create_by, create_date, update_by, update_date, remarks, del_flag) values
- ('1', '管理员', 'admin', '1', now(), '1', now(), '系统管理员', '0');
+INSERT INTO sys_role (id, name, code, create_by, create_date, update_by, update_date, remarks, del_flag) VALUES ('1', '管理员', 'admin', 'wenin819', '2015-07-14 20:54:43', 'wenin819', '2015-07-19 10:14:03', '系统管理员', '0');

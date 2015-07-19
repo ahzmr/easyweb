@@ -8,5 +8,4 @@ CREATE TABLE
         PRIMARY KEY (role_id, user_id)
     ) DEFAULT CHARSET=utf8 COMMENT='角色用户关系表';
 
-insert into sys_role_user (role_id, user_id, create_by, create_date) values
- ('1', '1', '1', now());
+INSERT INTO sys_role_user (role_id, user_id, create_by, create_date) VALUES ('1', '1', 'wenin819', '2015-07-18 19:40:46');
