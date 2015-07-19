@@ -36,8 +36,7 @@
                 </c:forEach>];
             var settings = {
                 check: {
-                    enable: true,
-                    nocheckInherit: true
+                    enable: true
                 },
                 data: {
                     simpleData: {
@@ -46,7 +45,16 @@
                 },
                 callback: {
                     beforeClick: function(treeId, treeNode, clickFlag) {
-                        menuTree.checkNode(treeNode, !treeNode.checked);
+                        if(!treeNode.checked) {
+                            menuTree.checkNode(treeNode, true);
+                            var parent = treeNode.getParentNode();
+                            while (null != parent) {
+                                menuTree.checkNode(parent, true);
+                                parent = parent.getParentNode();
+                            }
+                        } else {
+                            menuTree.checkNode(treeNode, false, true);
+                        }
                         return false;
                     }
                 }
@@ -91,7 +99,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="menuIds">角色授权：</label>
+        <label class="col-sm-3 control-label" for="menuIds" >角色授权：</label>
         <div class="col-sm-9">
             <input id="menuIds" type="hidden" name="menuIds"/>
             <div id="menuTree" class="ztree"></div>

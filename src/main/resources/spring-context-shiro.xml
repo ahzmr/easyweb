@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans" xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/login.html"/>
         <property name="unauthorizedUrl" value="/login.html?massage=请登陆后再操作"/>
-        <!-- <property name="filters">
-            <utils:map>
-                <entry key="aName" value-ref="someFilterPojo"/>
-            </utils:map>
-        </property> -->
+        <property name="filters">
+            <map>
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+            </map>
+        </property>
         <property name="filterChainDefinitions">
             <value>
                 /static/**=anon
-                /login.html=anon
-                /logout.html=anon
+                /login=authc
+                /logout=logout
                 /**=authc
             </value>
         </property>

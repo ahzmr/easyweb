@@ -78,19 +78,19 @@
         </div>
 
         <div class="form-group">
-            <div class="checkbox pull-right">
-                <label><input type="checkbox" id="rememberMe" name="rememberMe" value="true"/>下次自动登录</label>
+            <div class="col-md-12">
+                <div class="checkbox pull-right">
+                    <label><input type="checkbox" id="rememberMe" name="rememberMe" value="true"/>下次自动登录</label>
+                </div>
             </div>
         </div>
         <br />
-        <div class="form-group text-center">
-            <div class="col-md-12">
-                <input id="loginFormSubmit" class="btn btn-primary"
-                       type="submit" value="登 录"/>
-                <input class="btn" type="reset" value="重 置"/>
-                <input id="defaultPass" class="btn"
-                       type="button" value="默认密码登陆"/>
-            </div>
+        <div class="form-action text-center">
+            <input id="loginFormSubmit" class="btn btn-primary"
+                   type="submit" value="登 录"/>
+            <input class="btn" type="reset" value="重 置"/>
+            <input id="defaultPass" class="btn"
+                   type="button" value="默认密码登陆"/>
         </div>
     </form>
         </div>
