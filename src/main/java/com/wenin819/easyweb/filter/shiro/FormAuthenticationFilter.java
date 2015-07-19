@@ -2,9 +2,7 @@ package com.wenin819.easyweb.filter.shiro;
 
 import com.wenin819.easyweb.core.utils.WebUtils;
 import com.wenin819.easyweb.system.service.SysUserService;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +24,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
     @Resource
     private SysUserService sysUserService;
 
+    public static final String DEFAULT_ERROR_MSG_KEY_ATTRIBUTE_NAME = "message";
     private static final Logger logger = LoggerFactory.getLogger(FormAuthenticationFilter.class);
 
     @Override
@@ -57,5 +56,17 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
             logger.warn("用户[" + username + "]登陆失败，登陆IP为:" + WebUtils.getRealRemoteAddr());
         }
         return super.onLoginFailure(token, e, request, response);
+    }
+
+    @Override
+    protected void setFailureAttribute(ServletRequest request, AuthenticationException ae) {
+        super.setFailureAttribute(request, ae);
+        String errMsg;
+        if(ae instanceof CredentialsException || ae instanceof AccountException) {
+            errMsg = "用户名或密码错误，请重试。";
+        } else {
+            errMsg = ae.getMessage();
+        }
+        request.setAttribute(DEFAULT_ERROR_MSG_KEY_ATTRIBUTE_NAME, errMsg);
     }
 }

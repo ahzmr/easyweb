@@ -54,7 +54,7 @@ public class SystemUserRealm extends AuthorizingRealm {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         final SysUser sysUser = sysUserService.queryByLoginName(upToken.getUsername());
         if(null == sysUser) {
-            throw new AuthenticationException();
+            throw new UnknownAccountException();
         }
         return new SimpleAuthenticationInfo(sysUser, sysUser.getPassword(),
                 ByteSource.Util.bytes(sysUser.getLoginName()), getName());

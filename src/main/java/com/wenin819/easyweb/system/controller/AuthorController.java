@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class AuthorController extends BaseController {
 
-    @RequestMapping(value = "login.html", method = {RequestMethod.GET, RequestMethod.HEAD})
+    @RequestMapping(value = "login", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.HEAD})
     public String login() {
         return "system/login";
     }
+
+
 }

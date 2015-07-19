@@ -58,7 +58,7 @@
                 <h3 class="panel-title text-center">系统登陆</h3>
             </div>
     <form id="inputForm" class="form panel-body margin-base-vertical"
-          action="./login.html" method="post">
+          action="./login" method="post">
         <tags:message />
         <input type="hidden" id="fp" name="password">
         <div class="form-group">

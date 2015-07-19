@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class IndexController extends BaseController {
 
-    @RequestMapping(value = {"", "index.html"}, method = {RequestMethod.GET, RequestMethod.HEAD})
+    @RequestMapping(value = {"", "index"}, method = {RequestMethod.GET, RequestMethod.HEAD})
     public String index(Model model) {
         model.addAttribute("menus", JsonUtils.toJsonString(SecurityUtils.getAllMenu()));
         return "system/index";

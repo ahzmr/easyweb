@@ -85,13 +85,13 @@
                         <shiro:principal property="name"/> &nbsp;<b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a id="selfInfo" pid="myselfMenus" href="${baseUrl}/contacts/form.html?id=<shiro:principal property='no'/>">
+                        <li><a id="selfInfo" pid="myselfMenus" href="${baseUrl}/contacts/form?id=<shiro:principal property='no'/>">
                             修改个人信息</a></li>
-                        <li><a id="selfPwd" pid="myselfMenus" href="${baseUrl}/system/SysUser/modifyPwd.html">
+                        <li><a id="selfPwd" pid="myselfMenus" href="${baseUrl}/system/SysUser/modifyPwd">
                             修改个人密码</a></li>
                     </ul>
                 </li>
-                <li><a href="${baseUrl}/logout.html">退出</a></li>
+                <li><a href="${baseUrl}/logout">退出</a></li>
             </ul>
         </shiro:authenticated>
     </div>
