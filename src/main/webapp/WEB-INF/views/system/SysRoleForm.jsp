@@ -8,6 +8,11 @@
     <script>
         $(function() {
             initForm("#inputForm", {
+                rules: {
+                    name: { maxlength: 100, required: true },
+                    code: { maxlength: 100, required: true },
+                    remarks: { maxlength: 255 }
+                },
                 submitHandler: function(form){
                     var ids = [], nodes = menuTree.getCheckedNodes(true);
                     for(var i=0; i<nodes.length; i++) {

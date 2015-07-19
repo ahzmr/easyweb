@@ -82,11 +82,23 @@ public class SecurityUtils extends org.apache.shiro.SecurityUtils {
      * @return
      */
     public static List<SysMenu> getAllMenu() {
-        return getSysMenuService().queryAllMenu();
+        if(isSuperAdmin()) {
+            return getSysMenuService().queryAllMenus();
+        } else {
+            return getSysMenuService().queryMyMenus(getCurrentUser());
+        }
     }
 
+    /**
+     * 得到当前用户所有角色
+     * @return
+     */
     public static List<SysRole> getAllRole() {
-        return getSysRoleService().queryAllRole();
+        if(isSuperAdmin()) {
+            return getSysRoleService().queryAllRoles();
+        } else {
+            return getSysRoleService().queryMyRoles(getCurrentUser());
+        }
     }
 
     private static SysRoleService sysRoleService;

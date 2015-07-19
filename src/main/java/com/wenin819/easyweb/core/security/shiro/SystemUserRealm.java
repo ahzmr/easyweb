@@ -2,6 +2,8 @@ package com.wenin819.easyweb.core.security.shiro;
 
 import com.wenin819.easyweb.core.utils.Configs;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
+import com.wenin819.easyweb.core.utils.SecurityUtils;
+import com.wenin819.easyweb.system.model.SysMenu;
 import com.wenin819.easyweb.system.model.SysUser;
 import com.wenin819.easyweb.system.service.SysUserService;
 import org.apache.shiro.authc.*;
@@ -13,6 +15,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by wenin819@gmail.com on 2014-09-22.
@@ -34,6 +37,13 @@ public class SystemUserRealm extends AuthorizingRealm {
         // 处理超级管理员权限
         if(Configs.systemSuperAdminUserIds().contains(user.getId())) {
             info.addStringPermission("*");
+        } else {
+            List<SysMenu> allMenu = SecurityUtils.getAllMenu();
+            for (SysMenu sysMenu : allMenu) {
+                if(null != sysMenu.getPermission()) {
+                    info.addStringPermission(sysMenu.getPermission());
+                }
+            }
         }
 
         return info;

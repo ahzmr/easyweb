@@ -72,9 +72,9 @@
      </update>
 
 
-    <update id="deleteById" parameterType="string">
+    <delete id="deleteById" parameterType="string">
         <include refid="public.DeleteById" />
-    </update>
+    </delete>
 
     <select id="queryByCriteria" resultMap="BaseResultMap" parameterType="CriteriaQuery">
         <include refid="public.Select4Query" />
@@ -84,37 +84,7 @@
         <include refid="public.Count4Query" />
     </select>
 
-    <select id="deleteByCriteria" resultType="int" parameterType="CriteriaQuery">
+    <delete id="deleteByCriteria" parameterType="CriteriaQuery">
         <include refid="public.Delete4Query" />
-    </select>
-
-    <select id="queryMenuIdsByRole" resultType="string" parameterType="SysRole">
-        select distinct menu_id from ${schema.configPlat}.sys_role_menu where role_id = #{id}
-    </select>
-
-    <select id="queryRoleIdsByUser" resultType="string" parameterType="SysUser">
-        select distinct role_id from ${schema.configPlat}.sys_role_user where user_id = #{id}
-    </select>
-    
-    <delete id="deleteMenuRelationByRole" parameterType="SysRole">
-        delete from ${schema.configPlat}.sys_role_menu where role_id = #{id}
     </delete>
-
-    <insert id="insertRoleMenuRelation">
-        insert into ${schema.configPlat}.sys_role_menu(role_id, menu_id, create_by, create_date)
-         values (#{roleId}, #{menuId}, #{createBy}, #{createDate})
-    </insert>
-
-    <delete id="deleteUserRelationByRole" parameterType="SysRole">
-        delete from ${schema.configPlat}.sys_role_user where role_id = #{id}
-    </delete>
-
-    <delete id="deleteUserRelationByUser" parameterType="SysUser">
-        delete from ${schema.configPlat}.sys_role_user where user_id = #{id}
-    </delete>
-
-    <insert id="insertRoleUserRelation">
-        insert into ${schema.configPlat}.sys_role_user(role_id, user_id, create_by, create_date)
-         values (#{roleId}, #{userId}, #{createBy}, #{createDate})
-    </insert>
 </mapper>

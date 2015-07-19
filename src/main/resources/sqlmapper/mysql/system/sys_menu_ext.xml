@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wenin819.easyweb.system.dao.SysMenuDao">
 
+    <select id="queryMyMemus" resultMap="BaseResultMap" parameterType="SysUser">
+        select <include refid="BaseColumnList" /> from
+        (select distinct m.* from ${schema.configPlat}.sys_menu m, ${schema.configPlat}.sys_role_menu rm,
+        ${schema.configPlat}.sys_role_user ru
+        where m.id = rm.menu_id and rm.role_id = ru.role_id and ru.user_id = #{id} and m.del_flag = '0') sys_menu
+        order by sort ASC
+    </select>
+
 </mapper>

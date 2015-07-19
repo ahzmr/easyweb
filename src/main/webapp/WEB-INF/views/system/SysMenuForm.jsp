@@ -7,7 +7,16 @@
     <title>菜单管理</title>
     <script>
         $(function() {
-           initForm();
+           initForm("#inputForm", {
+               rules: {
+                   name: { maxlength: 100, required: true },
+                   sort: { number: true, required: true },
+                   href: { maxlength: 2047 },
+                   icon: { maxlength: 100 },
+                   permission: { maxlength: 200 },
+                   remarks: { maxlength: 255 }
+               }
+           });
         });
     </script>
 </head>

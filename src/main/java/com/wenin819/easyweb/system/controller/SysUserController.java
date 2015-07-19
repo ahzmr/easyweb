@@ -45,6 +45,11 @@ public class SysUserController extends BaseCrudController<SysUser> {
     }
 
     @Override
+    protected String getBasePermission() {
+        return "system:SysUser";
+    }
+
+    @Override
     protected SysUserService getService() {
         return sysUserService;
     }
@@ -70,7 +75,7 @@ public class SysUserController extends BaseCrudController<SysUser> {
 
     @Override
     public String toForm(SysUser entry, Model model, HttpServletRequest request) {
-        model.addAttribute("menus", SecurityUtils.getAllRole());
+        model.addAttribute("roles", SecurityUtils.getAllRole());
         String toForm = super.toForm(entry, model, request);
         entry = (SysUser) model.asMap().get(WebUtils.ENTRY);
         entry.setRoleIds(sysRoleService.queryRoleIdsByUser(entry));
@@ -86,7 +91,7 @@ public class SysUserController extends BaseCrudController<SysUser> {
     }
 
     @RequiresAuthentication
-    @RequestMapping(value = "modifyPwd.html")
+    @RequestMapping(value = "modifyPwd")
     public String modifyPwd(String loginName, String password, Model model) {
         model.addAttribute("user", SecurityUtils.getCurrentUser());
         if(StringUtils.isNotBlank(password)) {

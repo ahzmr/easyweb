@@ -62,7 +62,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#" onclick="return false;">wenin819</a>
+        <a class="navbar-brand" href="#" onclick="return false;">综合管理系统</a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse" ng-app="myMenu">
         <ul id="toolbar" class="nav navbar-nav" ng-controller="initMenus">
@@ -81,13 +81,13 @@
         <shiro:authenticated>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
+                    <a id="myselfMenus" href="" class="dropdown-toggle" data-toggle="dropdown">
                         <shiro:principal property="name"/> &nbsp;<b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a id="selfInfo" href="${baseUrl}/contacts/form.html?id=<shiro:principal property='no'/>">
+                        <li><a id="selfInfo" pid="myselfMenus" href="${baseUrl}/contacts/form.html?id=<shiro:principal property='no'/>">
                             修改个人信息</a></li>
-                        <li><a id="selfPwd" href="${baseUrl}/sys/user/modifyPwd.html">
+                        <li><a id="selfPwd" pid="myselfMenus" href="${baseUrl}/system/SysUser/modifyPwd.html">
                             修改个人密码</a></li>
                     </ul>
                 </li>

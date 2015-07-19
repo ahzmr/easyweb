@@ -1,12 +1,9 @@
 package com.wenin819.easyweb.system.controller;
 
-import com.wenin819.easyweb.core.persistence.mybatis.Criteria;
 import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
 import com.wenin819.easyweb.core.utils.ConfigEnum;
-import com.wenin819.easyweb.core.utils.StringUtils;
 import com.wenin819.easyweb.core.utils.WebUtils;
-import com.wenin819.easyweb.core.web.ActionType;
 import com.wenin819.easyweb.core.web.BaseCrudController;
 import com.wenin819.easyweb.system.model.SysRole;
 import com.wenin819.easyweb.system.service.SysMenuService;
@@ -68,7 +65,7 @@ public class SysRoleController extends BaseCrudController<SysRole> {
         entry = (SysRole) model.asMap().get(WebUtils.ENTRY);
 
         entry.setMenuIds(sysRoleService.queryMenuIdsByRole(entry));
-        model.addAttribute("menus", sysMenuService.queryAllMenu());
+        model.addAttribute("menus", sysMenuService.queryAllMenus());
         return toForm;
     }
 

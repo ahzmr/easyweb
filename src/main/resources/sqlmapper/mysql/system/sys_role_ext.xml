@@ -2,4 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wenin819.easyweb.system.dao.SysRoleDao">
 
+    <select id="queryMenuIdsByRole" resultType="string" parameterType="SysRole">
+        select distinct menu_id from ${schema.configPlat}.sys_role_menu where role_id = #{id}
+    </select>
+
+    <select id="queryRoleIdsByUser" resultType="string" parameterType="SysUser">
+        select distinct role_id from ${schema.configPlat}.sys_role_user where user_id = #{id}
+    </select>
+
+    <delete id="deleteMenuRelationByRole" parameterType="SysRole">
+        delete from ${schema.configPlat}.sys_role_menu where role_id = #{id}
+    </delete>
+
+    <insert id="insertRoleMenuRelation">
+        insert into ${schema.configPlat}.sys_role_menu(role_id, menu_id, create_by, create_date)
+        values (#{roleId}, #{menuId}, #{createBy}, #{createDate})
+    </insert>
+
+    <delete id="deleteUserRelationByRole" parameterType="SysRole">
+        delete from ${schema.configPlat}.sys_role_user where role_id = #{id}
+    </delete>
+
+    <delete id="deleteUserRelationByUser" parameterType="SysUser">
+        delete from ${schema.configPlat}.sys_role_user where user_id = #{id}
+    </delete>
+
+    <insert id="insertRoleUserRelation">
+        insert into ${schema.configPlat}.sys_role_user(role_id, user_id, create_by, create_date)
+        values (#{roleId}, #{userId}, #{createBy}, #{createDate})
+    </insert>
+
+    <select id="queryMyRoles" resultMap="BaseResultMap" parameterType="SysUser">
+        select <include refid="BaseColumnList" /> from
+        (select distinct r.* from ${schema.configPlat}.sys_role r, ${schema.configPlat}.sys_role_user ru
+        where r.id = ru.role_id and ru.user_id = #{id} and r.del_flag = '0') sys_role
+    </select>
+
 </mapper>

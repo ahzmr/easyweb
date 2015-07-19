@@ -69,6 +69,13 @@ public interface SysRoleDao extends MybatisBaseDao<SysRole> {
     int insertRoleUserRelation(RoleUserRelation relation);
 
     /**
+     * 查询用户所有角色
+     * @param user 用户
+     * @return
+     */
+    List<SysRole> queryMyRoles(SysUser user);
+
+    /**
      * 角色菜单关系
      */
     public static class RoleMenuRelation {

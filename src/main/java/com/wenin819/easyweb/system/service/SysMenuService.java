@@ -11,11 +11,13 @@ import com.wenin819.easyweb.core.utils.tree.TreeSortUtils;
 import com.wenin819.easyweb.core.utils.tree.adapter.ObjectTreeNodeAdapter;
 import com.wenin819.easyweb.system.dao.SysMenuDao;
 import com.wenin819.easyweb.system.model.SysMenu;
+import com.wenin819.easyweb.system.model.SysUser;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.beans.Transient;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -68,11 +70,28 @@ public class SysMenuService extends MybatisTreeBaseService<SysMenu> {
         return sysMenuDao;
     }
 
-    public List<SysMenu> queryAllMenu() {
+    /**
+     * 查询所有菜单
+     * @return
+     */
+    public List<SysMenu> queryAllMenus() {
         CriteriaQuery query = new CriteriaQuery();
         query.addOrder(SysMenu.TE.sort, true);
         List<SysMenu> sysMenus = getDao().queryByCriteria(query);
         return TreeSortUtils.sort4Tree(sysMenus, null, menuTreeNodeAdapter);
+    }
+
+    /**
+     * 查询用户当前所有菜单
+     * @param user 用户
+     * @return
+     */
+    public List<SysMenu> queryMyMenus(SysUser user) {
+        if(null == user) {
+            return Collections.EMPTY_LIST;
+        } else {
+            return TreeSortUtils.sort4Tree(sysMenuDao.queryMyMemus(user), null, menuTreeNodeAdapter);
+        }
     }
 
     /**

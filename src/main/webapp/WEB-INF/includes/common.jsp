@@ -22,7 +22,7 @@
 <script src="${libUrl}/jquery-validation/js/jquery.validate.js"></script>
 <script src="${libUrl}/jquery-validation/js/localization/messages_zh.min.js"></script>
 
-<link rel="stylesheet" href="${libUrl}/jquery-jbox/css/Skins/Default/jbox.css" />
+<link rel="stylesheet" href="${libUrl}/jquery-jbox/css/Skins2/Blue/jbox.css" />
 <script src="${libUrl}/jquery-jbox/js/jquery.jBox-2.3.min.js"></script>
 <script src="${libUrl}/jquery-jbox/js/i18n/jquery.jBox-zh-CN.js"></script>
 

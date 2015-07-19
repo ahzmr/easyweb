@@ -7,7 +7,17 @@
     <title>用户管理</title>
     <script>
         $(function() {
-           initForm();
+           initForm("#inputForm", {
+               rules: {
+                   loginName: { maxlength: 100, required: true },
+                   no: { maxlength: 100 },
+                   name: { maxlength: 100, required: true },
+                   email: { email: 200 },
+                   phone: { mobileOrPhoneCN: true },
+                   mobile: { mobileOrPhoneCN: true},
+                   remarks: { maxlength: 255 }
+               }
+           });
         });
     </script>
 </head>
@@ -73,7 +83,7 @@
     <div class="form-group">
         <label class="col-sm-3  control-label" for="remarks">用户角色：</label>
         <div class="col-sm-9">
-            <form:checkboxes items="${menus}" itemLabel="name" itemValue="id"
+            <form:checkboxes items="${roles}" itemLabel="name" itemValue="id"
                              path="roleIds" />
         </div>
     </div>

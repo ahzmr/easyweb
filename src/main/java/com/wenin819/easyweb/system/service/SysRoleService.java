@@ -119,9 +119,22 @@ public class SysRoleService extends MybatisBaseService<SysRole> {
      * 查询所有角色
      * @return
      */
-    public List<SysRole> queryAllRole() {
+    public List<SysRole> queryAllRoles() {
         CriteriaQuery query = new CriteriaQuery();
         query.createAndCriteria().equalTo(SysRole.TE.delFlag, ConfigEnum.DEL_FLAG_NORMAL);
         return sysRoleDao.queryByCriteria(query);
+    }
+
+    /**
+     * 查询用户对应的所有角色
+     * @param user
+     * @return
+     */
+    public List<SysRole> queryMyRoles(SysUser user) {
+        if(null == user) {
+            return Collections.EMPTY_LIST;
+        } else {
+            return sysRoleDao.queryMyRoles(user);
+        }
     }
 }
