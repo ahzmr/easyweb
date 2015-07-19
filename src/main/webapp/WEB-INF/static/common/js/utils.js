@@ -6,25 +6,25 @@ function subUrlFormat(url) {    // 子网网站格式化
     if(!url) {
         return url;
     }
-    return url.replace(/.*(\/easyweb\/)/i, "");
+    return encodeURIComponent(url.replace(/.*(\/easyweb\/)/i, ""));
 }
 
-function toPage(path, m0) { // 跳转页面
+function toPage(path) { // 跳转页面
     if(!path) {
         return;
     }
     var p = path;
+    var m0 = null;
     if(typeof path != "string") {
         p = $(path).data("url") || $(path).attr("href");
+        m0 = $(path).attr("pid");
+    }
+    if(!m0) {
+        m0 = top.$.hash().get("m0");
     }
     p = subUrlFormat(p);
-    var $mainFrame = top.$("#mainFrame");
-    if($mainFrame && $mainFrame.length) {
-        $mainFrame.attr("src", p);
-    } else {
-        location.href = '/easyweb/#?' + (m0?'m0='+m0+'&':'') + 'p=' + p;
-    }
-    return false;   // 成功处理，不继续处理
+    top.location.href = "/easyweb/#?m0=" + m0 + "&p=" + p;
+    return true;   // 成功处理
 }
 
 function page(pageNum) {   // 分页跳转

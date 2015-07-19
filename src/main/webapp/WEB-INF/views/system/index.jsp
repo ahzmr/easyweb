@@ -71,7 +71,7 @@
                     {{menu1.name}} &nbsp; <span class='{{menu1.children && "caret"}}'></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
-                    <li ng-repeat="menu2 in menu1.children"><a id="{{menu2.id}}" href="{{menu2.href}}">{{menu2.name}}</a></li>
+                    <li ng-repeat="menu2 in menu1.children"><a id="{{menu2.id}}" pid="{{menu1.id}}" href="{{menu2.href}}">{{menu2.name}}</a></li>
                 </ul>
             </li>
             <%--<li><a id="m0_contacts" href="javascript:"--%>

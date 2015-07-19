@@ -15,16 +15,6 @@
 </ul>
 <div class="container-fluid table-responsive">
     <tags:message />
-    <form id="searchForm" class="form-horizontal"
-          action="${baseUrl}/system/SysRole/" method="post">
-
-        <div class="form-group">
-            <div class="col-sm-12 text-center">
-                <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-                <input class="btn" type="reset" value="重置"/>
-            </div>
-        </div>
-    </form>
     <table class="table table-condensed table-hover table-striped table-bordered" >
         <thead>
         <tr>

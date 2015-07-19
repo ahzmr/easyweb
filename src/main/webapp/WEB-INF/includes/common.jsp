@@ -31,7 +31,7 @@
 <script src="${libUrl}/angular/js/angular.js"></script>
 
 <script src="${commonUrl}/js/utils.js"></script>
-<%--<script src="${commonUrl}/js/subpage.js"></script>--%>
+<script src="${commonUrl}/js/subpage.js"></script>
 <script src="${commonUrl}/js/formutils.js"></script>
 
 <script>
