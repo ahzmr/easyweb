@@ -37,28 +37,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-lg-3 col-sm-6">
+            <div class="form-group col-lg-4 col-sm-6">
                 <label class="col-sm-4 control-label">姓名：</label>
                 <div class="col-sm-8">
                     <input type="text" name="name" data-defVal="${param.name}" class="form-control" />
                 </div>
             </div>
-            <div class="form-group col-lg-3 col-sm-6">
+            <div class="form-group col-lg-4 col-sm-6">
                 <label class="col-sm-4 control-label">常住地点：</label>
                 <div class="col-sm-8">
                     <input type="text" name="address" data-defVal="${param.address}" class="form-control" />
                 </div>
             </div>
-            <div class="form-group col-lg-3 col-sm-6">
+            <div class="form-group col-lg-4 col-sm-6">
                 <label class="col-sm-4 control-label">工作地点：</label>
                 <div class="col-sm-8">
                     <input type="text" name="workAddr" data-defVal="${param.workAddr}" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group col-lg-3 col-sm-6">
-                <label class="col-sm-4 control-label">公司：</label>
-                <div class="col-sm-8">
-                    <input type="text" name="company" data-defVal="${param.company}" class="form-control" />
                 </div>
             </div>
         </div>

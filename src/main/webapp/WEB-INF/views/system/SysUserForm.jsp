@@ -31,7 +31,7 @@
 <form:form id="inputForm" modelAttribute="entry" action="${baseUrl}/system/SysUser/save"
            method="post" class="form-horizontal inputForm">
     <tags:message />
-    <div class="form-group">
+    <div class="form-group hide-add">
         <label class="col-sm-3  control-label" for="id">编号：</label>
         <div class="col-sm-9">
                 <form:input path="id" class="form-control readonly-edit" />

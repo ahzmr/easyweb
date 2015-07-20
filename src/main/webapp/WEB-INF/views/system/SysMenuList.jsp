@@ -43,7 +43,7 @@
                         <input type="hidden" name="oldSorts" value="${entity.sort}" />
                         <input type="text" name="sorts" value="${entity.sort}" maxlength="3" required="required"
                                style="width:50px;margin:0;padding:0;text-align:center;" /></td>
-                    <td>${entity.isShow}</td>
+                    <td>${fns:getDictLabel(entity.isShow, "sys_menu_is_show", "")}</td>
                     <td>${entity.permission}</td>
                     <td>${entity.remarks}</td>
                 <shiro:hasPermission name="system:SysMenu:edit"><td>

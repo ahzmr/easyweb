@@ -22,6 +22,7 @@
         <cglib.version>3.1</cglib.version>
         <mybatis.version>3.2.6</mybatis.version>
         <mybatis-spring.version>1.2.2</mybatis-spring.version>
+        <ehcache.version>2.6.11</ehcache.version>
         <druid.version>1.0.4</druid.version>
         <slf4j.version>1.7.6</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
@@ -67,6 +68,11 @@
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
 
         <!-- shiro -->
         <dependency>
@@ -94,6 +100,13 @@
             <version>${mybatis-spring.version}</version>
         </dependency>
 
+        <!-- ehcache -->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>${ehcache.version}</version>
+        </dependency>
+
         <!-- connection pool -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -108,12 +121,6 @@
             <version>${mysql.driver.version}</version>
             <scope>runtime</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.oracle</groupId>-->
-            <!--<artifactId>ojdbc14</artifactId>-->
-            <!--<version>${orcle.driver.version}</version>-->
-            <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>javax.servlet</groupId>

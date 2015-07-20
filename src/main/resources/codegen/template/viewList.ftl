@@ -10,6 +10,9 @@
     <meta name="decorator" content="default"/>
     <title>${entityLable}列表</title>
     <script>
+        $(function() {
+            initForm("#searchForm");
+        });
     </script>
 </head>
 <body>
@@ -17,8 +20,26 @@
     <li class="active"><a href="${basePath}">${entityLable}列表</a></li>
     <shiro:hasPermission name="${basePerm}:edit"><li><a href="${basePath}form">${entityLable}添加</a></li></shiro:hasPermission>
 </ul>
+<form id="searchForm" class="form-horizontal search-form"
+      action="${basePath}" method="post">
+    <div class="row">
+        <div class="form-group col-lg-4 col-sm-6">
+            <label class="col-sm-4 control-label">${table.primaryField.remarks}：</label>
+            <div class="col-sm-8">
+                <input type="text" name="${table.primaryField.name}" data-defVal="${r'${'}param.${table.primaryField.name}}" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-12 text-center">
+            <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+            <input class="btn" type="reset" value="重置"/>
+        </div>
+    </div>
+</form>
+<tags:message />
 <div class="container-fluid table-responsive">
-    <tags:message />
     <table class="table table-condensed table-hover table-striped table-bordered" >
         <thead>
         <tr>

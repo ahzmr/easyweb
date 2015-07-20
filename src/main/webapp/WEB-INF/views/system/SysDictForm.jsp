@@ -4,16 +4,16 @@
 <html lang="zh-CN">
 <head>
     <meta name="decorator" content="default"/>
-    <title>菜单管理</title>
+    <title>字典管理</title>
     <script>
         $(function() {
            initForm("#inputForm", {
                rules: {
-                   name: { maxlength: 100, required: true },
+                   value: { maxlength: 100, required: true },
+                   label: { maxlength: 100, required: true },
+                   type: { maxlength: 100, required: true },
+                   description: { maxlength: 100, required: true },
                    sort: { number: true, required: true },
-                   href: { maxlength: 2047 },
-                   icon: { maxlength: 100 },
-                   permission: { maxlength: 200 },
                    remarks: { maxlength: 255 }
                }
            });
@@ -23,32 +23,41 @@
 <body>
 <div class="container-fluid">
     <ul class="nav nav-tabs">
-        <li><a href="${baseUrl}/system/SysMenu/">菜单列表</a></li>
-        <li class="active"><a href="${baseUrl}/system/SysMenu/form?isView=${param.isView}&id=${entry.id}">
-        菜单<tags:autoFormLabel editPermission="system:SysMenu:edit" id="${entry.id}" /></a></li>
+        <li><a href="${baseUrl}/system/SysDict/">字典列表</a></li>
+        <li class="active"><a href="${baseUrl}/system/SysDict/form?isView=${param.isView}&id=${entry.id}">
+        字典<tags:autoFormLabel editPermission="system:SysDict:edit" id="${entry.id}" /></a></li>
     </ul><br/>
-<form:form id="inputForm" modelAttribute="entry" action="${baseUrl}/system/SysMenu/save"
+<form:form id="inputForm" modelAttribute="entry" action="${baseUrl}/system/SysDict/save"
            method="post" class="form-horizontal inputForm">
     <tags:message />
     <div class="form-group hide-add">
         <label class="col-sm-3 control-label" for="id">编号：</label>
         <div class="col-sm-9">
-                <form:input path="id" class="form-control readonly" />
+                <form:input path="id" class="form-control readonly-edit" />
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="parentId">父编号：</label>
+        <label class="col-sm-3 control-label" for="label">标签名：</label>
         <div class="col-sm-9">
-            <tags:treeselect id="parentId" name="parentId" value="${entry.parentId}"
-                             labelName="parentIdLabel" labelValue="${entry.parentName}" allowClear="true"
-                             title="父菜单" url="${baseUrl}/system/SysMenu/queryByParent.json" />
+            <form:input path="label" class="form-control" />
         </div>
     </div>
-    <input type="hidden" name="parentIds" value="${entry.parentIds}" />
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="name">名称：</label>
+        <label class="col-sm-3 control-label" for="value">数据值：</label>
         <div class="col-sm-9">
-                <form:input path="name" class="form-control" />
+                <form:input path="value" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="type">类型：</label>
+        <div class="col-sm-9">
+                <form:input path="type" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="description">描述：</label>
+        <div class="col-sm-9">
+                <form:input path="description" class="form-control" />
         </div>
     </div>
     <div class="form-group">
@@ -58,32 +67,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="href">链接：</label>
-        <div class="col-sm-9">
-                <form:input path="href" class="form-control" />
-        </div>
-    </div>
-    <%--<div class="form-group">
-        <label class="col-sm-3 control-label" for="icon">图标：</label>
-        <div class="col-sm-9">
-                <form:input path="icon" class="form-control" />
-        </div>
-    </div>--%>
-    <div class="form-group">
-        <label class="col-sm-3 control-label" for="isShow">是否显示：</label>
-        <div class="col-sm-9 radio-button">
-            <form:radiobuttons path="isShow"
-              items="${fns:getDictList('sys_menu_is_show')}" itemLabel="label" itemValue="value" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label" for="permission">权限标识：</label>
-        <div class="col-sm-9">
-                <form:input path="permission" class="form-control" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label">备注信息：</label>
+        <label class="col-sm-3 control-label" for="remarks">备注信息：</label>
         <div class="col-sm-9">
                 <form:input path="remarks" class="form-control" />
         </div>
@@ -91,7 +75,7 @@
     <div class="form-group hide-add">
         <label class="col-sm-3 control-label" for="createBy">创建者：</label>
         <div class="col-sm-9">
-                <form:input path="createBy" class="form-control readonly" />
+                <form:input path="createBy" class="form-control readonly-edit" />
         </div>
     </div>
     <div class="form-group hide-add">
@@ -117,7 +101,7 @@
     <input type="hidden" name="delFlag" value="${entry.delFlag}" />
     <div class="form-group">
         <div class="col-sm-12 text-center">
-            <shiro:hasPermission name="system:SysMenu:edit">
+            <shiro:hasPermission name="system:SysDict:edit">
                 <button class="btn btn-primary" type="submit">保 存</button>&nbsp;
             </shiro:hasPermission>
             <button class="btn" type="button" onclick="goHistory(-1)">返 回</button>

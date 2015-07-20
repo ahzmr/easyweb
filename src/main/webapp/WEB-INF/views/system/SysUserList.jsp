@@ -20,25 +20,19 @@
     <form id="searchForm" class="form-horizontal search-form"
           action="${baseUrl}/system/SysUser/" method="post">
         <div class="row">
-            <div class="form-group col-lg-3 col-sm-6">
+            <div class="form-group col-lg-4 col-sm-6">
                 <label class="col-sm-4 control-label">登录名：</label>
                 <div class="col-sm-8">
                     <input type="text" name="loginName" data-defVal="${param.loginName}" class="form-control" />
                 </div>
             </div>
-            <div class="form-group col-lg-3 col-sm-6">
-                <label class="col-sm-4 control-label">工号：</label>
-                <div class="col-sm-8">
-                    <input type="text" name="no" data-defVal="${param.no}" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group col-lg-3 col-sm-6">
+            <div class="form-group col-lg-4 col-sm-6">
                 <label class="col-sm-4 control-label">姓名：</label>
                 <div class="col-sm-8">
                     <input type="text" name="name" data-defVal="${param.name}" class="form-control" />
                 </div>
             </div>
-            <div class="form-group col-lg-3 col-sm-6">
+            <div class="form-group col-lg-4 col-sm-6">
                 <label class="col-sm-4 control-label">手机：</label>
                 <div class="col-sm-8">
                     <input type="text" name="mobile" data-defVal="${param.mobile}" class="form-control" />

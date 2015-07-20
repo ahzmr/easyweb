@@ -103,6 +103,7 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
     @RequestMapping({"list", ""})
     public String toList(Page<E> page, E entity, Model model, HttpServletRequest request) {
         checkPermission("view");
+        model.addAttribute(WebUtils.ENTRY, entity);
         entity = updateEntity(entity, ActionType.SELECT, request, model);
         CriteriaQuery example = genCriteriaes(entity, request, model);
         page = getService().queryPage(example, page);
