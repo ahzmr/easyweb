@@ -20,7 +20,7 @@
         $(".readonly-${optType}").each(readonlyHander);
         //<c:if test="${optType == 'view'}">
         $("input, select, textarea").not(".view-edit, .btn").each(readonlyHander);
-        $("input[type=submit]").hide();
+        $("input[type=submit], button[type=submit]").hide();
         //</c:if>
         //<c:if test="${optType != 'view'}">
         $(".hide-edit").hide();

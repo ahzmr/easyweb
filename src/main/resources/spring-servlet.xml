@@ -15,7 +15,10 @@
                                 expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
+    <!-- 依赖资源缓存一个月 -->
+    <mvc:resources mapping="/static/lib/**" location="/WEB-INF/static/lib/" order="1" cache-period="2592000" />
+    <!-- 自己的资源缓存一天 -->
+    <mvc:resources mapping="/static/common/**" location="/WEB-INF/static/common/" order="2" cache-period="86400" />
 
     <!-- 视图文件解析配置 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
