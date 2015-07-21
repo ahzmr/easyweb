@@ -2,6 +2,7 @@ package com.wenin819.easyweb.filter.shiro;
 
 import com.wenin819.easyweb.core.utils.WebUtils;
 import com.wenin819.easyweb.system.service.SysUserService;
+import com.wenin819.easyweb.utils.LoginErrCntUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -62,7 +63,11 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
     protected void setFailureAttribute(ServletRequest request, AuthenticationException ae) {
         super.setFailureAttribute(request, ae);
         String errMsg;
-        if(ae instanceof CredentialsException || ae instanceof AccountException) {
+        if(ae instanceof CredentialsException) {
+            errMsg = "用户名或密码错误，请重试。";
+            String username = getUsername(request);
+            LoginErrCntUtils.incrementLoginErrCnt(username);
+        } else if(ae instanceof AccountException) {
             errMsg = "用户名或密码错误，请重试。";
         } else {
             errMsg = ae.getMessage();

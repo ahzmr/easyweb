@@ -21,7 +21,7 @@ public class TxContactsService extends MybatisBaseService<TxContacts> {
 
     @Override
     public String getTableName() {
-        return ConfigUtils.get().getValue(Configs.SCHAME_CONFIGPLAT) + ".tx_contacts";
+        return Configs.schameConfigplat() + ".tx_contacts";
     }
 
     @Override

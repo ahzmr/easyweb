@@ -84,10 +84,14 @@ public class CacheUtils {
     @SuppressWarnings("unchecked")
     public static <T> T get(String cacheName, String key, Class<T> classType, T defaultVal) {
         Cache.ValueWrapper valueWrapper = getCache(cacheName).get(key);
-        if(null == valueWrapper || null == valueWrapper.get()) {
+		if(null == valueWrapper || null == valueWrapper.get()) {
             return defaultVal;
         }
-        return (T) ConvertUtils.convert(valueWrapper.get(), classType);
+		Object value = valueWrapper.get();
+		if(null == classType || classType.isAssignableFrom(value.getClass())) {
+			return (T) value;
+		}
+        return (T) ConvertUtils.convert(value, classType);
     }
 
     /**

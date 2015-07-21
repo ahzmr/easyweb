@@ -1,11 +1,13 @@
 package com.wenin819.easyweb.core.security.shiro;
 
+import com.wenin819.easyweb.core.utils.CacheUtils;
 import com.wenin819.easyweb.core.utils.Configs;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
 import com.wenin819.easyweb.core.utils.SecurityUtils;
 import com.wenin819.easyweb.system.model.SysMenu;
 import com.wenin819.easyweb.system.model.SysUser;
 import com.wenin819.easyweb.system.service.SysUserService;
+import com.wenin819.easyweb.utils.LoginErrCntUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -52,6 +54,10 @@ public class SystemUserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        String errMsg = LoginErrCntUtils.checkIsMaxLoginErrCnt(upToken.getUsername());
+        if(null != errMsg) {
+            throw new AuthenticationException(errMsg);
+        }
         final SysUser sysUser = sysUserService.queryByLoginName(upToken.getUsername());
         if(null == sysUser) {
             throw new UnknownAccountException();

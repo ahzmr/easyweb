@@ -24,7 +24,7 @@ public class SysUserService extends MybatisBaseService<SysUser> {
 
     @Override
     public String getTableName() {
-        return ConfigUtils.get().getValue(Configs.SCHAME_CONFIGPLAT) + ".sys_user";
+        return Configs.schameConfigplat() + ".sys_user";
     }
 
     @Override

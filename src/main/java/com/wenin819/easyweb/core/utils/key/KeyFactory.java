@@ -30,8 +30,7 @@ public class KeyFactory {
             if(null != keyGenerator) {
                 return keyGenerator;
             }
-            String value = ConfigUtils.get().getValue(Configs.KEY_GENERATOR_TYPE,
-                    Configs.KEY_GENERATOR_TYPE_DEFVAL);
+            String value = Configs.keyGeneratorType();
             if("sequence".equalsIgnoreCase(value)) {
                 keyGenerator = new SequenceKeyGenerator(tableName);
             } else {    // uuid

@@ -86,11 +86,8 @@ public class ConfigManager {
         int defualtRefrechTime = Configs.CONFIG_FILE_REFRESH_SECOND_DEFVAL;
         int value = getValue(Configs.CONFIG_FILE_REFRESH_SECOND, defualtRefrechTime);
         if(value < 0) {
-            logger.error("系统配置项{}有问题，为大于等于0的正整数，请检查，暂采用默认时间{}",
-                    Configs.CONFIG_FILE_REFRESH_SECOND, defualtRefrechTime);
-            value = defualtRefrechTime;
-        }
-        if(value > 0) {
+            logger.error("系统配置项{}有问题，为大于等于0的正整数，请检查，跳过配置", value);
+        } else if(value > 0) {
             logger.info("开始启动定时刷新系统配置的定时器……");
             ExecutorUtils.getSystemScheduledExecutorService().scheduleWithFixedDelay(new Runnable() {
                 @Override
@@ -118,7 +115,7 @@ public class ConfigManager {
         }
         logger.debug("完成加载扩展配置文件集合：" + extConfigFiles);
 
-        String extConfigBeans = getValue(Configs.EXT_CONFIG_BEANs);
+        String extConfigBeans = getValue(Configs.EXT_CONFIG_BEANS);
         if (StringUtils.isNotBlank(extConfigBeans)) {
             loadBeanProps(extConfigBeans, extProps);
         }
@@ -320,12 +317,11 @@ public class ConfigManager {
     @SuppressWarnings("unchecked")
     public <T> T getValue(String key, Class<T> classType, T defaultVal) {
         Assert.notNull(key, "key不能为空");
-        Assert.notNull(classType, "classType不能为空");
         String strVal = configChaches.getProperty(key);
         if(null == strVal || strVal.isEmpty()) {
             return defaultVal;
         }
-        if(CharSequence.class.isAssignableFrom(classType)) {
+        if(null == classType || classType.isAssignableFrom(strVal.getClass())) {
             return (T) strVal;
         } else {
             return (T) ConvertUtils.convert(strVal, classType);

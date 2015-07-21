@@ -22,6 +22,7 @@ public class SecurityUtils extends org.apache.shiro.SecurityUtils {
 
     public static final int HASH_ITERATIONS = 1024;
     public static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
+    public static final String ERR_LOGIN_CNT_CACHE_KEY = "errLoginCntCache";    // 错误登陆次数
 
     /**
      * 获得当前用户
