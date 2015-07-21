@@ -9,11 +9,9 @@ import com.wenin819.easyweb.core.web.BaseCrudController;
 import ${basePackageName}.model.${table.className};
 import ${basePackageName}.service.${table.className}Service;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author ${author}
@@ -46,10 +44,5 @@ public class ${table.className}Controller extends BaseCrudController<${table.cla
     @Override
     protected MybatisBaseService<${table.className}> getService() {
         return ${serviceName};
-    }
-
-    @Override
-    protected CriteriaQuery genCriteriaes(${table.className} entity, HttpServletRequest request, Model model) {
-        return super.genCriteriaes(entity, request, model);
     }
 }

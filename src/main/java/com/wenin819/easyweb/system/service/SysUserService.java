@@ -37,6 +37,25 @@ public class SysUserService extends MybatisBaseService<SysUser> {
         return sysUserDao;
     }
 
+    @Override
+    public CriteriaQuery genCriteriaQuery(SysUser entity) {
+        CriteriaQuery query = super.genCriteriaQuery(entity);
+        if(StringUtils.isNoneBlank(entity.getLoginName())) {
+            query.createAndCriteria().like(SysUser.TE.loginName, "%" + entity.getLoginName() + "%");
+        }
+        if(StringUtils.isNoneBlank(entity.getNo())) {
+            query.createAndCriteria().like(SysUser.TE.no, "%" + entity.getNo() + "%");
+        }
+        if(StringUtils.isNoneBlank(entity.getName())) {
+            query.createAndCriteria().like(SysUser.TE.name, "%" + entity.getName() + "%");
+        }
+        if(StringUtils.isNoneBlank(entity.getMobile())) {
+            query.createAndCriteria().like(SysUser.TE.mobile, "%" + entity.getMobile() + "%");
+        }
+        query.addOrder(SysUser.TE.no, true);
+        return query;
+    }
+
     /**
      * 通过登录名查询
      * @param username 登录名

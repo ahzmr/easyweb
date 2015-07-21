@@ -14,6 +14,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
@@ -55,28 +56,9 @@ public class SysUserController extends BaseCrudController<SysUser> {
     }
 
     @Override
-    protected CriteriaQuery genCriteriaes(SysUser entity, HttpServletRequest request, Model model) {
-        CriteriaQuery query = super.genCriteriaes(entity, request, model);
-        if(StringUtils.isNoneBlank(entity.getLoginName())) {
-            query.createAndCriteria().like(SysUser.TE.loginName, "%" + entity.getLoginName() + "%");
-        }
-        if(StringUtils.isNoneBlank(entity.getNo())) {
-            query.createAndCriteria().like(SysUser.TE.no, "%" + entity.getNo() + "%");
-        }
-        if(StringUtils.isNoneBlank(entity.getName())) {
-            query.createAndCriteria().like(SysUser.TE.name, "%" + entity.getName() + "%");
-        }
-        if(StringUtils.isNoneBlank(entity.getMobile())) {
-            query.createAndCriteria().like(SysUser.TE.mobile, "%" + entity.getMobile() + "%");
-        }
-        query.addOrder(SysUser.TE.no, true);
-        return query;
-    }
-
-    @Override
-    public String toForm(SysUser entry, Model model, HttpServletRequest request) {
+    public String toForm(boolean autoQuery, SysUser entry, Model model, HttpServletRequest request) {
         model.addAttribute("roles", SecurityUtils.getAllRole());
-        String toForm = super.toForm(entry, model, request);
+        String toForm = super.toForm(autoQuery, entry, model, request);
         entry = (SysUser) model.asMap().get(WebUtils.ENTRY);
         entry.setRoleIds(sysRoleService.queryRoleIdsByUser(entry));
         return toForm;
@@ -85,6 +67,14 @@ public class SysUserController extends BaseCrudController<SysUser> {
     @Override
     @Transient
     public String save(SysUser entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        SysUser oldUser;
+        if(null != entity.getId() && null != (oldUser = sysUserService.queryById(entity.getId()))) {
+            if(!oldUser.getLoginName().equals(entity.getLoginName()) &&
+                    null != sysUserService.queryByLoginName(entity.getLoginName())) {
+                addMessages(model, "修改失败，登陆名重复：" + entity.getLoginName());
+                return toForm(false, entity, model, request);
+            }
+        }
         String save = super.save(entity, model, redirectAttributes, request);
         sysRoleService.saveRoleUserRelations(entity, entity.getRoleIds());
         return save;
@@ -97,12 +87,22 @@ public class SysUserController extends BaseCrudController<SysUser> {
         if(StringUtils.isNotBlank(password)) {
             try {
                 getService().modifyPwd(loginName, password);
-                model.addAttribute(WebUtils.MSG, "修改用户名和密码成功");
+                addMessages(model, "修改用户名和密码成功");
                 return WebUtils.MSG_PAGE;
             } catch (Exception e) {
-                model.addAttribute(WebUtils.MSG, "修改用户名和密码失败，失败原因为：" + e.getMessage());
+                addMessages(model, "修改用户名和密码失败，失败原因为：" + e.getMessage());
             }
         }
         return getBasePagePath() + "ModifyPwd";
+    }
+
+    @RequestMapping("checkRepeat")
+    @ResponseBody
+    public boolean checkRepeat(SysUser entity) {
+        if(null == entity.getLoginName()) {
+            return false;
+        } else {
+            return !sysUserService.checkLoginNameExists(entity.getLoginName());
+        }
     }
 }

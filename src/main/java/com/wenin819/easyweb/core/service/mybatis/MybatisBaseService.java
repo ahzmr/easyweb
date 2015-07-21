@@ -63,6 +63,15 @@ public abstract class MybatisBaseService<E extends BaseEntity> {
     }
 
     /**
+     * 生成通用查询条件
+     * @param entity 实体
+     * @return 查询条件
+     */
+    public CriteriaQuery genCriteriaQuery(E entity) {
+        return new CriteriaQuery();
+    }
+
+    /**
      * 获取实体ID
      * @param entity 实体
      * @return 实体ID

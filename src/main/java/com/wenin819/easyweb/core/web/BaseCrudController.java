@@ -77,7 +77,7 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
      * @return
      */
     protected CriteriaQuery genCriteriaes(E entity, HttpServletRequest request, Model model) {
-        return new CriteriaQuery();
+        return getService().genCriteriaQuery(entity);
     }
 
     /**
@@ -120,9 +120,21 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
      */
     @RequestMapping("form")
     public String toForm(E entry, Model model, HttpServletRequest request) {
+        return toForm(true, entry, model, request);
+    }
+
+    /**
+     * 跳转查看修改页面
+     * @param autoQuery 是否自动查询实体
+     * @param entry
+     * @param model
+     * @param request
+     * @return
+     */
+    protected String toForm(boolean autoQuery, E entry, Model model, HttpServletRequest request) {
         checkPermission("view");
         E entity;
-        if(null == entry.getId() || null == (entity = getService().queryById(entry.getId()))) {
+        if(!autoQuery || null == entry.getId() || null == (entity = getService().queryById(entry.getId()))) {
             model.addAttribute(WebUtils.ENTRY, entry);
         } else {
             model.addAttribute(WebUtils.ENTRY, entity);
@@ -143,10 +155,10 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
         entity = updateEntity(entity, ActionType.SAVE, request, model);
         final int success = getService().save(entity);
         if(success > 0) {
-            redirectAttributes.addAttribute(WebUtils.MSG, "保存成功");
+            addMessages(redirectAttributes, "保存成功");
             return redirect2ListPage;
         } else {
-            model.addAttribute(WebUtils.MSG, "保存失败，请重试");
+            addMessages(model, "保存失败，请重试");
             model.addAttribute(WebUtils.ENTRY, entity);
             return pagePathForm;
         }
@@ -157,9 +169,9 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
         checkPermission("edit");
         final int success = getService().delete(entity);
         if(success > 0) {
-            redirectAttributes.addAttribute(WebUtils.MSG, "删除成功");
+            addMessages(redirectAttributes, "删除成功");
         } else {
-            redirectAttributes.addAttribute(WebUtils.MSG, "删除失败，请重试");
+            addMessages(redirectAttributes, "删除失败，请重试");
         }
         return redirect2ListPage;
     }

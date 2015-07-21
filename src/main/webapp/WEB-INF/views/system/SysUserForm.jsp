@@ -9,7 +9,10 @@
         $(function() {
            initForm("#inputForm", {
                rules: {
-                   loginName: { maxlength: 100, required: true },
+                   loginName: { maxlength: 100, required: true, repeatCheck: {
+                        url: "${baseUrl}/system/SysUser/checkRepeat.json",
+                        oldValue: "${entry.loginName}"
+                   }},
                    no: { maxlength: 100 },
                    name: { maxlength: 100, required: true },
                    email: { email: 200 },

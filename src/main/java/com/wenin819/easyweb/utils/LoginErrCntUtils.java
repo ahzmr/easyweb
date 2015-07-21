@@ -13,6 +13,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class LoginErrCntUtils {
 
+    private static final AtomicInteger defaultVal = new AtomicInteger(0);
+
     /**
      * 检查是否达到最大错误登陆次数
      * @param username 用户名
@@ -20,7 +22,7 @@ public class LoginErrCntUtils {
      */
     public static String checkIsMaxLoginErrCnt(String username) {
         int maxErrCnt = Configs.systemLoginMaxErrCnt();
-        if(CacheUtils.get(SecurityUtils.ERR_LOGIN_CNT_CACHE_KEY, username, new AtomicInteger(0)).get() >= maxErrCnt) {
+        if(CacheUtils.get(SecurityUtils.ERR_LOGIN_CNT_CACHE_KEY, username, defaultVal).get() >= maxErrCnt) {
             return "用户密码错误次数大于" + maxErrCnt + "次，请过5分钟后再试";
         } else {
             return null;

@@ -12,6 +12,36 @@ $.validator.addMethod("mobileOrPhoneCN", function(phone_number, element) {
                                       phone_number.match(/^(\d{3,4}-?\d{7,9})$/));
 }, "请输入正常的手机或电话号码");
 
+$.validator.addMethod("repeatCheck", function(value, element, param) {
+    var optional = this.optional(element);
+    if(optional) {
+        return optional;
+    }
+    param = typeof param === "string" && { url: param } || param;
+
+    var $element = $(element);
+    var oldValue = param.oldValue || $element.data("oldValue");
+    if(oldValue == value) {
+        return true;
+    }
+
+    var url = param.url, name = element.name;
+    var success = false;
+    var data = {
+        elementName: name
+    };
+    data[name] = value;
+    $.ajax(url, {
+        dataType: 'json',
+        async: false,
+        data: data,
+        success: function(data) {
+            success = data;
+        }
+    });
+    return success;
+}, "请输入不重复的数据");
+
 function initForm(form, options) {
     if(!form || typeof form !== 'string') {
         options = form;
@@ -25,13 +55,12 @@ function initForm(form, options) {
         input.val(input.attr("data-defVal"));
     });
     options = $.extend({}, {
+        onkeyup: false,
         submitHandler: function(form){
             loading('正在提交，请稍等...');
             form.submit();
         },
-        errorContainer: "#messageBox",
         errorPlacement: function(error, element) {
-            $("#messageBox").text("输入有误，请先更正。");
             if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
                 error.appendTo(element.parent().parent());
             } else {
