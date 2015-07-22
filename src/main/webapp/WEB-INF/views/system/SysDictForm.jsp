@@ -8,8 +8,17 @@
     <script>
         $(function() {
            initForm("#inputForm", {
+               groups: {
+                   typeVal: "value type"
+               },
                rules: {
-                   value: { maxlength: 100, required: true },
+                   value: { maxlength: 100, required: true, repeatCheck: {
+                       url: "${baseUrl}/system/SysDict/validate.json",
+                       oldValue: "${entry.value}",
+                       otherParam: {
+                           type: function() { return $("#type").val(); }
+                       }
+                   } },
                    label: { maxlength: 100, required: true },
                    type: { maxlength: 100, required: true },
                    description: { maxlength: 100, required: true },
@@ -43,15 +52,15 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="value">数据值：</label>
+        <label class="col-sm-3 control-label" for="type">类型：</label>
         <div class="col-sm-9">
-                <form:input path="value" class="form-control" />
+            <form:input path="type" class="form-control" />
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="type">类型：</label>
+        <label class="col-sm-3 control-label" for="value">数据值：</label>
         <div class="col-sm-9">
-                <form:input path="type" class="form-control" />
+                <form:input path="value" class="form-control" />
         </div>
     </div>
     <div class="form-group">

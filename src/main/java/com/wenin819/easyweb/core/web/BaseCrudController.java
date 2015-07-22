@@ -5,17 +5,14 @@ import com.wenin819.easyweb.core.persistence.Page;
 import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
 import com.wenin819.easyweb.core.utils.SecurityUtils;
-import com.wenin819.easyweb.core.utils.StringUtils;
 import com.wenin819.easyweb.core.utils.WebUtils;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 
 /**
  * Created by wenin819@gmail.com on 2014-09-02.
@@ -68,7 +65,6 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
         SecurityUtils.getSubject().checkPermission(getBasePermission() + (null != subPerm ? ":" + subPerm : ""));
     }
 
-
     /**
      * 生成分布查询条件
      * @param entity
@@ -76,7 +72,7 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
      * @param model
      * @return
      */
-    protected CriteriaQuery genCriteriaes(E entity, HttpServletRequest request, Model model) {
+    protected CriteriaQuery genCriteriaQuery(E entity, HttpServletRequest request, Model model) {
         return getService().genCriteriaQuery(entity);
     }
 
@@ -105,7 +101,7 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
         checkPermission("view");
         model.addAttribute(WebUtils.ENTRY, entity);
         entity = updateEntity(entity, ActionType.SELECT, request, model);
-        CriteriaQuery example = genCriteriaes(entity, request, model);
+        CriteriaQuery example = genCriteriaQuery(entity, request, model);
         page = getService().queryPage(example, page);
         model.addAttribute(WebUtils.PAGE, page);
         return pagePathList;
@@ -143,15 +139,19 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
     }
 
     /**
-     * 修改处理
-     * @param entity
+     * 增加或修改处理
+     * @param entity 实体
      * @param model
      * @param request
-     * @return
+     * @return 正常处理返回 redirect2ListPage, 否则返回 pagePathForm
      */
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(E entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         checkPermission("edit");
+        String errMsg = getService().validate(entity);
+        if(null != errMsg) {
+            return toForm(false, entity, model, request);
+        }
         entity = updateEntity(entity, ActionType.SAVE, request, model);
         final int success = getService().save(entity);
         if(success > 0) {
@@ -159,8 +159,7 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
             return redirect2ListPage;
         } else {
             addMessages(model, "保存失败，请重试");
-            model.addAttribute(WebUtils.ENTRY, entity);
-            return pagePathForm;
+            return toForm(false, entity, model, request);
         }
     }
 
@@ -174,5 +173,11 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
             addMessages(redirectAttributes, "删除失败，请重试");
         }
         return redirect2ListPage;
+    }
+
+    @RequestMapping("validate")
+    @ResponseBody
+    public boolean validate(E entity) {
+        return null == getService().validate(entity);
     }
 }

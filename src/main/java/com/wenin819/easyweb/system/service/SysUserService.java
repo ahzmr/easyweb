@@ -75,6 +75,28 @@ public class SysUserService extends MybatisBaseService<SysUser> {
         }
     }
 
+    @Override
+    public String validate(SysUser entity) {
+        CriteriaQuery query = new CriteriaQuery();
+        if(null != entity.getId()) {
+            query.createAndCriteria().notEqualTo(SysUser.TE.id, entity.getId());
+        }
+        String msg;
+        if(null != entity.getLoginName()) {
+            query.createAndCriteria().equalTo(SysUser.TE.loginName, entity.getLoginName());
+            msg = "登录名";
+        } else if(null != entity.getNo()) {
+            query.createAndCriteria().equalTo(SysUser.TE.no, entity.getNo());
+            msg = "工号";
+        } else {
+            return "登录名不能为空";
+        }
+        if(sysUserDao.countByCriteria(query) > 0) {
+            return msg + "重复";
+        }
+        return super.validate(entity);
+    }
+
     /**
      * 判断登录名是否已经存在
      * @param loginName 登录名

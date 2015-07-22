@@ -10,6 +10,7 @@ import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
 import com.wenin819.easyweb.core.utils.BeanUtils;
 import com.wenin819.easyweb.core.utils.ConfigEnum;
 import com.wenin819.easyweb.core.utils.key.KeyFactory;
+import com.wenin819.easyweb.system.model.SysRole;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -193,5 +194,15 @@ public abstract class MybatisBaseService<E extends BaseEntity> {
      */
     public String genId() {
         return KeyFactory.getKeyGenerator(getTableName()).genNextKey();
+    }
+
+
+    /**
+     * 检查实体有效性
+     * @param entity 实体
+     * @return 有效是返回null，其它返回原因
+     */
+    public String validate(E entity) {
+        return null;
     }
 }

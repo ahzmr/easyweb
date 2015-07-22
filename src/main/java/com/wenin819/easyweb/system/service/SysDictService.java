@@ -5,6 +5,7 @@ import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
 import com.wenin819.easyweb.core.utils.ConfigEnum;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
+import com.wenin819.easyweb.core.utils.StringUtils;
 import com.wenin819.easyweb.system.dao.SysDictDao;
 import com.wenin819.easyweb.system.model.SysDict;
 import com.wenin819.easyweb.utils.SysDictUtils;
@@ -37,6 +38,23 @@ public class SysDictService extends MybatisBaseService<SysDict> {
     @Override
     public MybatisBaseDao<SysDict> getDao() {
         return sysDictDao;
+    }
+
+    @Override
+    public CriteriaQuery genCriteriaQuery(SysDict entity) {
+        CriteriaQuery query = super.genCriteriaQuery(entity);
+        query.createAndCriteria().equalTo(SysDict.TE.delFlag, ConfigEnum.DEL_FLAG_NORMAL);
+        if(StringUtils.isNotBlank(entity.getType())) {
+            query.createAndCriteria().like(SysDict.TE.type, "%" + entity.getType() + "%");
+        }
+        if(StringUtils.isNotBlank(entity.getLabel())) {
+            query.createAndCriteria().like(SysDict.TE.label, "%" + entity.getLabel() + "%");
+        }
+        if(StringUtils.isNotBlank(entity.getDescription())) {
+            query.createAndCriteria().like(SysDict.TE.description, "%" + entity.getDescription() + "%");
+        }
+        query.addOrder(SysDict.TE.type, true).addOrder(SysDict.TE.sort, true);
+        return query;
     }
 
     /**
@@ -75,5 +93,25 @@ public class SysDictService extends MybatisBaseService<SysDict> {
         }
         SysDictUtils.removeDictTypeCache(sysDict.getType());
         return super.delete(params);
+    }
+
+    @Override
+    public String validate(SysDict entity) {
+        CriteriaQuery query = new CriteriaQuery();
+        if(null != entity.getId()) {
+            query.createAndCriteria().notEqualTo(SysDict.TE.id, entity.getId());
+        }
+        String msg;
+        if(null != entity.getType() && null != entity.getValue()) {
+            query.createAndCriteria().equalTo(SysDict.TE.type, entity.getType())
+                .equalTo(SysDict.TE.value, entity.getValue());
+            msg = "值";
+        } else {
+            return "类型和值不能为空";
+        }
+        if(sysDictDao.countByCriteria(query) > 0) {
+            return msg + "重复";
+        }
+        return super.validate(entity);
     }
 }

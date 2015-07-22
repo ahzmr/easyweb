@@ -10,10 +10,13 @@
            initForm("#inputForm", {
                rules: {
                    loginName: { maxlength: 100, required: true, repeatCheck: {
-                        url: "${baseUrl}/system/SysUser/checkRepeat.json",
+                        url: "${baseUrl}/system/SysUser/validate.json",
                         oldValue: "${entry.loginName}"
                    }},
-                   no: { maxlength: 100 },
+                   no: { maxlength: 100, repeatCheck: {
+                       url: "${baseUrl}/system/SysUser/validate.json",
+                       oldValue: "${entry.no}"
+                   } },
                    name: { maxlength: 100, required: true },
                    email: { email: 200 },
                    phone: { mobileOrPhoneCN: true },

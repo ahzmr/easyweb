@@ -3,8 +3,9 @@ package com.wenin819.easyweb.system.service;
 import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.persistence.mybatis.MybatisTreeBaseDao;
 import com.wenin819.easyweb.core.service.mybatis.MybatisTreeBaseService;
-import com.wenin819.easyweb.core.utils.Configs;
+import com.wenin819.easyweb.core.utils.ConfigEnum;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
+import com.wenin819.easyweb.core.utils.Configs;
 import com.wenin819.easyweb.core.utils.StringUtils;
 import com.wenin819.easyweb.core.utils.tree.ITreeNodeAdapter;
 import com.wenin819.easyweb.core.utils.tree.TreeSortUtils;
@@ -68,6 +69,14 @@ public class SysMenuService extends MybatisTreeBaseService<SysMenu> {
     @Override
     public MybatisTreeBaseDao<SysMenu> getDao() {
         return sysMenuDao;
+    }
+
+    @Override
+    public CriteriaQuery genCriteriaQuery(SysMenu entity) {
+        CriteriaQuery query = super.genCriteriaQuery(entity);
+        query.createAndCriteria().equalTo(SysMenu.TE.delFlag, ConfigEnum.DEL_FLAG_NORMAL);
+        query.addOrder(SysMenu.TE.sort, true);
+        return query;
     }
 
     /**

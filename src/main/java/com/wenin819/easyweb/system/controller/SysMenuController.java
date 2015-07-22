@@ -1,12 +1,9 @@
 package com.wenin819.easyweb.system.controller;
 
 import com.wenin819.easyweb.core.persistence.Page;
-import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
-import com.wenin819.easyweb.core.utils.ConfigEnum;
 import com.wenin819.easyweb.core.utils.tree.ITreeNodeAdapter;
 import com.wenin819.easyweb.core.utils.tree.TreeSortUtils;
-import com.wenin819.easyweb.core.utils.tree.adapter.ObjectTreeNodeAdapter;
 import com.wenin819.easyweb.core.utils.tree.support.TreeNodeWrapper;
 import com.wenin819.easyweb.core.web.BaseCrudController;
 import com.wenin819.easyweb.system.model.SysMenu;
@@ -52,14 +49,6 @@ public class SysMenuController extends BaseCrudController<SysMenu> {
     @Override
     protected MybatisBaseService<SysMenu> getService() {
         return sysMenuService;
-    }
-
-    @Override
-    protected CriteriaQuery genCriteriaes(SysMenu entity, HttpServletRequest request, Model model) {
-        CriteriaQuery query = super.genCriteriaes(entity, request, model);
-        query.createAndCriteria().equalTo(SysMenu.TE.delFlag, ConfigEnum.DEL_FLAG_NORMAL);
-        query.addOrder(SysMenu.TE.sort, true);
-        return query;
     }
 
     @Override

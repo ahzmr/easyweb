@@ -40,6 +40,12 @@ public class SysRoleService extends MybatisBaseService<SysRole> {
         return sysRoleDao;
     }
 
+    @Override
+    public CriteriaQuery genCriteriaQuery(SysRole entity) {
+        CriteriaQuery query = super.genCriteriaQuery(entity);
+        query.createAndCriteria().equalTo(SysRole.TE.delFlag, ConfigEnum.DEL_FLAG_NORMAL);
+        return query;
+    }
     /**
      * 查询角色菜单ID列表
      * @param role 角色
@@ -140,27 +146,28 @@ public class SysRoleService extends MybatisBaseService<SysRole> {
 
     /**
      * 检查角色有效性
-     * @param role 角色
+     * @param entity 角色
      * @return 有效是返回null，其它返回原因
      */
-    public String validate(SysRole role) {
+    @Override
+    public String validate(SysRole entity) {
         CriteriaQuery query = new CriteriaQuery();
-        if(null != role.getId()) {
-            query.createAndCriteria().notEqualTo(SysRole.TE.id, role.getId());
+        if(null != entity.getId()) {
+            query.createAndCriteria().notEqualTo(SysRole.TE.id, entity.getId());
         }
         String msg;
-        if(null != role.getName()) {
-            query.createAndCriteria().equalTo(SysRole.TE.name, role.getName());
+        if(null != entity.getName()) {
+            query.createAndCriteria().equalTo(SysRole.TE.name, entity.getName());
             msg = "名称";
-        } else if(null != role.getCode()) {
-            query.createAndCriteria().equalTo(SysRole.TE.code, role.getCode());
+        } else if(null != entity.getCode()) {
+            query.createAndCriteria().equalTo(SysRole.TE.code, entity.getCode());
             msg = "编码";
         } else {
             return "名称和编码不能为空";
         }
         if(0 < getDao().countByCriteria(query)) {
-            return msg + "重复，请重新输入";
+            return msg + "重复";
         }
-        return null;
+        return super.validate(entity);
     }
 }

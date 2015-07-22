@@ -47,20 +47,4 @@ public class SysDictController extends BaseCrudController<SysDict> {
         return sysDictService;
     }
 
-    @Override
-    protected CriteriaQuery genCriteriaes(SysDict entity, HttpServletRequest request, Model model) {
-        CriteriaQuery query = super.genCriteriaes(entity, request, model);
-        query.createAndCriteria().equalTo(SysDict.TE.delFlag, ConfigEnum.DEL_FLAG_NORMAL);
-        if(StringUtils.isNotBlank(entity.getType())) {
-            query.createAndCriteria().like(SysDict.TE.type, "%" + entity.getType() + "%");
-        }
-        if(StringUtils.isNotBlank(entity.getLabel())) {
-            query.createAndCriteria().like(SysDict.TE.label, "%" + entity.getLabel() + "%");
-        }
-        if(StringUtils.isNotBlank(entity.getDescription())) {
-            query.createAndCriteria().like(SysDict.TE.description, "%" + entity.getDescription() + "%");
-        }
-        query.addOrder(SysDict.TE.type, true).addOrder(SysDict.TE.sort, true);
-        return query;
-    }
 }

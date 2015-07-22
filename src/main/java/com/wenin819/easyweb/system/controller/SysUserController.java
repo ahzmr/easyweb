@@ -67,16 +67,10 @@ public class SysUserController extends BaseCrudController<SysUser> {
     @Override
     @Transient
     public String save(SysUser entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
-        SysUser oldUser;
-        if(null != entity.getId() && null != (oldUser = sysUserService.queryById(entity.getId()))) {
-            if(!oldUser.getLoginName().equals(entity.getLoginName()) &&
-                    null != sysUserService.queryByLoginName(entity.getLoginName())) {
-                addMessages(model, "修改失败，登陆名重复：" + entity.getLoginName());
-                return toForm(false, entity, model, request);
-            }
-        }
         String save = super.save(entity, model, redirectAttributes, request);
-        sysRoleService.saveRoleUserRelations(entity, entity.getRoleIds());
+        if(redirect2ListPage.equals(save)) {
+            sysRoleService.saveRoleUserRelations(entity, entity.getRoleIds());
+        }
         return save;
     }
 
@@ -94,15 +88,5 @@ public class SysUserController extends BaseCrudController<SysUser> {
             }
         }
         return getBasePagePath() + "ModifyPwd";
-    }
-
-    @RequestMapping("checkRepeat")
-    @ResponseBody
-    public boolean checkRepeat(SysUser entity) {
-        if(null == entity.getLoginName()) {
-            return false;
-        } else {
-            return !sysUserService.checkLoginNameExists(entity.getLoginName());
-        }
     }
 }
