@@ -12,12 +12,13 @@ $.validator.addMethod("mobileOrPhoneCN", function(phone_number, element) {
                                       phone_number.match(/^(\d{3,4}-?\d{7,9})$/));
 }, "请输入正常的手机或电话号码");
 
+// 检查重复数据，用法： repeatCheck: { url: url, oldValue: oldValue, otherParam: { p1: p1, p2: function(){} }}
 $.validator.addMethod("repeatCheck", function(value, element, param) {
     var optional = this.optional(element);
     if(optional) {
         return optional;
     }
-    param = typeof param === "string" && { url: param } || param;
+    param = typeof param === "string" && { url: param } || param || {};
 
     var $element = $(element);
     var oldValue = param.oldValue || $element.data("oldValue");
@@ -27,11 +28,14 @@ $.validator.addMethod("repeatCheck", function(value, element, param) {
 
     var url = param.url, name = element.name;
     var success = false;
-    var data = {
-        elementName: name
-    };
+    if(!url) {
+        return success;
+    }
+    var data = $.extend({}, param.otherParam);
+    data.elementName = name;
     data[name] = value;
     $.ajax(url, {
+        method: 'post',
         dataType: 'json',
         async: false,
         data: data,

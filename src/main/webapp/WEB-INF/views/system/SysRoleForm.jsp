@@ -9,8 +9,14 @@
         $(function() {
             initForm("#inputForm", {
                 rules: {
-                    name: { maxlength: 100, required: true },
-                    code: { maxlength: 100, required: true },
+                    name: { maxlength: 100, required: true, repeatCheck: {
+                        url: "${baseUrl}/system/SysRole/validate.json",
+                        oldValue: "${entry.name}"
+                    } },
+                    code: { maxlength: 100, required: true, repeatCheck: {
+                        url: "${baseUrl}/system/SysRole/validate.json",
+                        oldValue: "${entry.code}"
+                    } },
                     remarks: { maxlength: 255 }
                 },
                 submitHandler: function(form){

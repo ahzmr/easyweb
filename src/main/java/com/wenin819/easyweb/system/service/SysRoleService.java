@@ -137,4 +137,30 @@ public class SysRoleService extends MybatisBaseService<SysRole> {
             return sysRoleDao.queryMyRoles(user);
         }
     }
+
+    /**
+     * 检查角色有效性
+     * @param role 角色
+     * @return 有效是返回null，其它返回原因
+     */
+    public String validate(SysRole role) {
+        CriteriaQuery query = new CriteriaQuery();
+        if(null != role.getId()) {
+            query.createAndCriteria().notEqualTo(SysRole.TE.id, role.getId());
+        }
+        String msg;
+        if(null != role.getName()) {
+            query.createAndCriteria().equalTo(SysRole.TE.name, role.getName());
+            msg = "名称";
+        } else if(null != role.getCode()) {
+            query.createAndCriteria().equalTo(SysRole.TE.code, role.getCode());
+            msg = "编码";
+        } else {
+            return "名称和编码不能为空";
+        }
+        if(0 < getDao().countByCriteria(query)) {
+            return msg + "重复，请重新输入";
+        }
+        return null;
+    }
 }

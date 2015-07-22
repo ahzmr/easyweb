@@ -11,6 +11,7 @@ import com.wenin819.easyweb.system.service.SysRoleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
@@ -60,8 +61,8 @@ public class SysRoleController extends BaseCrudController<SysRole> {
     }
 
     @Override
-    public String toForm(SysRole entry, Model model, HttpServletRequest request) {
-        String toForm = super.toForm(entry, model, request);
+    public String toForm(boolean autoQuery, SysRole entry, Model model, HttpServletRequest request) {
+        String toForm = super.toForm(autoQuery, entry, model, request);
         entry = (SysRole) model.asMap().get(WebUtils.ENTRY);
 
         entry.setMenuIds(sysRoleService.queryMenuIdsByRole(entry));
@@ -72,8 +73,18 @@ public class SysRoleController extends BaseCrudController<SysRole> {
     @Override
     @Transient
     public String save(SysRole entity, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        String errMsg = sysRoleService.validate(entity);
+        if(null != errMsg) {
+            return toForm(false, entity, model, request);
+        }
         String save = super.save(entity, model, redirectAttributes, request);
         sysRoleService.saveRoleMenuRelations(entity, entity.getMenuIds());
         return save;
+    }
+
+    @RequestMapping("validate")
+    @ResponseBody
+    public boolean validate(SysRole role) {
+        return null == sysRoleService.validate(role);
     }
 }
