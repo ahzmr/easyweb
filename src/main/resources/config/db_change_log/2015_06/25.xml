@@ -8,7 +8,7 @@
     <changeSet id="20150624001" author="lichao" failOnError="false">
         <preConditions>
             <not>
-                <tableExists tableName="SYS_KEY_SEQUENCE" />
+                <tableExists tableName="sys_key_sequence" />
             </not>
         </preConditions>
         <comment>增加序列表</comment>

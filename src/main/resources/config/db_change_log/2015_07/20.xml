@@ -8,7 +8,7 @@
     <changeSet id="20150720001" author="lichao" failOnError="false">
         <preConditions>
             <not>
-                <tableExists tableName="SYS_DICT" />
+                <tableExists tableName="sys_dict" />
             </not>
         </preConditions>
         <comment>初始化数据字典表</comment>
@@ -17,7 +17,7 @@
 
     <changeSet id="20150720002" author="lichao" failOnError="false">
         <preConditions>
-            <tableExists tableName="SYS_MENU" />
+            <tableExists tableName="sys_menu" />
         </preConditions>
         <comment>增加数据字典菜单和授权</comment>
         <sqlFile path="${jdbc.type}/20_002_update_sys_menu.sql" relativeToChangelogFile="true" />

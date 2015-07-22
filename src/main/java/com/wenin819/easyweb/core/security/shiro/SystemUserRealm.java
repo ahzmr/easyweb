@@ -1,8 +1,6 @@
 package com.wenin819.easyweb.core.security.shiro;
 
-import com.wenin819.easyweb.core.utils.CacheUtils;
 import com.wenin819.easyweb.core.utils.Configs;
-import com.wenin819.easyweb.core.utils.ConfigUtils;
 import com.wenin819.easyweb.core.utils.SecurityUtils;
 import com.wenin819.easyweb.system.model.SysMenu;
 import com.wenin819.easyweb.system.model.SysUser;
@@ -39,6 +37,7 @@ public class SystemUserRealm extends AuthorizingRealm {
         // 处理超级管理员权限
         if(Configs.systemSuperAdminUserIds().contains(user.getId())) {
             info.addStringPermission("*");
+            info.addRole(SecurityUtils.SUPER_ADMIN_NAME);
         } else {
             List<SysMenu> allMenu = SecurityUtils.getAllMenu();
             for (SysMenu sysMenu : allMenu) {

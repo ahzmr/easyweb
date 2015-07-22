@@ -8,7 +8,7 @@
     <changeSet id="20150714001" author="lichao" failOnError="false">
         <preConditions>
             <not>
-                <tableExists tableName="SYS_MENU" />
+                <tableExists tableName="sys_menu" />
             </not>
         </preConditions>
         <comment>增加菜单表</comment>
@@ -17,7 +17,7 @@
     <changeSet id="20150714002" author="lichao" failOnError="false">
         <preConditions>
             <not>
-                <tableExists tableName="SYS_ROLE_MENU" />
+                <tableExists tableName="sys_role_menu" />
             </not>
         </preConditions>
         <comment>增加角色菜单关系表</comment>
