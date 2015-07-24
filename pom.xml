@@ -239,6 +239,14 @@
             <version>${liquibase.version}</version>
         </dependency>
 
+        <!-- 终端解析工具 -->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>1.16</version>
+        </dependency>
+
+
         <!-- test -->
         <dependency>
             <groupId>junit</groupId>

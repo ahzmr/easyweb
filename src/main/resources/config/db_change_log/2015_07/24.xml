@@ -5,23 +5,23 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="20150720001" author="lichao" failOnError="false">
+    <changeSet id="20150724001" author="lichao" failOnError="false">
         <preConditions>
             <not>
-                <tableExists tableName="sys_dict" />
+                <tableExists tableName="sys_login_log" />
             </not>
         </preConditions>
-        <comment>初始化数据字典表</comment>
-        <sqlFile path="${jdbc.type}/20_001_init_sys_dict.sql" relativeToChangelogFile="true" />
+        <comment>初始化登录日志表</comment>
+            <sqlFile path="${jdbc.type}/24_001_init_sys_login_log.sql" relativeToChangelogFile="true" />
     </changeSet>
 
-    <changeSet id="20150720002" author="lichao" failOnError="false">
+    <changeSet id="20150724002" author="lichao" failOnError="false">
         <preConditions>
             <tableExists tableName="sys_menu" />
             <tableExists tableName="sys_role_menu" />
         </preConditions>
-        <comment>增加数据字典菜单和授权</comment>
-        <sqlFile path="${jdbc.type}/20_002_update_sys_menu.sql" relativeToChangelogFile="true" />
+        <comment>增加日志查询菜单</comment>
+            <sqlFile path="${jdbc.type}/24_002_update_sys_menu.sql" relativeToChangelogFile="true" />
     </changeSet>
     
 </databaseChangeLog>

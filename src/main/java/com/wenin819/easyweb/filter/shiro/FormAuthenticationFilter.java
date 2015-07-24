@@ -1,6 +1,7 @@
 package com.wenin819.easyweb.filter.shiro;
 
 import com.wenin819.easyweb.core.utils.WebUtils;
+import com.wenin819.easyweb.system.service.SysLoginLogService;
 import com.wenin819.easyweb.system.service.SysUserService;
 import com.wenin819.easyweb.utils.LoginErrCntUtils;
 import org.apache.shiro.authc.*;
@@ -24,6 +25,8 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 
     @Resource
     private SysUserService sysUserService;
+    @Resource
+    private SysLoginLogService sysLoginLogService;
 
     public static final String DEFAULT_ERROR_MSG_KEY_ATTRIBUTE_NAME = "message";
     private static final Logger logger = LoggerFactory.getLogger(FormAuthenticationFilter.class);
@@ -43,10 +46,13 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
         String username = getUsername(request);
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String realRemoteAddr = WebUtils.getRealRemoteAddr(httpServletRequest);
         if (logger.isInfoEnabled()) {
-            logger.info("用户[" + username + "]成功登陆，登陆IP为:" + WebUtils.getRealRemoteAddr());
+            logger.info("用户[" + username + "]成功登陆，登陆IP为:" + realRemoteAddr);
         }
         sysUserService.updateUserLoginInfo(username);
+        sysLoginLogService.saveLoginLog(username, realRemoteAddr, httpServletRequest.getHeader("user-agent"));
         return super.onLoginSuccess(token, subject, request, response);
     }
 
@@ -54,7 +60,9 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
         String username = getUsername(request);
         if (logger.isWarnEnabled()) {
-            logger.warn("用户[" + username + "]登陆失败，登陆IP为:" + WebUtils.getRealRemoteAddr());
+            HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+            String realRemoteAddr = WebUtils.getRealRemoteAddr(httpServletRequest);
+            logger.warn("用户[" + username + "]登陆失败，登陆IP为:" + realRemoteAddr);
         }
         return super.onLoginFailure(token, e, request, response);
     }

@@ -1,4 +1,4 @@
-package com.wenin819.easyweb.modules.webclient.vo;
+package com.wenin819.easyweb.utils;
 
 import org.apache.http.HttpHost;
 
@@ -20,6 +20,11 @@ public class HttpContext {
 
     public HttpContext(String url) {
         this.url = url;
+    }
+
+    public HttpContext(String url, Map<String, String> params) {
+        this.url = url;
+        this.params = params;
     }
 
     public HttpContext(String url, Map<String, String> params, Map<String, String> cookies) {

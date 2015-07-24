@@ -1,6 +1,5 @@
-package com.wenin819.easyweb.modules.webclient.util;
+package com.wenin819.easyweb.utils;
 
-import com.wenin819.easyweb.modules.webclient.vo.HttpContext;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -19,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.*;
 
@@ -46,7 +44,7 @@ public class HttpUtils {
             return "";
         }
         if(null == separator) {
-            separator = "";
+            separator = "&";
         }
         StringBuilder s = new StringBuilder();
         boolean isFirst = true;

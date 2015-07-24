@@ -1,7 +1,7 @@
 package com.wenin819.easyweb.modules.webclient.service;
 
-import com.wenin819.easyweb.modules.webclient.util.HttpUtils;
-import com.wenin819.easyweb.modules.webclient.vo.HttpContext;
+import com.wenin819.easyweb.utils.HttpUtils;
+import com.wenin819.easyweb.utils.HttpContext;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
 import org.springframework.core.io.DefaultResourceLoader;

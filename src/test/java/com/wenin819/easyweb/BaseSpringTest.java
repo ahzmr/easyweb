@@ -22,7 +22,7 @@ public class BaseSpringTest {
 
     protected void loggerJson(Object... msgs) {
         if(logger.isInfoEnabled()) {
-            logger.info(JsonUtils.toJsonString(msgs));
+            logger.info(JsonUtils.objectToJson(msgs));
         }
     }
 }

@@ -2,10 +2,15 @@ package com.wenin819.easyweb.core.utils;
 
 import com.wenin819.easyweb.config.SessionConfigEnum;
 
+import com.wenin819.easyweb.utils.HttpContext;
+import com.wenin819.easyweb.utils.HttpUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * Web 操作工具类
@@ -18,6 +23,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
     public static final String PAGE = "page";   // 分页
     public static final String MSG = "message"; // 消息
     public static final String MSG_PAGE = "common/message"; // 消息页面
+    private static final Logger logger = LoggerFactory.getLogger(WebUtils.class);
 
     /**
      * 客户端地址请求头，分先后顺序
@@ -67,6 +73,33 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
     public static <T> T getSessionAttr(Object key) {
         final Session session = SecurityUtils.getSubject().getSession();
         return null == session ? null : (T) session.getAttribute(key);
+    }
+
+    /**
+     * 淘宝通过IP查地址接口会话
+     */
+    private static final HttpContext TAOBAO_IP_QUERY =
+            new HttpContext("http://ip.taobao.com/service/getIpInfo.php");
+
+    /**
+     * 通过IP地址查地址
+     * @param ipAddr IP地址
+     * @return
+     */
+    public static String getLocationNameByIp(String ipAddr) {
+        if(StringUtils.isBlank(ipAddr)) {
+            return null;
+        }
+        String rsStr = HttpUtils.httpPost(TAOBAO_IP_QUERY.addParam("id", ipAddr));
+        if(null == rsStr || rsStr.length() == 0 || !rsStr.startsWith("{")) {
+            logger.error("请求淘宝IP地址查询接口失败");
+            return null;
+        }
+        Map<Object, Object> data = JsonUtils.jsonToMap(rsStr);
+        if("0".equals(data.get("code"))) {
+            return StringUtils.join(data.get("region"), data.get("region"));
+        }
+        return null;
     }
 
 }

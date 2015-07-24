@@ -17,7 +17,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = {"", "index"}, method = {RequestMethod.GET, RequestMethod.HEAD})
     public String index(Model model) {
-        model.addAttribute("menus", JsonUtils.toJsonString(SecurityUtils.getAllMenu()));
+        model.addAttribute("menus", JsonUtils.objectToJson(SecurityUtils.getAllMenu()));
         return "system/index";
     }
 }
