@@ -90,14 +90,14 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
         if(StringUtils.isBlank(ipAddr)) {
             return null;
         }
-        String rsStr = HttpUtils.httpPost(TAOBAO_IP_QUERY.addParam("id", ipAddr));
+        String rsStr = HttpUtils.httpPost(TAOBAO_IP_QUERY.addParam("ip", ipAddr));
         if(null == rsStr || rsStr.length() == 0 || !rsStr.startsWith("{")) {
             logger.error("请求淘宝IP地址查询接口失败");
             return null;
         }
         Map<Object, Object> data = JsonUtils.jsonToMap(rsStr);
-        if("0".equals(data.get("code"))) {
-            return StringUtils.join(data.get("region"), data.get("region"));
+        if(null != (data = (Map<Object, Object>) data.get("data"))) {
+            return StringUtils.join(data.get("region"), data.get("city"));
         }
         return null;
     }

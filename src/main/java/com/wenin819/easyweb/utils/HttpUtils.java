@@ -94,7 +94,8 @@ public class HttpUtils {
         final byte[] bytes = httpGetBytes(httpContext);
         String rs = null;
         try {
-            rs = new String(bytes, null != httpContext.getCharset() ? httpContext.getCharset() : DEFAULT_HTTP_ENCODING);
+            rs = null == bytes ? null : new String(bytes, null != httpContext.getCharset() ?
+                    httpContext.getCharset() : DEFAULT_HTTP_ENCODING);
         } catch (Exception e) {
             logger.error("转换httpGet请求返回报文失败", e);
         }
