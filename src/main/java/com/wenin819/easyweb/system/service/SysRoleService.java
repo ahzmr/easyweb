@@ -5,6 +5,7 @@ import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
 import com.wenin819.easyweb.core.utils.ConfigEnum;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
+import com.wenin819.easyweb.core.utils.SecurityUtils;
 import com.wenin819.easyweb.system.dao.SysRoleDao;
 import com.wenin819.easyweb.system.model.SysRole;
 import com.wenin819.easyweb.system.model.SysUser;
@@ -85,6 +86,7 @@ public class SysRoleService extends MybatisBaseService<SysRole> {
                 sysRoleDao.insertRoleMenuRelation(relation);
             }
         }
+        SecurityUtils.updateMenuCache();
     }
 
     /**

@@ -24,7 +24,7 @@ public class CacheUtils {
      * @param <T> 值泛型
      * @return
      */
-	public static <T> T get(String key, T defaultVal) {
+	public static <T> T get(Object key, T defaultVal) {
 		return get(SYS_CACHE, key, defaultVal);
 	}
 
@@ -36,7 +36,7 @@ public class CacheUtils {
      * @param <T> 值泛型
      * @return
      */
-	public static <T> T get(String key, Class<T> classType, T defaultVal) {
+	public static <T> T get(Object key, Class<T> classType, T defaultVal) {
 		return get(SYS_CACHE, key, classType, defaultVal);
 	}
 
@@ -46,7 +46,7 @@ public class CacheUtils {
      * @param value 值
      * @param <T> 值泛型
      */
-	public static <T> void put(String key, T value) {
+	public static <T> void put(Object key, T value) {
 		put(SYS_CACHE, key, value);
 	}
 
@@ -54,7 +54,7 @@ public class CacheUtils {
      * 删除系统缓存对应的项
      * @param key 项
      */
-	public static void remove(String key) {
+	public static void remove(Object key) {
 		remove(SYS_CACHE, key);
 	}
 
@@ -67,9 +67,8 @@ public class CacheUtils {
      * @return
      */
 	@SuppressWarnings("unchecked")
-    public static <T> T get(String cacheName, String key, T defaultVal) {
-        Assert.notNull(defaultVal, "defaultVal不能为空！");
-        return get(cacheName, key, (Class<T>)defaultVal.getClass(), defaultVal);
+    public static <T> T get(String cacheName, Object key, T defaultVal) {
+        return get(cacheName, key, null == defaultVal ? null : (Class<T>)defaultVal.getClass(), defaultVal);
 	}
 
     /**
@@ -82,7 +81,7 @@ public class CacheUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T get(String cacheName, String key, Class<T> classType, T defaultVal) {
+    public static <T> T get(String cacheName, Object key, Class<T> classType, T defaultVal) {
         Cache.ValueWrapper valueWrapper = getCache(cacheName).get(key);
 		if(null == valueWrapper || null == valueWrapper.get()) {
             return defaultVal;
@@ -101,7 +100,7 @@ public class CacheUtils {
      * @param value 值
      * @param <T> 值泛型
      */
-	public static <T> void put(String cacheName, String key, T value) {
+	public static <T> void put(String cacheName, Object key, T value) {
 		getCache(cacheName).put(key, value);
 	}
 
@@ -110,8 +109,16 @@ public class CacheUtils {
      * @param cacheName 缓存名称
      * @param key 需要删除的项
      */
-	public static void remove(String cacheName, String key) {
+	public static void remove(String cacheName, Object key) {
 		getCache(cacheName).evict(key);
+	}
+
+	/**
+	 * 清空缓存所有内容
+	 * @param cacheName 缓存名称
+	 */
+	public static void clear(String cacheName) {
+		getCache(cacheName).clear();
 	}
 	
 	/**

@@ -23,6 +23,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
     public static final String PAGE = "page";   // 分页
     public static final String MSG = "message"; // 消息
     public static final String MSG_PAGE = "common/message"; // 消息页面
+    public static final String TAOBAO_IP2ADDR_CACHE = "taobaoIp2AddrCache"; // 淘宝IP解析地址缓存
     private static final Logger logger = LoggerFactory.getLogger(WebUtils.class);
 
     /**
@@ -90,16 +91,29 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
         if(StringUtils.isBlank(ipAddr)) {
             return null;
         }
-        String rsStr = HttpUtils.httpPost(TAOBAO_IP_QUERY.addParam("ip", ipAddr));
-        if(null == rsStr || rsStr.length() == 0 || !rsStr.startsWith("{")) {
-            logger.error("请求淘宝IP地址查询接口失败");
-            return null;
+        String addr = CacheUtils.get(TAOBAO_IP2ADDR_CACHE, ipAddr, null);
+        if(null != addr) {
+            return addr;
         }
-        Map<Object, Object> data = JsonUtils.jsonToMap(rsStr);
-        if(null != (data = (Map<Object, Object>) data.get("data"))) {
-            return StringUtils.join(data.get("region"), data.get("city"));
+        synchronized (TAOBAO_IP2ADDR_CACHE) {
+            addr = CacheUtils.get(TAOBAO_IP2ADDR_CACHE, ipAddr, null);
+            if(null != addr) {
+                return addr;
+            }
+            String rsStr = HttpUtils.httpPost(TAOBAO_IP_QUERY.addParam("ip", ipAddr));
+            if (null == rsStr || rsStr.length() == 0 || !rsStr.startsWith("{")) {
+                logger.error("请求淘宝IP地址查询接口失败");
+                return null;
+            }
+            Map<Object, Object> data = JsonUtils.jsonToMap(rsStr);
+            if (null != (data = (Map<Object, Object>) data.get("data"))) {
+                addr = StringUtils.join(data.get("region"), data.get("city"));
+            } else {
+                addr = "";
+            }
+            CacheUtils.put(TAOBAO_IP2ADDR_CACHE, ipAddr, addr);
+            return addr;
         }
-        return null;
     }
 
 }

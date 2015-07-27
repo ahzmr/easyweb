@@ -33,6 +33,10 @@ public abstract class BaseEntity<TE extends IFiledEnum> {
         return (V) extPropertiesMap.get(key);
     }
 
+    public void removeExtProperty(String key) {
+        extPropertiesMap.remove(key);
+    }
+
     private String getLableKey(TE field) {
         return field.getFiledName() + "_Lable";
     }

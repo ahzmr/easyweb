@@ -21,7 +21,7 @@ public class SysDictUtils {
 	
 	private static SysDictDao sysDictDao = SpringContextUtils.getBean(SysDictDao.class);
 
-	public static final String CACHE_DICT_MAP = "dictMap";
+	public static final Object CACHE_DICT_MAP = "dictMap";
 
     /**
      * 通过值获得对应的标签
