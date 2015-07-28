@@ -50,7 +50,6 @@
         </c:forEach>
         </tbody>
     </table>
-    <tags:pagination page="${page}" />
 </div>
 </body>
 </html>

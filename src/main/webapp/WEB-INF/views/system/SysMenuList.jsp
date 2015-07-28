@@ -60,7 +60,6 @@
             </div>
         </shiro:hasPermission>
     </form>
-    <tags:pagination page="${page}" />
 </div>
 </body>
 </html>
