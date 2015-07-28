@@ -55,7 +55,7 @@
             $(function() {
                 $.jBox.confirm("您当前密码为默认密码，请及时修改密码。", "请修改密码", function(v, h, f) {
                     if(v == 'ok') {
-                        $("#selfPwd").click();
+                        toPage($("#selfPwd"));
                     }
                     return true;
                 });
@@ -73,16 +73,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#" onclick="return false;">综合管理系统</a>
+        <a class="navbar-brand" href="/easyweb/">综合管理系统</a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse" ng-app="myMenu">
         <ul id="toolbar" class="nav navbar-nav" ng-controller="initMenus">
             <li class="dropdown" ng-repeat="menu1 in menus">
-                <a id="{{menu1.id}}" href="{{menu1.href}}" class="dropdown-toggle" data-toggle="dropdown">
+                <a id="{{menu1.id}}" target="mainFrame" href="{{menu1.href}}" class="dropdown-toggle" data-toggle="dropdown">
                     {{menu1.name}} &nbsp; <span class='{{menu1.children && "caret"}}'></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
-                    <li ng-repeat="menu2 in menu1.children"><a id="{{menu2.id}}" pid="{{menu1.id}}" href="{{menu2.href}}">{{menu2.name}}</a></li>
+                    <li ng-repeat="menu2 in menu1.children"><a id="{{menu2.id}}" target="mainFrame" pid="{{menu1.id}}" href="{{menu2.href}}">{{menu2.name}}</a></li>
                 </ul>
             </li>
             <%--<li><a id="m0_contacts" href="javascript:"--%>
@@ -96,9 +96,9 @@
                         <shiro:principal property="name"/> &nbsp;<b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a id="selfInfo" pid="myselfMenus" href="${baseUrl}/system/SysUser/form?id=<shiro:principal property='id'/>">
+                        <li><a id="selfInfo" target="mainFrame" pid="myselfMenus" href="${baseUrl}/system/SysUser/form?id=<shiro:principal property='id'/>">
                             修改个人信息</a></li>
-                        <li><a id="selfPwd" pid="myselfMenus" href="${baseUrl}/system/SysUser/modifyPwd">
+                        <li><a id="selfPwd" target="mainFrame" pid="myselfMenus" href="${baseUrl}/system/SysUser/modifyPwd">
                             修改个人密码</a></li>
                     </ul>
                 </li>

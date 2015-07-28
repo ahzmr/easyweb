@@ -2,31 +2,6 @@ function goHistory(cur) {   // 历史跳转
     history.go(cur);
 }
 
-function subUrlFormat(url) {    // 子网网站格式化
-    if(!url) {
-        return url;
-    }
-    return encodeURIComponent(url.replace(/.*(\/easyweb\/)/i, ""));
-}
-
-function toPage(path) { // 跳转页面
-    if(!path) {
-        return;
-    }
-    var p = path;
-    var m0 = null;
-    if(typeof path != "string") {
-        p = $(path).data("url") || $(path).attr("href");
-        m0 = $(path).attr("pid");
-    }
-    if(!m0) {
-        m0 = top.$.hash().get("m0");
-    }
-    p = subUrlFormat(p);
-    top.location.href = "/easyweb/#?m0=" + m0 + "&p=" + p;
-    return true;   // 成功处理
-}
-
 function page(pageNum) {   // 分页跳转
     var searchForm = $("#searchForm");
     if(!searchForm) {
@@ -40,6 +15,13 @@ function page(pageNum) {   // 分页跳转
     $pageNum.val(pageNum);
     searchForm.submit();
     return false;
+}
+
+function toPage(path) {
+    if(!(typeof path === 'string')) {
+        path = $(path).attr("href");
+    }
+    top.$("#mainFrame").attr("src", path);
 }
 
 function loading(mess){ // 显示加载框

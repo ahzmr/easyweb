@@ -32,7 +32,6 @@
 <script src="${libUrl}/My97DatePicker/WdatePicker.js"></script>
 
 <script src="${commonUrl}/js/utils.js"></script>
-<script src="${commonUrl}/js/subpage.js"></script>
 <script src="${commonUrl}/js/formutils.js"></script>
 
 <script>
