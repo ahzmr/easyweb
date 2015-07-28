@@ -4,7 +4,7 @@
 <html lang="zh-CN">
 <head>
     <meta name="decorator" content="default"/>
-    <title>字典管理</title>
+    <title>登录日志管理</title>
     <script>
         $(function() {
            initForm();
@@ -14,9 +14,9 @@
 <body>
 <div class="container-fluid">
     <ul class="nav nav-tabs">
-        <li><a href="${baseUrl}/system/SysLoginLog/">字典列表</a></li>
+        <li><a href="${baseUrl}/system/SysLoginLog/">登录日志列表</a></li>
         <li class="active"><a href="${baseUrl}/system/SysLoginLog/form?isView=${param.isView}&id=${entry.id}">
-        字典<tags:autoFormLabel editPermission="system:SysLoginLog:edit" id="${entry.id}" /></a></li>
+            登录日志<tags:autoFormLabel editPermission="system:SysLoginLog:edit" id="${entry.id}" /></a></li>
     </ul><br/>
 <form:form id="inputForm" modelAttribute="entry" action="${baseUrl}/system/SysLoginLog/save"
            method="post" class="form-horizontal inputForm">

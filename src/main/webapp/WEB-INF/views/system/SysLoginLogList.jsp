@@ -14,7 +14,6 @@
 <body>
 <ul class="nav nav-tabs">
     <li class="active"><a href="${baseUrl}/system/SysLoginLog/">登录日志列表</a></li>
-    <shiro:hasPermission name="system:SysLoginLog:edit"><li><a href="${baseUrl}/system/SysLoginLog/form">登录日志添加</a></li></shiro:hasPermission>
 </ul>
 <form id="searchForm" class="form-horizontal search-form"
       action="${baseUrl}/system/SysLoginLog/" method="post">
