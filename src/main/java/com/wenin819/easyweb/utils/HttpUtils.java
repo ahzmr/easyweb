@@ -124,6 +124,9 @@ public class HttpUtils {
         }
         HttpGet httpGet = new HttpGet(url);
         httpGet.setConfig(requestConfig);
+        for (Map.Entry<String, String> header : httpContext.getHeaders().entrySet()) {
+            httpGet.addHeader(header.getKey(), header.getValue());
+        }
         Map<String, String> cookies = httpContext.getCookies();
         httpGet.addHeader("Cookie", genQueryString(cookies, "; "));
         try {
@@ -155,6 +158,9 @@ public class HttpUtils {
         String url = httpContext.getUrl();
         HttpPost httpPost = new HttpPost(url);
         httpPost.setConfig(requestConfig);
+        for (Map.Entry<String, String> header : httpContext.getHeaders().entrySet()) {
+            httpPost.addHeader(header.getKey(), header.getValue());
+        }
         Map<String, String> cookies = httpContext.getCookies();
         httpPost.addHeader("Cookie", genQueryString(cookies, "; "));
         try {

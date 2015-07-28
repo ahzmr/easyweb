@@ -13,8 +13,9 @@ import java.util.Map;
 public class HttpContext {
 
     private String url;
-    private Map<String, String> params;
-    private Map<String, String> cookies;
+    private final Map<String, String> params = new LinkedHashMap<String, String>();
+    private final Map<String, String> cookies = new LinkedHashMap<String, String>();
+    private final Map<String, String> headers = new LinkedHashMap<String, String>();
     private HttpHost proxy;
     private Charset charset;
 
@@ -24,13 +25,13 @@ public class HttpContext {
 
     public HttpContext(String url, Map<String, String> params) {
         this.url = url;
-        this.params = params;
+        addAllParam(params);
     }
 
     public HttpContext(String url, Map<String, String> params, Map<String, String> cookies) {
         this.url = url;
-        this.params = params;
-        this.cookies = cookies;
+        addAllParam(params);
+        addAllCookie(cookies);
     }
 
     public String getUrl() {
@@ -47,33 +48,24 @@ public class HttpContext {
     }
 
     public HttpContext addParam(String name, String value) {
-        if(null == params) {
-            params = new LinkedHashMap<String, String>();
-        }
         params.put(name, value);
         return this;
     }
 
     public HttpContext addAllParam(Map<String, String> params) {
-        if(null == this.params) {
-            this.params = new LinkedHashMap<String, String>();
-        }
         this.params.putAll(params);
         return this;
     }
 
     public HttpContext addAllParam(String[] names, String[] values) {
-        if(null == params) {
-            params = new LinkedHashMap<String, String>();
-        }
         for (int i = 0; i < names.length; i++) {
-            params.put(names[i], values[i]);
+            addParam(names[i], values[i]);
         }
         return this;
     }
 
-    public HttpContext setParams(Map<String, String> params) {
-        this.params = params;
+    public HttpContext clearParams() {
+        params.clear();
         return this;
     }
 
@@ -82,33 +74,50 @@ public class HttpContext {
     }
 
     public HttpContext addCookie(String name, String value) {
-        if(null == cookies) {
-            cookies = new LinkedHashMap<String, String>();
-        }
         cookies.put(name, value);
         return this;
     }
 
     public HttpContext addAllCookie(Map<String, String> cookies) {
-        if(null == this.cookies) {
-            this.cookies = new LinkedHashMap<String, String>();
-        }
         this.cookies.putAll(cookies);
         return this;
     }
 
     public HttpContext addAllCookie(String[] names, String[] values) {
-        if(null == cookies) {
-            cookies = new LinkedHashMap<String, String>();
-        }
         for (int i = 0; i < names.length; i++) {
-            cookies.put(names[i], values[i]);
+            addCookie(names[i], values[i]);
         }
         return this;
     }
 
-    public HttpContext setCookies(Map<String, String> cookies) {
-        this.cookies = cookies;
+    public HttpContext clearCookies() {
+        this.cookies.clear();
+        return this;
+    }
+
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
+
+    public HttpContext addHeader(String name, String value) {
+        headers.put(name, value);
+        return this;
+    }
+
+    public HttpContext addAllHeader(Map<String, String> headers) {
+        this.headers.putAll(cookies);
+        return this;
+    }
+
+    public HttpContext addAllHeader(String[] names, String[] values) {
+        for (int i = 0; i < names.length; i++) {
+            addHeader(names[i], values[i]);
+        }
+        return this;
+    }
+
+    public HttpContext clearHeaders() {
+        this.headers.clear();
         return this;
     }
 
