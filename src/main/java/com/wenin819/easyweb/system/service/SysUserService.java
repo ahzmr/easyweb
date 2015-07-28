@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wenin819@gmail.com on 2014-09-23.
@@ -93,6 +94,15 @@ public class SysUserService extends MybatisBaseService<SysUser> {
         }
         if(sysUserDao.countByCriteria(query) > 0) {
             return msg + "重复";
+        }
+        List<String> roleIds = entity.getRoleIds();
+        if(null != roleIds) {
+            Set<String> roleIdSet = SecurityUtils.getAllRoleIdSet();
+            for (String roleId : roleIds) {
+                if(!roleIdSet.contains(roleId)) {
+                    return "保存的角色列表，超过您的权限范围，请重新选择";
+                }
+            }
         }
         return super.validate(entity);
     }

@@ -2,6 +2,8 @@ package com.wenin819.easyweb.system.controller;
 
 import com.wenin819.easyweb.core.persistence.Page;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
+import com.wenin819.easyweb.core.utils.SecurityUtils;
+import com.wenin819.easyweb.core.utils.WebUtils;
 import com.wenin819.easyweb.core.utils.tree.ITreeNodeAdapter;
 import com.wenin819.easyweb.core.utils.tree.TreeSortUtils;
 import com.wenin819.easyweb.core.utils.tree.support.TreeNodeWrapper;
@@ -53,8 +55,9 @@ public class SysMenuController extends BaseCrudController<SysMenu> {
 
     @Override
     public String toList(Page<SysMenu> page, SysMenu entity, Model model, HttpServletRequest request) {
-        String view = super.toList(page, entity, model, request);
-        List<SysMenu> sysMenus = TreeSortUtils.sort4Tree(page, null, new ITreeNodeAdapter<SysMenu>() {
+        checkPermission("view");
+        model.addAttribute(WebUtils.ENTRY, entity);
+        List<SysMenu> sysMenus = TreeSortUtils.sort4Tree(SecurityUtils.getAllMenu(), null, new ITreeNodeAdapter<SysMenu>() {
             @Override
             public String getId(SysMenu node) {
                 return null == node ? null : node.getId();
@@ -65,9 +68,9 @@ public class SysMenuController extends BaseCrudController<SysMenu> {
                 return null == node ? null : node.getParentId();
             }
         });
-        page.clear();
         page.addAll(sysMenus);
-        return view;
+        model.addAttribute(WebUtils.PAGE, page);
+        return pagePathList;
     }
 
     @RequestMapping("queryByParent")

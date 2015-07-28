@@ -150,6 +150,7 @@ public abstract class BaseCrudController<E extends BaseEntity> extends BaseContr
         checkPermission("edit");
         String errMsg = getService().validate(entity);
         if(null != errMsg) {
+            addMessages(model, "保存失败，" + errMsg);
             return toForm(false, entity, model, request);
         }
         entity = updateEntity(entity, ActionType.SAVE, request, model);

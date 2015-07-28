@@ -1,6 +1,8 @@
 package com.wenin819.easyweb.system.controller;
 
+import com.wenin819.easyweb.core.persistence.Page;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
+import com.wenin819.easyweb.core.utils.SecurityUtils;
 import com.wenin819.easyweb.core.utils.WebUtils;
 import com.wenin819.easyweb.core.web.BaseCrudController;
 import com.wenin819.easyweb.system.model.SysRole;
@@ -51,12 +53,21 @@ public class SysRoleController extends BaseCrudController<SysRole> {
     }
 
     @Override
+    public String toList(Page<SysRole> page, SysRole entity, Model model, HttpServletRequest request) {
+        checkPermission("view");
+        model.addAttribute(WebUtils.ENTRY, entity);
+        page.addAll(SecurityUtils.getAllRole());
+        model.addAttribute(WebUtils.PAGE, page);
+        return pagePathList;
+    }
+
+    @Override
     public String toForm(boolean autoQuery, SysRole entry, Model model, HttpServletRequest request) {
         String toForm = super.toForm(autoQuery, entry, model, request);
         entry = (SysRole) model.asMap().get(WebUtils.ENTRY);
 
         entry.setMenuIds(sysRoleService.queryMenuIdsByRole(entry));
-        model.addAttribute("menus", sysMenuService.queryAllMenus());
+        model.addAttribute("menus", SecurityUtils.getAllMenu());
         return toForm;
     }
 

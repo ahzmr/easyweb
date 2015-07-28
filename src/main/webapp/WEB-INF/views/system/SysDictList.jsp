@@ -58,7 +58,7 @@
             <th>排序</th>
             <th>更新者</th>
             <th>更新时间</th>
-        <shiro:hasPermission name="system:SysRole:edit">
+        <shiro:hasPermission name="system:SysDict:edit">
             <th>操作</th>
         </shiro:hasPermission>
         </tr>

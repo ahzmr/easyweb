@@ -46,7 +46,7 @@
         <#list table.fieldList as field>
             <th>${field.remarks}</th>
         </#list>
-        <shiro:hasPermission name="system:SysRole:edit">
+        <shiro:hasPermission name="${basePerm}:edit">
             <th>操作</th>
         </shiro:hasPermission>
         </tr>

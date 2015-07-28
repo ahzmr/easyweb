@@ -7,6 +7,7 @@ import com.wenin819.easyweb.core.utils.ConfigEnum;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
 import com.wenin819.easyweb.core.utils.SecurityUtils;
 import com.wenin819.easyweb.system.dao.SysRoleDao;
+import com.wenin819.easyweb.system.model.SysMenu;
 import com.wenin819.easyweb.system.model.SysRole;
 import com.wenin819.easyweb.system.model.SysUser;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,9 @@ import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -169,6 +172,19 @@ public class SysRoleService extends MybatisBaseService<SysRole> {
         }
         if(0 < getDao().countByCriteria(query)) {
             return msg + "重复";
+        }
+        List<String> menuIds = entity.getMenuIds();
+        if(null != menuIds) {
+            List<SysMenu> allMenu = SecurityUtils.getAllMenu();
+            Set<String> myMenuIds = new HashSet<String>();
+            for (SysMenu sysMenu : allMenu) {
+                myMenuIds.add(sysMenu.getId());
+            }
+            for (String menuId : menuIds) {
+                if(!myMenuIds.contains(menuId)) {
+                    return "保存的菜单列表，超过您的权限范围，请重新选择";
+                }
+            }
         }
         return super.validate(entity);
     }

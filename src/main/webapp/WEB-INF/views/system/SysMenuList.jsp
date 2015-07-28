@@ -29,7 +29,7 @@
             <th>是否显示</th>
             <th>权限标识</th>
             <th>备注信息</th>
-        <shiro:hasPermission name="system:SysRole:edit">
+        <shiro:hasPermission name="system:SysMenu:edit">
             <th>操作</th>
         </shiro:hasPermission>
         </tr >
