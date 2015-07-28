@@ -50,6 +50,17 @@
         myMenu.controller("initMenus", function($scope) {
             $scope.menus = sys_menus.getMenu();
         });
+
+        <c:if test="${sessionScope.get('isDefaultPassword')}">
+            $(function() {
+                $.jBox.confirm("您当前密码为默认密码，请及时修改密码。", "请修改密码", function(v, h, f) {
+                    if(v == 'ok') {
+                        $("#selfPwd").click();
+                    }
+                    return true;
+                });
+            });
+        </c:if>
     </script>
 </head>
 <body>

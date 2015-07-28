@@ -1,6 +1,8 @@
 package com.wenin819.easyweb.filter.shiro;
 
+import com.wenin819.easyweb.core.utils.SecurityUtils;
 import com.wenin819.easyweb.core.utils.WebUtils;
+import com.wenin819.easyweb.system.model.SysUser;
 import com.wenin819.easyweb.system.service.SysLoginLogService;
 import com.wenin819.easyweb.system.service.SysUserService;
 import com.wenin819.easyweb.utils.LoginErrCntUtils;
@@ -53,6 +55,10 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
         }
         sysUserService.updateUserLoginInfo(username);
         sysLoginLogService.saveLoginLog(username, realRemoteAddr, httpServletRequest.getHeader("user-agent"));
+        SysUser sysUser = SecurityUtils.getCurrentUser();
+        final String password = getPassword(request);
+        final String hash = SecurityUtils.genHMacSha256(sysUser.getLoginName(), sysUser.getLoginName());
+        ((HttpServletRequest) request).getSession().setAttribute("isDefaultPassword", password.equals(hash));
         return super.onLoginSuccess(token, subject, request, response);
     }
 
