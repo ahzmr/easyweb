@@ -69,7 +69,7 @@ public class CodeGen {
             filePath = CodegenConfigUtils.getMapperMysqlPath() + separator
                        + table.getName() + ".xml";
             content = FreemarkerUtils.process2String(sqlMapperTpl, model);
-            writeFile(content, filePath, true);
+            writeFile(content, filePath, false);
             logger.info("SqlMapper: {}", filePath);
 
             filePath = CodegenConfigUtils.getMapperMysqlPath() + separator

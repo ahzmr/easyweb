@@ -101,7 +101,8 @@ public class CodegenConfigUtils {
                 file = ResourceUtils.getFile(path);
             }
 
-            file = new File(file, "src/main/java");
+            file = "true".equals(props.getProperty("genToTest")) ?
+                    new File(file, "src/test/java") : new File(file, "src/main/java");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -124,7 +125,7 @@ public class CodegenConfigUtils {
      * @return
      */
     public static File getTplPath() {
-        File file = new File(getProjectPath() + "/../resources",
+        File file = new File(getProjectPath() + "/../../main/resources",
                 replacePath("codegen.template"));
         return file;
     }
