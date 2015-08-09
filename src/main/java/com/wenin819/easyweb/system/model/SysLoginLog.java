@@ -78,6 +78,14 @@ public class SysLoginLog extends BaseEntity<SysLoginLog.TE> {
      * 结束创建时间
      */
     private Date createDateEnd;
+    /**
+     * 会话编号
+     */
+    private String sessionId;
+    /**
+     * 退出时间
+     */
+    private Date logoutDate;
 
     public String getId() {
         return id;
@@ -193,6 +201,20 @@ public class SysLoginLog extends BaseEntity<SysLoginLog.TE> {
     public void setCreateDateEnd(Date createDateEnd) {
         this.createDateEnd = createDateEnd;
     }
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+    public Date getLogoutDate() {
+        return logoutDate;
+    }
+
+    public void setLogoutDate(Date logoutDate) {
+        this.logoutDate = logoutDate;
+    }
 
     public static enum TE implements IFiledEnum {
         id("id"),  // 编号
@@ -209,6 +231,8 @@ public class SysLoginLog extends BaseEntity<SysLoginLog.TE> {
         remarks("remarks"),  // 备注信息
         createBy("create_by"),  // 创建者
         createDate("create_date"),  // 创建时间
+        sessionId("session_id"),  // 会话编号
+        logoutDate("logout_date"),  // 退出时间
         ;
         private String filedName;
         private TE(String filedName) {

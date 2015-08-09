@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wenin819.easyweb.system.dao.SysLoginLogDao">
 
+    <update id="updateLogoutDate">
+        update <include refid="TableClause" />
+        set logout_date = #{logoutDate}
+        where id = #{id} and logout_date is null
+    </update>
+
 </mapper>

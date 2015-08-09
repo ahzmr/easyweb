@@ -4,12 +4,14 @@ import com.wenin819.easyweb.core.persistence.mybatis.CriteriaQuery;
 import com.wenin819.easyweb.core.persistence.mybatis.MybatisBaseDao;
 import com.wenin819.easyweb.core.service.mybatis.MybatisBaseService;
 import com.wenin819.easyweb.core.utils.ConfigUtils;
+import com.wenin819.easyweb.core.utils.SecurityUtils;
 import com.wenin819.easyweb.core.utils.WebUtils;
 import com.wenin819.easyweb.system.dao.SysLoginLogDao;
 import com.wenin819.easyweb.system.model.SysLoginLog;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
+import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,6 +23,8 @@ import java.util.Date;
  */
 @Service
 public class SysLoginLogService extends MybatisBaseService<SysLoginLog> {
+
+    public static final String LOGIN_LOG_ID_KEY = "loginLogId";
 
     @Resource
     private SysLoginLogDao sysLoginLogDao;
@@ -87,6 +91,20 @@ public class SysLoginLogService extends MybatisBaseService<SysLoginLog> {
         loginLog.setAppType(browser.getBrowserType().getName());
         loginLog.setAppVersion(browser.getName());
 
+        Session session = SecurityUtils.getSubject().getSession();
+        loginLog.setSessionId((String) session.getId());
+
         sysLoginLogDao.insert(loginLog);
+
+        session.setAttribute(LOGIN_LOG_ID_KEY, loginLog.getId());
+    }
+
+    /**
+     * 更新退出时间
+     * @param loginLogId 登录日志ID
+     * @param logoutDate 退出时间
+     */
+    public void updateLogoutDate(String loginLogId, Date logoutDate) {
+        sysLoginLogDao.updateLogoutDate(loginLogId, logoutDate);
     }
 }

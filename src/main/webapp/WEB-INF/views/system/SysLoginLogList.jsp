@@ -57,6 +57,7 @@
             <th>编号</th>
             <th>登陆人</th>
             <th>登陆时间</th>
+            <th>退出时间</th>
             <th>登录IP</th>
             <th>登录地点</th>
             <th>操作系统</th>
@@ -64,9 +65,7 @@
             <th>设备名称</th>
             <th>设备类型</th>
             <th>应用名称</th>
-            <th>应用类型</th>
             <th>应用版本</th>
-            <th>备注信息</th>
         </tr>
         </thead>
         <tbody>
@@ -75,6 +74,7 @@
                     <td><a href="${baseUrl}/system/SysLoginLog/form?isView=1&id=${entity.id}">${entity.id}</a></td>
                     <td>${entity.createBy}</td>
                     <td><fmt:formatDate value="${entity.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                    <td><fmt:formatDate value="${entity.logoutDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                     <td>${entity.loginIp}</td>
                     <td>${entity.loginLocation}</td>
                     <td>${entity.osName}</td>
@@ -82,9 +82,7 @@
                     <td>${entity.deviceName}</td>
                     <td>${entity.deviceType}</td>
                     <td>${entity.appName}</td>
-                    <td>${entity.appType}</td>
                     <td>${entity.appVersion}</td>
-                    <td>${entity.remarks}</td>
             </tr>
         </c:forEach>
         </tbody>

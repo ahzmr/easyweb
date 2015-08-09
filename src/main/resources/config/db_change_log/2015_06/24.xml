@@ -8,7 +8,7 @@
     <changeSet id="20150624001" author="lichao" failOnError="false" >
         <preConditions>
             <not>
-                <tableExists tableName="sys_user" />
+                <tableExists tableName="SYS_USER" />
             </not>
         </preConditions>
         <comment>初始化用户表</comment>

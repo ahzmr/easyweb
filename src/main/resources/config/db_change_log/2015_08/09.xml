@@ -5,14 +5,12 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="20150624001" author="lichao" failOnError="false">
+    <changeSet id="20150809001" author="lichao" failOnError="false">
         <preConditions>
-            <not>
-                <tableExists tableName="SYS_KEY_SEQUENCE" />
-            </not>
+            <tableExists tableName="SYS_LOGIN_LOG" />
         </preConditions>
-        <comment>增加序列表</comment>
-        <sqlFile path="${jdbc.type}/25_001_init_ares_key_sequence.sql" relativeToChangelogFile="true" />
+        <comment>修改登录日志表，增加记录退出时间与会话ID</comment>
+        <sqlFile path="${jdbc.type}/09_001_update_sys_login_log.sql" relativeToChangelogFile="true" />
     </changeSet>
-    
+
 </databaseChangeLog>
